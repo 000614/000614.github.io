@@ -8,12 +8,18 @@
             <script type="text/javascript" src="https://assets.pyecharts.org/assets/v5/maps/china.js"></script>
 
 </head>
-<body >
-    <div id="feb818f87880463688c30f06cfcea302" class="chart-container" style="width:900px; height:500px; "></div>
+<body onresize="resizeFresh()">
+<style type="text/css">
+            html,body{
+                height:100%;
+                width:100%
+            }
+</style>
+    <div id="c7483489b5514a728c673bce530ddc4d" class="chart-container" style="width:95%; height:95%; margin:auto; top:30px"></div>
     <script>
-        var chart_feb818f87880463688c30f06cfcea302 = echarts.init(
-            document.getElementById('feb818f87880463688c30f06cfcea302'), 'white', {renderer: 'canvas'});
-        var option_feb818f87880463688c30f06cfcea302 = {
+        var chart_c7483489b5514a728c673bce530ddc4d = echarts.init(
+            document.getElementById('c7483489b5514a728c673bce530ddc4d'), 'white', {renderer: 'canvas'});
+        var option_c7483489b5514a728c673bce530ddc4d = {
     "animation": true,
     "animationThreshold": 2000,
     "animationDuration": 1000,
@@ -565,7 +571,7 @@
     "title": [
         {
             "show": true,
-            "text": "\u6dc4\u535a\u9879\u76ee",
+            "text": "\u5317\u4eac\u9879\u76ee",
             "target": "blank",
             "subtarget": "blank",
             "padding": 5,
@@ -600,7 +606,7 @@
     },
     "geo": {
         "map": "china",
-        "zoom": 2.2,
+        "zoom": 1.35,
         "roam": true,
         "aspectScale": 0.75,
         "nameProperty": "name",
@@ -608,7 +614,14 @@
         "emphasis": {}
     }
 };
-        chart_feb818f87880463688c30f06cfcea302.setOption(option_feb818f87880463688c30f06cfcea302);
+        chart_c7483489b5514a728c673bce530ddc4d.setOption(option_c7483489b5514a728c673bce530ddc4d);
     </script>
+	<script>
+         var x=window.innerWidth;
+     function resizeFresh(){
+         if(x!=window.innerWidth)
+             location.reload();
+     }
+	</script>
 </body>
 </html>
