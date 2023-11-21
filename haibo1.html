@@ -9,11 +9,11 @@
 
 </head>
 <body >
-    <div id="91ee65c2524d44c1bd255f18a8936b8b" class="chart-container" style="width:900px; height:500px; "></div>
+    <div id="feb818f87880463688c30f06cfcea302" class="chart-container" style="width:900px; height:500px; "></div>
     <script>
-        var chart_91ee65c2524d44c1bd255f18a8936b8b = echarts.init(
-            document.getElementById('91ee65c2524d44c1bd255f18a8936b8b'), 'white', {renderer: 'canvas'});
-        var option_91ee65c2524d44c1bd255f18a8936b8b = {
+        var chart_feb818f87880463688c30f06cfcea302 = echarts.init(
+            document.getElementById('feb818f87880463688c30f06cfcea302'), 'white', {renderer: 'canvas'});
+        var option_feb818f87880463688c30f06cfcea302 = {
     "animation": true,
     "animationThreshold": 2000,
     "animationDuration": 1000,
@@ -54,15 +54,73 @@
                     "value": [
                         116.407526,
                         39.90403,
-                        10
+                        93
                     ]
                 },
                 {
-                    "name": "\u4e0a\u6d77",
+                    "name": "\u6d4e\u5357",
                     "value": [
-                        121.473701,
-                        31.230416,
-                        20
+                        117,
+                        36.65,
+                        112
+                    ]
+                },
+                {
+                    "name": "\u6dc4\u535a",
+                    "value": [
+                        118.05,
+                        36.78,
+                        60
+                    ]
+                }
+            ],
+            "label": {
+                "show": false,
+                "margin": 8
+            }
+        },
+        {
+            "type": "effectScatter",
+            "coordinateSystem": "geo",
+            "showEffectOn": "render",
+            "rippleEffect": {
+                "show": true,
+                "brushType": "stroke",
+                "scale": 2.5,
+                "period": 4
+            },
+            "symbolSize": 12,
+            "data": [
+                {
+                    "name": "\u91d1\u660c",
+                    "value": [
+                        102.188043,
+                        38.520089,
+                        60
+                    ]
+                },
+                {
+                    "name": "\u5174\u5b89\u76df",
+                    "value": [
+                        122.05,
+                        46.08,
+                        32
+                    ]
+                },
+                {
+                    "name": "\u547c\u4f26\u8d1d\u5c14",
+                    "value": [
+                        119.77,
+                        49.22,
+                        18
+                    ]
+                },
+                {
+                    "name": "\u6d4e\u5b81",
+                    "value": [
+                        116.59,
+                        35.38,
+                        40
                     ]
                 },
                 {
@@ -70,23 +128,23 @@
                     "value": [
                         113.23,
                         23.16,
-                        30
+                        46
                     ]
                 },
                 {
-                    "name": "\u6210\u90fd",
+                    "name": "\u5927\u540c",
                     "value": [
-                        104.06,
-                        30.67,
-                        40
+                        113.3,
+                        40.12,
+                        60
                     ]
                 },
                 {
-                    "name": "\u54c8\u5c14\u6ee8",
+                    "name": "\u4e0a\u9976",
                     "value": [
-                        126.63,
-                        45.75,
-                        50
+                        117.58,
+                        25.27,
+                        9
                     ]
                 }
             ],
@@ -97,9 +155,144 @@
         },
         {
             "type": "lines",
-            "name": "geo-lines",
+            "name": "\u5317\u4eac\u9879\u76ee",
             "coordinateSystem": "geo",
-            "zlevel": 3,
+            "zlevel": 4,
+            "progressive": 400,
+            "progressiveThreshold": 3000,
+            "effect": {
+                "show": true,
+                "brushType": "stroke",
+                "scale": 2.5,
+                "period": 4,
+                "color": "red",
+                "symbol": "arrow",
+                "symbolSize": 5
+            },
+            "symbol": [
+                "none",
+                "arrow"
+            ],
+            "polyline": false,
+            "large": true,
+            "largeThreshold": 2000,
+            "symbolSize": 12,
+            "data": [
+                {
+                    "name": "\u91d1\u660c->\u5317\u4eac",
+                    "coords": [
+                        [
+                            102.188043,
+                            38.520089
+                        ],
+                        [
+                            116.407526,
+                            39.90403
+                        ]
+                    ]
+                },
+                {
+                    "name": "\u5174\u5b89\u76df->\u5317\u4eac",
+                    "coords": [
+                        [
+                            122.05,
+                            46.08
+                        ],
+                        [
+                            116.407526,
+                            39.90403
+                        ]
+                    ]
+                },
+                {
+                    "name": "\u547c\u4f26\u8d1d\u5c14->\u5317\u4eac",
+                    "coords": [
+                        [
+                            119.77,
+                            49.22
+                        ],
+                        [
+                            116.407526,
+                            39.90403
+                        ]
+                    ]
+                },
+                {
+                    "name": "\u6d4e\u5b81->\u5317\u4eac",
+                    "coords": [
+                        [
+                            116.59,
+                            35.38
+                        ],
+                        [
+                            116.407526,
+                            39.90403
+                        ]
+                    ]
+                },
+                {
+                    "name": "\u5927\u540c->\u5317\u4eac",
+                    "coords": [
+                        [
+                            113.3,
+                            40.12
+                        ],
+                        [
+                            116.407526,
+                            39.90403
+                        ]
+                    ]
+                },
+                {
+                    "name": "\u4e0a\u9976->\u5317\u4eac",
+                    "coords": [
+                        [
+                            117.58,
+                            25.27
+                        ],
+                        [
+                            116.407526,
+                            39.90403
+                        ]
+                    ]
+                },
+                {
+                    "name": "\u5e7f\u5dde->\u5317\u4eac",
+                    "coords": [
+                        [
+                            113.23,
+                            23.16
+                        ],
+                        [
+                            116.407526,
+                            39.90403
+                        ]
+                    ]
+                }
+            ],
+            "lineStyle": {
+                "show": true,
+                "width": 1,
+                "opacity": 1,
+                "curveness": 0.2,
+                "type": "solid"
+            },
+            "label": {
+                "show": false,
+                "margin": 8
+            },
+            "rippleEffect": {
+                "show": true,
+                "brushType": "stroke",
+                "scale": 2.5,
+                "period": 4
+            }
+        },
+        {
+            "type": "lines",
+            "name": "\u6d4e\u5357\u9879\u76ee",
+            "coordinateSystem": "geo",
+            "zlevel": 5,
             "progressive": 400,
             "progressiveThreshold": 3000,
             "effect": {
@@ -121,67 +314,176 @@
             "symbolSize": 12,
             "data": [
                 {
-                    "name": "\u4e0a\u6d77->\u5e7f\u5dde",
+                    "name": "\u91d1\u660c->\u6d4e\u5357",
                     "coords": [
                         [
-                            121.473701,
-                            31.230416
+                            102.188043,
+                            38.520089
                         ],
+                        [
+                            117,
+                            36.65
+                        ]
+                    ]
+                },
+                {
+                    "name": "\u5174\u5b89\u76df->\u6d4e\u5357",
+                    "coords": [
+                        [
+                            122.05,
+                            46.08
+                        ],
+                        [
+                            117,
+                            36.65
+                        ]
+                    ]
+                },
+                {
+                    "name": "\u547c\u4f26\u8d1d\u5c14->\u6d4e\u5357",
+                    "coords": [
+                        [
+                            119.77,
+                            49.22
+                        ],
+                        [
+                            117,
+                            36.65
+                        ]
+                    ]
+                },
+                {
+                    "name": "\u6d4e\u5b81->\u6d4e\u5357",
+                    "coords": [
+                        [
+                            116.59,
+                            35.38
+                        ],
+                        [
+                            117,
+                            36.65
+                        ]
+                    ]
+                },
+                {
+                    "name": "\u5927\u540c->\u6d4e\u5357",
+                    "coords": [
+                        [
+                            113.3,
+                            40.12
+                        ],
+                        [
+                            117,
+                            36.65
+                        ]
+                    ]
+                },
+                {
+                    "name": "\u4e0a\u9976->\u6d4e\u5357",
+                    "coords": [
+                        [
+                            117.58,
+                            25.27
+                        ],
+                        [
+                            117,
+                            36.65
+                        ]
+                    ]
+                },
+                {
+                    "name": "\u5e7f\u5dde->\u6d4e\u5357",
+                    "coords": [
                         [
                             113.23,
                             23.16
+                        ],
+                        [
+                            117,
+                            36.65
+                        ]
+                    ]
+                }
+            ],
+            "lineStyle": {
+                "show": true,
+                "width": 1,
+                "opacity": 1,
+                "curveness": 0.2,
+                "type": "solid"
+            },
+            "label": {
+                "show": false,
+                "margin": 8
+            },
+            "rippleEffect": {
+                "show": true,
+                "brushType": "stroke",
+                "scale": 2.5,
+                "period": 4
+            }
+        },
+        {
+            "type": "lines",
+            "name": "\u6dc4\u535a\u9879\u76ee",
+            "coordinateSystem": "geo",
+            "zlevel": 6,
+            "progressive": 400,
+            "progressiveThreshold": 3000,
+            "effect": {
+                "show": true,
+                "brushType": "stroke",
+                "scale": 2.5,
+                "period": 4,
+                "color": "blue",
+                "symbol": "arrow",
+                "symbolSize": 5
+            },
+            "symbol": [
+                "none",
+                "arrow"
+            ],
+            "polyline": false,
+            "large": true,
+            "largeThreshold": 2000,
+            "symbolSize": 12,
+            "data": [
+                {
+                    "name": "\u91d1\u660c->\u6dc4\u535a",
+                    "coords": [
+                        [
+                            102.188043,
+                            38.520089
+                        ],
+                        [
+                            118.05,
+                            36.78
                         ]
                     ]
                 },
                 {
-                    "name": "\u4e0a\u6d77->\u65b0\u7586",
+                    "name": "\u5927\u540c->\u6dc4\u535a",
                     "coords": [
                         [
-                            121.473701,
-                            31.230416
+                            113.3,
+                            40.12
                         ],
                         [
-                            87.627704,
-                            43.793026
+                            118.05,
+                            36.78
                         ]
                     ]
                 },
                 {
-                    "name": "\u4e0a\u6d77->\u54c8\u5c14\u6ee8",
+                    "name": "\u5e7f\u5dde->\u6dc4\u535a",
                     "coords": [
-                        [
-                            121.473701,
-                            31.230416
-                        ],
-                        [
-                            126.63,
-                            45.75
-                        ]
-                    ]
-                },
-                {
-                    "name": "\u6210\u90fd->\u5317\u4eac",
-                    "coords": [
-                        [
-                            104.06,
-                            30.67
-                        ],
-                        [
-                            116.407526,
-                            39.90403
-                        ]
-                    ]
-                },
-                {
-                    "name": "\u54c8\u5c14\u6ee8->\u5e7f\u5dde",
-                    "coords": [
-                        [
-                            126.63,
-                            45.75
-                        ],
                         [
                             113.23,
                             23.16
+                        ],
+                        [
+                            118.05,
+                            36.78
                         ]
                     ]
                 }
@@ -209,7 +511,10 @@
         {
             "data": [
                 "",
-                "geo-lines"
+                "",
+                "\u5317\u4eac\u9879\u76ee",
+                "\u6d4e\u5357\u9879\u76ee",
+                "\u6dc4\u535a\u9879\u76ee"
             ],
             "selected": {},
             "show": true,
@@ -260,7 +565,7 @@
     "title": [
         {
             "show": true,
-            "text": "Geo-Lines",
+            "text": "\u6dc4\u535a\u9879\u76ee",
             "target": "blank",
             "subtarget": "blank",
             "padding": 5,
@@ -303,7 +608,7 @@
         "emphasis": {}
     }
 };
-        chart_91ee65c2524d44c1bd255f18a8936b8b.setOption(option_91ee65c2524d44c1bd255f18a8936b8b);
+        chart_feb818f87880463688c30f06cfcea302.setOption(option_feb818f87880463688c30f06cfcea302);
     </script>
 </body>
 </html>
