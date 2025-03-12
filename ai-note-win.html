@@ -1,4 +1,4 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>WK1-ai学习笔记（win系统）</title><style>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>ai学习笔记（win系统）</title><style>
 /* cspell:disable-file */
 /* webkit printing magic: print all background colors */
 html {
@@ -681,7 +681,7 @@ blockquote {
 	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
 }
 	
-</style></head><body><article id="1afa551d-035a-80b0-9ad2-c463b57612e3" class="page sans"><header><h1 class="page-title">WK1-ai学习笔记（win系统）</h1><p class="page-description"></p></header><div class="page-body"><h1 id="1afa551d-035a-801e-a543-dc104213ad24" class="">Day01-api的使用-openai库+上下文记忆+gradio界面</h1><p id="1afa551d-035a-8055-a790-f049b48194f4" class="">（背景介绍部分未总结）</p><ul id="1afa551d-035a-80e6-903c-e7e6101dadf4" class="toggle"><li><details open=""><summary>折叠day01课程笔记</summary><h2 id="1afa551d-035a-80ac-9792-c5fb8a9e9c8a" class="">openai库的调用（直接调用+autogen使用）</h2><ul id="1afa551d-035a-8091-aaf8-ec9fc46d2906" class="toggle"><li><details open=""><summary>折叠长代码块</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1afa551d-035a-80da-8d56-f099784cee00" class="code"><code class="language-Python">import openai
+</style></head><body><article id="1afa551d-035a-80b0-9ad2-c463b57612e3" class="page sans"><header><h1 class="page-title">ai学习笔记（win系统）</h1><p class="page-description"></p></header><div class="page-body"><h1 id="1b4a551d-035a-80cc-8ba2-fee399663c4c" class="">WK1-ai部署</h1><h1 id="1afa551d-035a-801e-a543-dc104213ad24" class="">Day01-api的使用-openai库+上下文记忆+gradio界面</h1><p id="1afa551d-035a-8055-a790-f049b48194f4" class="">（背景介绍部分未总结）</p><ul id="1afa551d-035a-80e6-903c-e7e6101dadf4" class="toggle"><li><details open=""><summary>折叠day01课程笔记</summary><h2 id="1afa551d-035a-80ac-9792-c5fb8a9e9c8a" class="">openai库的调用（直接调用+autogen使用）</h2><ul id="1afa551d-035a-8091-aaf8-ec9fc46d2906" class="toggle"><li><details open=""><summary>折叠长代码块</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1afa551d-035a-80da-8d56-f099784cee00" class="code"><code class="language-Python">import openai
 import os
 openai.api_key = os.getenv(&quot;GUIJI_API&quot;)
 
@@ -947,5 +947,96 @@ ghcr.io/open-webui/open-webui:main</code></pre></details></li></ul><hr id="1afa5
 conda activate myenv 
 #⽼版本conda可能需要先⽤source activate 
 # Install vLLM with CUDA 12.1.
-pip install vllm</code></pre><p id="1afa551d-035a-801c-85cd-e1f0e94af29a" class="">再通过vllm框架直接启动该模型，注意替换模型名称</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1afa551d-035a-8003-b32c-c9d0c77eb902" class="code"><code class="language-Python"> python -m vllm.entrypoints.openai.api_server \--model /root/autodl-tmp/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B \--served-model-name DeepSeek-R1-Distill-Qwen-7B \ --max-model-len=2048</code></pre><p id="1afa551d-035a-8047-bee4-d5ce239630da" class="">启动成功后自动从终端进入模型问答交互</p><h2 id="1afa551d-035a-800e-b594-f0961b77969c" class="">(补充：可以用ssh连接通过本地端口访问服务器，已欠费…暂无展示)</h2></details></li></ul><hr id="1afa551d-035a-803a-b2cc-ddef5139ba6d"/><h1 id="1afa551d-035a-8023-a5c0-d9c22ddbe1b2" class="">Day04-anaconda+部分编程技巧</h1><ul id="1afa551d-035a-803c-ac6a-f9c3e5221aef" class="toggle"><li><details open=""><summary>折叠day04课程笔记(只针对记录了未完全掌握部分便于回顾)</summary><p id="1afa551d-035a-80c3-95b9-fd1b02e5719b" class="">多行代码合并为一行           【Crtl+Shift+J】<br/>包装代码                   【Crtl+Alt+T】<br/>在上方插入新行             【Ctrl + Alt + Enter】<br/>在下方插入新行              【Shift + Enter】<br/>上下移动选中代码            【Alt + Shift + 上、下键】<br/>复制代码                     【Ctrl + D】<br/>折叠代码                     【Ctrl + -】<br/>全局查找                 【Ctrl + Shift+F】<br/></p></details></li></ul><hr id="1afa551d-035a-808e-b7ea-c6f5285c48c1"/><h1 id="1afa551d-035a-80e4-aaff-dfeb1cbc2087" class="">Day05-提示词使用技巧和基础模板介绍</h1><ul id="1afa551d-035a-804a-bdb2-fe2c01979d8d" class="toggle"><li><details open=""><summary>折叠讲义（预览需时间，建议回顾的时候下载下来再用）（不折叠写笔记的时候也太卡了….）</summary><figure id="1afa551d-035a-8091-9ffd-d3d5ac846ecd"><div class="source"><a href="course05-DeepSeek%E6%8F%90%E7%A4%BA%E8%AF%8D%E6%8A%80%E5%B7%A7%E5%8F%8A%E5%AE%9E%E8%B7%B5-%E8%AE%B2%E4%B9%89.pdf">attachment:6d03d435-6516-464a-b77e-823837a81cec:course05-DeepSeek提示词技巧及实践-讲义.pdf</a></div></figure></details></li></ul><ul id="1afa551d-035a-8032-8c0c-db84a7ed376a" class="toggle"><li><details open=""><summary>折叠day05课程笔记</summary><p id="1afa551d-035a-808b-b180-ff8677705335" class="">通用框架：人物形象+上下文背景+具体任务+限制条件+期望输出+少样示例</p><p id="1afa551d-035a-8008-b55a-ccb6956f65b2" class="">原理解释：<br/>清晰指令+上下⽂本⾝就是种“奖励”<br/>设定约束条件就是种“惩罚”<br/>提供⽰例就是“奖励模板”<br/>通过迭代优化提⽰词，不断“奖励”模型<br/></p><p id="1afa551d-035a-80a8-a11a-df6ab747279c" class="">部分技巧：（Takeadeepbreath）（Let’sthinkstepbystep），分治法（PromptChain-论文大纲逐阶段生成）， PromptTuning（适用于少样本模型或零样本模型微调），Prompt逆向</p></details></li></ul><p id="1afa551d-035a-80bf-ae99-fccf1d5dd3c0" class="">
+pip install vllm</code></pre><p id="1afa551d-035a-801c-85cd-e1f0e94af29a" class="">再通过vllm框架直接启动该模型，注意替换模型名称</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1afa551d-035a-8003-b32c-c9d0c77eb902" class="code"><code class="language-Python"> python -m vllm.entrypoints.openai.api_server \--model /root/autodl-tmp/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B \--served-model-name DeepSeek-R1-Distill-Qwen-7B \ --max-model-len=2048</code></pre><p id="1afa551d-035a-8047-bee4-d5ce239630da" class="">启动成功后自动从终端进入模型问答交互</p><h2 id="1afa551d-035a-800e-b594-f0961b77969c" class="">(补充：可以用ssh连接通过本地端口访问服务器，已欠费…暂无展示)</h2></details></li></ul><hr id="1afa551d-035a-803a-b2cc-ddef5139ba6d"/><h1 id="1afa551d-035a-8023-a5c0-d9c22ddbe1b2" class="">Day04-anaconda+部分编程技巧</h1><ul id="1afa551d-035a-803c-ac6a-f9c3e5221aef" class="toggle"><li><details open=""><summary>折叠day04课程笔记(只针对记录了未完全掌握部分便于回顾)</summary><p id="1afa551d-035a-80c3-95b9-fd1b02e5719b" class="">多行代码合并为一行           【Crtl+Shift+J】<br/>包装代码                   【Crtl+Alt+T】<br/>在上方插入新行             【Ctrl + Alt + Enter】<br/>在下方插入新行              【Shift + Enter】<br/>上下移动选中代码            【Alt + Shift + 上、下键】<br/>复制代码                     【Ctrl + D】<br/>折叠代码                     【Ctrl + -】<br/>全局查找                 【Ctrl + Shift+F】<br/></p></details></li></ul><hr id="1afa551d-035a-808e-b7ea-c6f5285c48c1"/><h1 id="1afa551d-035a-80e4-aaff-dfeb1cbc2087" class="">Day05-提示词使用技巧和基础模板介绍</h1><ul id="1afa551d-035a-804a-bdb2-fe2c01979d8d" class="toggle"><li><details open=""><summary>折叠讲义（预览需时间，建议回顾的时候下载下来再用）（不折叠写笔记的时候也太卡了….）</summary><figure id="1afa551d-035a-8091-9ffd-d3d5ac846ecd"><div class="source"><a href="course05-DeepSeek%E6%8F%90%E7%A4%BA%E8%AF%8D%E6%8A%80%E5%B7%A7%E5%8F%8A%E5%AE%9E%E8%B7%B5-%E8%AE%B2%E4%B9%89.pdf">attachment:6d03d435-6516-464a-b77e-823837a81cec:course05-DeepSeek提示词技巧及实践-讲义.pdf</a></div></figure></details></li></ul><ul id="1afa551d-035a-8032-8c0c-db84a7ed376a" class="toggle"><li><details open=""><summary>折叠day05课程笔记</summary><p id="1afa551d-035a-808b-b180-ff8677705335" class="">通用框架：人物形象+上下文背景+具体任务+限制条件+期望输出+少样示例</p><p id="1afa551d-035a-8008-b55a-ccb6956f65b2" class="">原理解释：<br/>清晰指令+上下⽂本⾝就是种“奖励”<br/>设定约束条件就是种“惩罚”<br/>提供⽰例就是“奖励模板”<br/>通过迭代优化提⽰词，不断“奖励”模型<br/></p><p id="1afa551d-035a-80a8-a11a-df6ab747279c" class="">部分技巧：（Takeadeepbreath）（Let’sthinkstepbystep），分治法（PromptChain-论文大纲逐阶段生成）， PromptTuning（适用于少样本模型或零样本模型微调），Prompt逆向</p></details></li></ul><p id="1b4a551d-035a-80fa-a9bf-e7b781fffe85" class="">
+</p><h1 id="1afa551d-035a-80bf-ae99-fccf1d5dd3c0" class="">WK2-rag+微调学习笔记</h1><h1 id="1b4a551d-035a-80f5-8122-c2da89c75d07" class="">Day01 rag背景介绍</h1><ul id="1b4a551d-035a-8080-a33f-d5d6244599f3" class="toggle"><li><details open=""><summary>折叠讲义</summary><figure id="1b4a551d-035a-8014-bd77-e8fdb2270012"><div class="source"><a href="RAG%E4%BB%8B%E7%BB%8D%E5%8F%8A%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80-%E8%AE%B2%E4%B9%89.pdf">attachment:25f633dc-a896-4c36-b943-b4cd3651a659:RAG介绍及理论基础-讲义.pdf</a></div></figure></details></li></ul><h1 id="1b4a551d-035a-8047-9f69-c42621f5124e" class="">Day02 文件加载</h1><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b4a551d-035a-80e5-b45a-f615bfd42874" class="code"><code class="language-Python">#从指定的pdf文件中提取所有文本内容
+from pdfminer.high_level import extract_text
+#用于解析pdf文件，按页面
+from pdfminer.high_level import extract_pages
+#LTTextBox 文档中的文本框，LTTextLine代表文本框中的单行文本
+from pdfminer.layout import LTTextBox, LTTextLine
+#定义一个函数，函数：parse_pdf,参数：file_path(文件路径)， 返回解析后文件的内容
+
+def parse_pdf(file_path):
+    text = extract_text(file_path)
+    return text
+
+#定义一个名为parse_pdf_page的函数，参数也设置为文件路径，解析pdf文件，按页解析
+
+def parse_pdf_page(file_path):
+    # 逐页获取pdf文件的布局元素
+    for pages in extract_pages(file_path):
+        #遍历当前页面每一个元素
+        for element in pages:
+            #判断当前元素是否为LTTextBox 类型（文本框）
+            if isinstance(element, LTTextBox):
+                #遍历文本框的每个子元素
+                for text_line in element:
+                    #判断是否是单行文本
+                    if isinstance(text_line, LTTextLine):
+                        #打印
+                        print(text_line.get_text())
+if __name__ == &#x27;__main__&#x27;:
+    #print(parse_pdf(r&quot;C:\Users\admin\Desktop\0311demo\course05-DeepSeek提示词技巧及实践-讲义.pdf&quot;))
+    parse_pdf_page(r&quot;C:\Users\admin\Desktop\0311demo\course05-DeepSeek提示词技巧及实践-讲义.pdf&quot;)</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b4a551d-035a-8069-b853-c7e1901c5410" class="code"><code class="language-Python"># 从 docx 库中导入 Document 类，用于处理 Word 文档
+from docx import Document
+
+def parse_docx(file_path):
+    &quot;&quot;&quot;
+    该函数用于解析 Word 文档（.docx 格式），打印文档中表格的内容，并返回文档段落文本的拼接结果。
+
+    :param file_path: Word 文档的文件路径
+    :return: 文档中所有段落文本拼接成的字符串，段落之间用换行符分隔
+    &quot;&quot;&quot;
+    # 打开指定路径的 Word 文档，创建一个 Document 对象
+    doc = Document(file_path)
+    # 遍历文档中的所有表格
+    for table in doc.tables:
+        # 遍历当前表格的每一行
+        for row in table.rows:
+            # 遍历当前行的每一个单元格
+            for cell in row.cells:
+                # 打印单元格中的文本内容，并以空格结尾
+                print(cell.text, end=&quot; &quot;)
+            # 打印完一行单元格内容后换行
+            print()
+    # 遍历文档中的所有段落，将每个段落的文本提取出来
+    # 然后使用换行符将这些段落文本连接成一个字符串
+    return &quot;\n&quot;.join([para.text for para in doc.paragraphs])
+
+if __name__ == &#x27;__main__&#x27;:
+    print(parse_docx(r&#x27;C:\Users\admin\Desktop\0311demo\丁子健.docx&#x27;))</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b4a551d-035a-802b-baa0-e49172f93143" class="code"><code class="language-Python">import openpyxl
+#创建一个函数，读取excel文件(.xlsx格式)，file_path参数：文件路径
+
+def parse_xlsx(file_path):
+    #加载excel文件
+    workbook = openpyxl.load_workbook(file_path)
+    #活动工作表，默认的
+    sheet = workbook.active
+    #储存从excel工作表中提取出来的每一行数据
+    data = []
+
+    #sheet.iter_rows 遍历活动工作表中的每一行，values_only = Ture只获取单元格中的实际值，不包含单元格其他属性
+    for row in sheet.iter_rows(values_only = True):
+        #将遍历的单元格内容追加到data列表中
+        data.append(row)
+    return data
+
+if __name__ == &#x27;__main__&#x27;:
+    print(parse_xlsx(r&#x27;C:\Users\admin\Desktop\0311demo\新建 Microsoft Excel 工作表.xlsx&#x27;))
+</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b4a551d-035a-8009-b9f4-c194a586fbf1" class="code"><code class="language-Python">def parse_txt(file_path):
+    try:
+        with open(file_path, &#x27;r&#x27;, encoding = &#x27;utf-8&#x27;) as file:
+            return file.read()
+    except Exception as e:
+        print(f&#x27;好像读取文件错了嗷&#x27;)
+
+if __name__ == &#x27;__main__&#x27;:
+    print(parse_txt(r&#x27;C:\Users\admin\Desktop\0311demo\新建文本文档.txt&#x27;))</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b4a551d-035a-80e1-b099-e57879080612" class="code"><code class="language-Python">import json
+
+def parse_json(file_path):
+    with open(file_path, &#x27;r&#x27;, encoding = &#x27;utf-8&#x27;) as file:
+        return json.load(file)
+
+if __name__ == &quot;__main__&quot;:
+    print(parse_json(r&#x27;C:\Users\admin\Desktop\0311demo\001.json&#x27;))</code></pre><p id="1b4a551d-035a-8086-b750-c481aeda8e76" class="">
 </p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
