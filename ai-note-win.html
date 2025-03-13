@@ -1150,4 +1150,39 @@ print(text)
 for index,block in enumerate(text,start=1):
     print(f&quot;第{index}个文本内容:&quot;)
     print(block.page_content)
-    print(&quot;*&quot;*100)</code></pre></details></li></ul><hr id="1b4a551d-035a-8015-ad79-fa178bfe3f9c"/></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
+    print(&quot;*&quot;*100)</code></pre></details></li></ul><hr id="1b4a551d-035a-8015-ad79-fa178bfe3f9c"/><h2 id="1b5a551d-035a-8038-8eb1-ebcb5a8f97ba" class="">Day04 Embedding模型部署</h2><p id="1b5a551d-035a-8047-9188-dac30f574f90" class="">自注意力机制：自动找到重点，关注重要的部分，忽略不重要的部分自动处理信息</p><p id="1b5a551d-035a-8061-b794-dec5242b510b" class=""><del>如何快速判断import的是方法还是类？—已经会了</del></p><p id="1b5a551d-035a-80df-8838-e03c4345ed6b" class="">余弦相似度原理举例：类似通过夹角余弦值判断向量是否相似</p><p id="1b5a551d-035a-809e-ab05-df808086fa76" class="">欧几里得距离：坐标差平方再开方，算出两点的直线距离</p><p id="1b5a551d-035a-808e-9a00-ef6071cbd695" class=""><del>Transformer，encoder，decoder，embedding，RAG，BERT之间的关系，联系和区别？搜完了懂了</del></p><p id="1b5a551d-035a-8071-a59f-de5f924e55ac" class="block-color-red"><a href="https://blog.csdn.net/Vessel_Liu/article/details/143090157">Transformer架构：Encoder-Decoder</a>：这篇文章讲的看起来很流畅，待读</p><ul id="1b5a551d-035a-80bc-9b0e-fb786037614b" class="toggle"><li><details open=""><summary>讲义文件</summary><figure id="1b5a551d-035a-80d9-9a23-d24069305a33"><div class="source"><a href="Embedding%E6%A8%A1%E5%9E%8B%E5%8E%9F%E7%90%86-%E8%AF%BE%E7%A8%8B%E8%AE%B2%E4%B9%89.pdf">attachment:561f0245-4831-42de-a494-012c2ebf8707:Embedding模型原理-课程讲义.pdf</a></div></figure><figure id="1b5a551d-035a-80bf-8d4c-f8ea30b6d4b5"><div class="source"><a href="Embedding%E5%9C%BA%E6%99%AF%E5%BA%94%E7%94%A8%E5%8F%8A%E5%AE%9E%E6%88%98V3.pdf">attachment:f41f14da-8956-4756-aca5-617162ccde51:Embedding场景应用及实战V3.pdf</a></div></figure></details></li></ul><ul id="1b5a551d-035a-802a-b0c5-dca4d6f2ccd0" class="toggle"><li><details open=""><summary>复习自检———————口头解释以下图【所有细节】</summary><ul id="1b5a551d-035a-8008-aa20-f331326ec987" class="toggle"><li><details open=""><summary>文本相似意义</summary><figure id="1b5a551d-035a-8036-a92e-f255198094b5" class="image"><a href="image%202.png"><img style="width:681.982177734375px" src="image%202.png"/></a></figure></details></li></ul><ul id="1b5a551d-035a-80ee-9bc9-eaf4355551a2" class="toggle"><li><details open=""><summary>rag中embedding作用</summary><figure id="1b5a551d-035a-8095-a7a1-ec69bf4defd5" class="image"><a href="image%203.png"><img style="width:681.9732666015625px" src="image%203.png"/></a></figure></details></li></ul><ul id="1b5a551d-035a-80f2-ae00-e102d5c702d9" class="toggle"><li><details open=""><summary>encoder和decoder联系（BERT，GPT）</summary><figure id="1b5a551d-035a-803a-bd17-eafecfe4de2e" class="image"><a href="image%204.png"><img style="width:681.9910888671875px" src="image%204.png"/></a></figure></details></li></ul><ul id="1b5a551d-035a-802f-b333-fe040ebcfe9e" class="toggle"><li><details open=""><summary>encoder</summary><figure id="1b5a551d-035a-80a6-ad1d-f8c679511233" class="image"><a href="image%205.png"><img style="width:681.9910888671875px" src="image%205.png"/></a></figure></details></li></ul><ul id="1b5a551d-035a-8035-b3e4-c364cf723fc1" class="toggle"><li><details open=""><summary>注意力</summary><figure id="1b5a551d-035a-80a1-b259-cdd4a7ae19db" class="image"><a href="image%206.png"><img style="width:682px" src="image%206.png"/></a></figure></details></li></ul><ul id="1b5a551d-035a-8007-acb6-fb963834c0d0" class="toggle"><li><details open=""><summary>参数</summary><figure id="1b5a551d-035a-80c9-b1af-da6b5702f1d1" class="image"><a href="image%207.png"><img style="width:453.0000305175781px" src="image%207.png"/></a></figure></details></li></ul><ul id="1b5a551d-035a-8046-a233-ff04c48434a6" class="toggle"><li><details open=""><summary>BERT</summary><figure id="1b5a551d-035a-8087-89ab-d743d847f8d6" class="image"><a href="image%208.png"><img style="width:681.9910888671875px" src="image%208.png"/></a></figure></details></li></ul></details></li></ul><ul id="1b5a551d-035a-80af-a837-c5e6d7569b18" class="toggle"><li><details open=""><summary>直接调用阿里API代码</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b5a551d-035a-8083-b0cf-c2eb61c0c27a" class="code"><code class="language-Python">import dashscope
+from http import HTTPStatus
+import os
+def embed_with_str():
+    resp = dashscope.TextEmbedding.call(
+        model = dashscope.TextEmbedding.Models.text_embedding_v3,
+        input = &#x27;活动活动&#x27;,
+        apikey = os.getenv(&quot;AL_API_KEY&quot;)
+    )
+    if resp.status_code == HTTPStatus.OK:
+        print(resp)
+    else:
+        print(resp)
+if __name__ == &quot;__main__&quot;:
+    embed_with_str()</code></pre></details></li></ul><ul id="1b5a551d-035a-8042-9d47-c7a666661dc5" class="toggle"><li><details open=""><summary>本地部署Embedding代码</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b5a551d-035a-8016-b674-ed6d9c86fc7c" class="code"><code class="language-Python">from transformers import AutoTokenizer, AutoModel
+import torch
+from pdfminer.high_level import extract_text
+
+model_path = r&quot;E:\bge-large-zh-v1___5&quot;
+pdf_path = r&#x27;C:\Users\admin\Desktop\text1\丁子健.pdf&#x27;
+tokenizer = AutoTokenizer.from_pretrained(model_path)
+model = AutoModel.from_pretrained(model_path)
+pdf_text = extract_text(pdf_path)
+
+sentence = pdf_text.split(&quot;||&quot;)
+
+encoder_input = tokenizer(sentence, max_length = 512, padding = True, truncation = True, return_tensors = &#x27;pt&#x27;)
+
+with torch.no_gard():
+    output = model(**encoder_input)
+
+embeddings = output.last_hidden_state[0][:, 0]
+
+for i in enumerate (embeddings):
+    print(i)</code></pre></details></li></ul><ul id="1b5a551d-035a-802e-83bf-c25f322a4c0b" class="toggle"><li><details open=""><summary>实例</summary></details></li></ul><p id="1b5a551d-035a-80d9-a578-cec0b9b1f763" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
