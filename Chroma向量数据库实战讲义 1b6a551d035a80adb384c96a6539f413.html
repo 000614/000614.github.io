@@ -1,0 +1,870 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Chroma向量数据库实战讲义</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-default_background {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: undefined; }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-transparentGray { background-color: undefined; }
+.select-value-color-translucentGray { background-color: undefined; }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1b6a551d-035a-80ad-b384-c96a6539f413" class="page sans"><header><h1 class="page-title">Chroma向量数据库实战讲义</h1><p class="page-description"></p></header><div class="page-body"><h1 id="1b6a551d-035a-8126-a5fe-ce476caaa37d" class="">Chroma向量数据库完全解析</h1><h2 id="1b6a551d-035a-8107-a45a-fe9c80a14478" class="">Chroma介绍</h2><h3 id="1b6a551d-035a-81a9-b368-f30b1bbd7184" class="">什么是向量数据库</h3><p id="1b6a551d-035a-815f-8bbe-ded031f0caa5" class="">向量数据库是<strong>一种专门用于存储和检索向量数据的数据库系统。</strong> 它通过存储文档的语义向量表征，实现了快速高效的相似性搜索，确保了系统能够及时访问最新、最相关的信息源。</p><p id="1b6a551d-035a-81bf-ad3f-d1aef79695fc" class="">不同于传统数据库存储结构化数据，向量数据库存储的是向量形式的数据，这些向量通常是将文本等非结构化数据通过embedding模型编码而成。在人工智能、尤其是机器学习和深度学习领域，数据往往会被表示为高维向量。这些向量代表了数据的特征，可以是图像、文本或者任何类型的数据。向量数据库通过索引和检索机制来管理和利用这些高维向量数据，从而加快检索速度并提高检索的准确性。特别是在执行相似性搜索时，如查找与给定图像最相似的图像或找到与特定文本段落语义相近的文本。</p><h3 id="1b6a551d-035a-816f-814b-eb9b5fa28779" class="">向量数据库和传统数据库的对比</h3><p id="1b6a551d-035a-811a-ab53-ec6e7309ee98" class="">下面我们分别从数据存储结构、数据查询方式、应用场景等多个方面来对比两种数据库，加深对向量数据库的理解。</p><ol type="1" id="1b6a551d-035a-81a9-95a9-cf1ca894e28b" class="numbered-list" start="1"><li>数据存储结构</li></ol><table id="1b6a551d-035a-8152-8db5-f27491047c83" class="simple-table"><tbody><tr id="1b6a551d-035a-81f5-ac4f-fb21fbb834d7"><td id="Bo@P" class="">特性</td><td id="slIO" class="">传统数据库</td><td id="&gt;muW" class="">向量化数据库</td></tr><tr id="1b6a551d-035a-816c-a34d-e715d37d26d2"><td id="Bo@P" class="">数据结构</td><td id="slIO" class="">表格形式，行和列</td><td id="&gt;muW" class="">向量形式，高维度空间中的点</td></tr><tr id="1b6a551d-035a-81ec-9219-ef99fc7231ae"><td id="Bo@P" class="">数据类型</td><td id="slIO" class="">结构化数据（数值、文本、日期等）</td><td id="&gt;muW" class="">非结构化数据（文本、图像等）转化为向量</td></tr><tr id="1b6a551d-035a-81c6-b6e5-f144978d8fc6"><td id="Bo@P" class="">索引方式</td><td id="slIO" class="">基于主键、外键和索引的关系型结构</td><td id="&gt;muW" class="">基于向量的索引，通常使用如ANN（Approximate Nearest Neighbors）技术</td></tr></tbody></table><ol type="1" id="1b6a551d-035a-81c5-a05f-de33cb8cda9c" class="numbered-list" start="1"><li>数据查询方式</li></ol><table id="1b6a551d-035a-81de-8687-c3826681a8a2" class="simple-table"><tbody><tr id="1b6a551d-035a-8123-a938-e7de02ffa953"><td id="qCmm" class="">特性</td><td id="r~FS" class="">传统数据库</td><td id="^]UT" class="">向量化数据库</td></tr><tr id="1b6a551d-035a-8161-b247-ef5f0607584c"><td id="qCmm" class="">查询语言</td><td id="r~FS" class="">SQL</td><td id="^]UT" class="">向量查询，基于相似度度量（如余弦相似度、欧氏距离等）</td></tr><tr id="1b6a551d-035a-817b-9f5c-c02c46eecc90"><td id="qCmm" class="">查询效率</td><td id="r~FS" class="">对于结构化数据查询效率高</td><td id="^]UT" class="">对于相似性搜索查询效率高</td></tr><tr id="1b6a551d-035a-819b-881b-c798fe4317c8"><td id="qCmm" class="">查询结果</td><td id="r~FS" class="">精确匹配</td><td id="^]UT" class="">近似匹配，返回最相似的向量</td></tr></tbody></table><ol type="1" id="1b6a551d-035a-8133-b8ae-ca725b5e7797" class="numbered-list" start="1"><li>应用场景</li></ol><table id="1b6a551d-035a-81e3-8b1d-e15e7f5e9326" class="simple-table"><tbody><tr id="1b6a551d-035a-81f7-85fa-d63f6e3b3a0b"><td id=":ug{" class="">特性</td><td id="\Omk" class="">传统数据库</td><td id="e^}T" class="">向量化数据库</td></tr><tr id="1b6a551d-035a-81e6-9954-fe726bd70327"><td id=":ug{" class="">常见应用</td><td id="\Omk" class="">事务处理、报表生成、记录管理</td><td id="e^}T" class="">生成AI知识检索、语义搜索、个性化推荐等需要向量相似性计算的领域</td></tr><tr id="1b6a551d-035a-8142-a05e-f18bf5691344"><td id=":ug{" class="">数据类型</td><td id="\Omk" class="">适用于明确和结构化的数据</td><td id="e^}T" class="">适用于非结构化和多维数据（如文本、图像）</td></tr></tbody></table><ol type="1" id="1b6a551d-035a-8103-b663-fadae6e622eb" class="numbered-list" start="1"><li>性能和扩展性</li></ol><table id="1b6a551d-035a-8155-969b-db8bafd4ffff" class="simple-table"><tbody><tr id="1b6a551d-035a-810a-9fab-f478225c677c"><td id="X=:r" class="">特性</td><td id="|ACh" class="">传统数据库</td><td id="I\Dl" class="">向量化数据库</td></tr><tr id="1b6a551d-035a-816c-bff6-cc89c96b440c"><td id="X=:r" class="">性能优化</td><td id="|ACh" class="">索引优化、查询优化、缓存</td><td id="I\Dl" class="">向量索引优化（如HNSW、LSH）、并行计算</td></tr><tr id="1b6a551d-035a-81aa-98ad-e678b964cf68"><td id="X=:r" class="">扩展性</td><td id="|ACh" class="">垂直扩展（增加硬件资源）和水平扩展（分片）</td><td id="I\Dl" class="">水平扩展（分布式向量数据库）</td></tr><tr id="1b6a551d-035a-81a2-9aaf-c53abb5785cf"><td id="X=:r" class="">数据一致性</td><td id="|ACh" class="">强一致性，通过事务和锁机制保证</td><td id="I\Dl" class="">通常为最终一致性，特别是在分布式系统中</td></tr></tbody></table><ol type="1" id="1b6a551d-035a-815c-8044-f29581b63036" class="numbered-list" start="1"><li>设计和管理</li></ol><table id="1b6a551d-035a-8171-ac1b-fc959a7ef2af" class="simple-table"><tbody><tr id="1b6a551d-035a-81d8-8cdf-d2266dbd6b76"><td id="~QF=" class="">特性</td><td id="WfxU" class="">传统数据库</td><td id="BBWs" class="">向量化数据库</td></tr><tr id="1b6a551d-035a-81a2-bc31-e3be710d67de"><td id="~QF=" class="">数据模式</td><td id="WfxU" class="">预定义的模式（Schema）</td><td id="BBWs" class="">无需预定义模式，灵活性高</td></tr><tr id="1b6a551d-035a-8188-a819-fe86de21d32b"><td id="~QF=" class="">数据管理</td><td id="WfxU" class="">需要严格的模式管理和约束</td><td id="BBWs" class="">更加灵活，适合处理变化频繁的数据</td></tr><tr id="1b6a551d-035a-81a4-8cac-e764284c62a4"><td id="~QF=" class="">数据插入和更新</td><td id="WfxU" class="">受限于表结构，需要考虑约束和索引</td><td id="BBWs" class="">向量更新相对简单，但需要重新计算索引</td></tr></tbody></table><p id="1b6a551d-035a-813f-861f-e24a92a3cf26" class="">总结</p><ul id="1b6a551d-035a-819d-9b9d-c65d09059459" class="bulleted-list"><li style="list-style-type:disc"><strong>传统数据库</strong>适合处理结构化数据，提供精确匹配查询，广泛应用于事务处理和数据分析场景。</li></ul><ul id="1b6a551d-035a-8191-94df-eade78ce9592" class="bulleted-list"><li style="list-style-type:disc"><strong>向量化数据库</strong>则适合处理非结构化数据，提供相似性查询，广泛应用于需要高效信息检索、推荐和自然语言处理的场景。</li></ul><p id="1b6a551d-035a-8196-809d-f47c3dbba5c3" class="">通过对比可以看出，虽然传统数据库和向量化数据库在结构、查询方式和应用场景上有很大的不同，但它们各自擅长的领域和用途相辅相成，能够满足不同类型的数据处理需求。</p><h3 id="1b6a551d-035a-81bb-8d54-c2e5646905a4" class="">向量数据库的原理</h3><p id="1b6a551d-035a-8161-8e85-e4f36c1a03e1" class=""><strong>向量数据库的核心在于其向量索引技术。</strong> 这些技术利用向量空间的几何性质来优化存储结构和检索过程，当进行数据检索时，向量数据库通过计算查询向量与数据库中存储向量之间的相似度来找到最相似的结果，向量数据库的工作原理包括以下几个部分：</p><p id="1b6a551d-035a-81a3-9298-d4464c461873" class=""><strong>1.数据导入与向量化</strong></p><p id="1b6a551d-035a-8145-8122-da1902e7e314" class="">首先需要将非结构化数据如文本、图像等通过embedding模型编码转换为向量形式。常用的embedding模型有Word2Vec、BERT、GPT等。每个数据项都会被映射到一个固定维度的向量空间中。</p><figure id="1b6a551d-035a-8006-9cb6-c1bf066519f7" class="image"><a href="embeddings.jpg"><img style="width:709.982177734375px" src="embeddings.jpg"/></a></figure><p id="1b6a551d-035a-819b-a2b1-d4bf3d96f561" class="">下面是对常见的数据向量化模型的简单介绍：</p><table id="1b6a551d-035a-81ce-b741-f7c3295d1051" class="simple-table"><tbody><tr id="1b6a551d-035a-81ed-bccd-fe2f494274ce"><td id="ZpaD" class="">向量化模型</td><td id="KSIH" class="" style="width:657px">介绍</td></tr><tr id="1b6a551d-035a-81c2-b72a-dc6ffcc29acb"><td id="ZpaD" class="">Word2Vec</td><td id="KSIH" class="" style="width:657px">Word2Vec是一种流行的词嵌入模型，由Google推出。它包含CBOW和Skip-gram两种模型架构，通过神经网络对上下文进行建模，将词映射为固定维度的词向量。这些词向量能较好地捕捉词与词之间的语义和句法关系。Word2Vec广泛用于自然语言处理任务中。</td></tr><tr id="1b6a551d-035a-81e3-99fc-e57db6697a07"><td id="ZpaD" class="">GloVe</td><td id="KSIH" class="" style="width:657px">GloVe（Global Vectors）是斯坦福大学提出的基于词共现统计信息训练词向量的模型。它利用词与词之间的共现矩阵，通过矩阵分解得到词向量表示。GloVe相比Word2Vec，能更好地捕捉词的全局统计信息。</td></tr><tr id="1b6a551d-035a-81b5-b6df-ce5276d058de"><td id="ZpaD" class="">GPT</td><td id="KSIH" class="" style="width:657px">GPT是OpenAI开发的生成式预训练模型，采用Transformer架构并在大规模文本语料上训练。GPT除了输出文本表示向量，还能直接生成自然语言。</td></tr><tr id="1b6a551d-035a-8148-9c3a-f1441806f1a6"><td id="ZpaD" class="">BERT</td><td id="KSIH" class="" style="width:657px">BERT（Bidirectional Encoder Representations from Transformers）是一种基于Transformer的预训练语言模型，由Google开发。BERT通过掩码语言模型和下一句预测两个任务进行预训练，输出上下文化的词/句向量表示，在各种自然语言任务中表现卓越。</td></tr><tr id="1b6a551d-035a-81ac-bdab-c52f9c57cb03"><td id="ZpaD" class="">ViT</td><td id="KSIH" class="" style="width:657px">ViT（Vision Transformer）是一种将Transformer应用到图像领域的模型，由Google提出。ViT将图像分割为多个patches，并将这些patches线性投影到向量空间，然后输入Transformer进行建模，最终生成图像级特征向量。</td></tr><tr id="1b6a551d-035a-813d-b8b3-e70e9f33cf53"><td id="ZpaD" class="">Speech2Vec</td><td id="KSIH" class="" style="width:657px">Speech2Vec是语音嵌入模型的一种，由Speech团队提出。它采用迁移学习的思路，利用预训练的BERT模型将音频数据投影到与文本相同的向量空间,获得语音片段的语义向量表示。</td></tr></tbody></table><p id="1b6a551d-035a-81f0-9689-e194713374ce" class=""><strong>2.向量存储与索引</strong></p><p id="1b6a551d-035a-8116-8b9c-db213715990d" class="">数据经过向量化后，需要被高效存储和索引,以支持快速向量相似度查询。向量数据库通常采用以下数据结构：</p><p id="1b6a551d-035a-81be-a8c0-d3198816717d" class="">不同的向量库采用不同的索引算法组合，以平衡查询精度、查询性能、内存占用等指标。</p><p id="1b6a551d-035a-8172-b04f-e18b7ee22cab" class=""><strong>平面存储</strong>：将向量按顺序存储在磁盘或内存中,查询时需要线性扫描对比,效率低下。</p><p id="1b6a551d-035a-81e7-8495-d560dccf6611" class=""><strong>树形索引</strong>：使用KD树、球树等树形结构组织向量,实现基于空间划分的向量索引,查询时可剪枝提高效率。</p><p id="1b6a551d-035a-81f7-b726-c208050d05ad" class=""><strong>哈希索引</strong>：通过局部敏感哈希等将高维向量映射到低维哈希值,对哈希值构建倒排索引用于快速筛选候选向量集。</p><p id="1b6a551d-035a-8175-8701-ed1e9c5add13" class=""><strong>3.向量相似度计算</strong></p><p id="1b6a551d-035a-8127-aef7-c0778e8d5681" class="">当查询一个向量时，向量数据库需要遍历索引中的向量，计算与查询向量的相似度。常用的相似度计算方法有余弦相似度、欧几里得距离、杰卡德相似度等。高效的相似度计算对查询性能至关重要。</p><p id="1b6a551d-035a-8151-ac36-c52b2922f3d8" class=""><strong>4.向量查询</strong></p><p id="1b6a551d-035a-81db-b631-eed34bbdde10" class="">查询通常分为两个阶段，基于索引的候选集筛选和候选集精确计算。在第一阶段,根据索引快速筛选出较小的候选集，第二阶段对候选集中每个向量进行精确相似度计算，并按相似度排序输出结果。</p><h3 id="1b6a551d-035a-81d0-a995-d669a63d66f0" class="">简要介绍Chroma数据库</h3><h3 id="1b6a551d-035a-8179-b8a0-fa4e15ec42dc" class="">常见向量数据库</h3><p id="1b6a551d-035a-81c9-abed-d8459138cf11" class="">首先，我们来介绍一下目前常见的几种主流向量数据库：</p><p id="1b6a551d-035a-81f2-b97e-f6ae4a0dde1a" class=""><strong>1.Faiss</strong></p><p id="1b6a551d-035a-810f-84c9-fecb62b37936" class="">Fassi是Facebook AI研究院推出的开源向量数据库，支持高效的相似向量查询。它支持内存和持久化两种存储方式，提供了多种索引算法如倒排文件、平面量化、矩阵乘法运算等。Faiss具有优秀的查询性能,广泛应用于Facebook的推荐系统、广告系统等场景。</p><p id="1b6a551d-035a-81a2-8abc-ca2be7f06699" class=""><strong>2.Milvus</strong></p><p id="1b6a551d-035a-8136-b3de-d3a1c95102a2" class="">Milvus是一个开源的分布式向量数据库，由Zilliz公司开发，支持海量向量数据的持久化存储和毫秒级查询响应。它采用了多种优化的向量索引数据结构，如Rnag Tree、IVF等。Milvus支持水平扩展、高可用和云原生等特性，非常适合大规模AI场景。</p><p id="1b6a551d-035a-811c-b45b-cfb204a96dc6" class=""><strong>3.Weaviate</strong></p><p id="1b6a551d-035a-81a0-80d6-c7e35a9d39ce" class="">Weaviate是一个基于云本地架构设计的开源向量数据库，结合了向量数据存储和知识图谱两种功能。它采用B+树和HNSW等索引算法，支持各种向量查询类型。Weaviate还提供灵活的数据模型和RESTful API，可与多语言应用程序集成。</p><p id="1b6a551d-035a-8108-a3c2-f4115486f845" class=""><strong>4.Qdrant</strong></p><p id="1b6a551d-035a-8107-b908-cc6c70045289" class="">Qdrant是一个用Rust编写的高性能开源向量数据库,支持快速向量相似度查找。它内置多种向量索引如HNSW、BF等，并使用SIMD和向量化等优化手段提升查询效率。Qdrant提供分布式集群模式支持水平扩展。</p><p id="1b6a551d-035a-81d8-9b8f-f45351487cc3" class=""><strong>5.Pinecone</strong></p><p id="1b6a551d-035a-8139-a7b1-f6fd85e2474d" class="">Pinecone是一家新兴的向量数据库服务商，提供基于云的托管向量数据库服务。它使用优化的向量索引结构，通过分片、复制和分布式查询等策略支持海量向量数据存储和快速查询。</p><p id="1b6a551d-035a-81b8-ac1a-f4254df0a877" class=""><strong>6.ElasticSearch</strong></p><p id="1b6a551d-035a-8126-8456-ee8fa16bb862" class="">虽然ElasticSearch核心功能是全文检索，但从7.x版本开始也支持向量相似度搜索。通过集成Lucene近似最近邻向量索引库，ElasticSearch可存储和查询向量数据，尤其适合与传统全文检索相结合的混合场景。</p><p id="1b6a551d-035a-81c5-afce-d06cc1851f6e" class=""><strong>7.Chroma</strong></p><p id="1b6a551d-035a-8191-868e-e74dd00749e1" class="">Chroma 是一个开源的嵌入式向量数据库，专为处理和存储高维向量数据而设计。它提供高效的相似性搜索功能，并广泛应用于机器学习和数据分析领域，帮助开发者轻松构建和优化基于向量的应用程序，如推荐系统和图像识别。</p><h3 id="1b6a551d-035a-81b4-b9b6-c5d9b22eaf35" class="">Chroma的优势</h3><p id="1b6a551d-035a-8105-ad10-c3f1aafd0c5c" class="">Chroma的优点就是简单，是一个轻量级、易用的向量数据库。如果你在开发LLM应用需要一个向量数据库实现LLM记忆功能，需要支持文本相似语言搜索，又不想安装独立的向量数据库，Chroma是不错的选择。也就是说，Chroma特别适用于小型到中型数据集，是初学者和小型项目的理想选择。通过Chroma，用户可以快速构建语义搜索原型、研究或教学项目，并实现准确的数据匹配和检索。</p><h2 id="1b6a551d-035a-81fa-a9dc-d60fdccb3108" class="">Chroma的安装及运行</h2><h3 id="1b6a551d-035a-819b-ba52-d2a0259786c1" class="">(1)安装和运行Chroma</h3><h3 id="1b6a551d-035a-815b-b255-cb4199afe8dd" class="">①安装必要的依赖库</h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-8111-a398-d7b0463db4a6" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">pip install chromadb</code></pre><p id="1b6a551d-035a-8179-8ef1-f91bb5d7a252" class="">Chroma支持<strong>内存运行、本地运行和服务端运行</strong>三种模式，这三种方式我们都会讲到，但是更推荐使用服务端运行模式。</p><h3 id="1b6a551d-035a-81ad-b955-e96c1a0f3d9e" class="">①内存运行Chroma</h3><p id="1b6a551d-035a-8199-a395-e637728f26a5" class="">最简单地启动Chroma的方法是直接在Python中使用<code>chroma = Chroma.Client()</code>，这将在内存中创建一个Chroma数据库的接口<code>client</code>，你可以对其进行操作，但注意：<strong>这种方式建立的数据库不会储存在内存中，程序停止运行后，数据库也会丢失</strong>。因此，它只适合于测试和开发阶段。</p><h3 id="1b6a551d-035a-8107-8e93-d3ee14fd5672" class="">②本地运行Chroma</h3><p id="1b6a551d-035a-81d1-bb6b-e58a20c0af73" class="">本地运行可以使用如下代码，可建立一个<code>client</code>。在任何需要对向量数据库进行修改的情况下，都需要首先建立一个<code>client</code>，这将告诉系统：我选择了这个向量数据库，接下来我要对他进行修改了。使用<code>PersistentClient</code>会将所有的操作同步到储存的向量数据库中，不会发生丢失。</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-818f-8bc3-d7fa63458e70" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">client = chromadb.PersistentClient(path=&quot;/path/to/save/to&quot;)</code></pre><h3 id="1b6a551d-035a-81f6-a26d-c45b2696fb27" class="">③服务端运行Chroma（推荐）</h3><p id="1b6a551d-035a-8184-a53e-c297be235d20" class="">服务端运行<strong>Chroma</strong>是更适用于生产环境的方法，首先在命令行中输入：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-8133-9b5c-fa87635a0bac" class="code"><code class="language-Shell" style="white-space:pre-wrap;word-break:break-all">chroma run --path /db_path</code></pre><p id="1b6a551d-035a-810a-bf3f-c837fa5d0bee" class="">这条命令会在你的本地地址的8000端口启动<strong>Chroma</strong>的<code>server</code>。如果你的程序运行在云端、Docker等环境中，你需要相应地修改IP地址和端口号，才能启动服务。</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-8144-878c-d20563d3a777" class="code"><code class="language-Shell" style="white-space:pre-wrap;word-break:break-all">chroma run --path /db_path --host your_ip_address --port your_port_number</code></pre><p id="1b6a551d-035a-81bf-8437-c9bbced06e10" class="">启动Chroma服务成功后，保持其运行状态，然后使用以下代码通过<code>server</code>创建一个<code>client</code>：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-81cd-bb43-f50c2147492f" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">import chromadb
+client = chromadb.HttpClient(host=&#x27;localhost&#x27;, port=8000)</code></pre><p id="1b6a551d-035a-8129-811c-dd61e9dfc9a1" class="">当你看到命令行显示以下信息，就说明运行成功了。这里建立的<code>client</code>代表了一个Chroma的客户端，它包含了我们指定的储存位置下的所有向量数据库。</p><figure id="1b6a551d-035a-8075-9d8f-caad6bf2def1" class="image"><a href="pic_2-1719299376730-34.png"><img style="width:710.0000610351562px" src="pic_2-1719299376730-34.png"/></a></figure><h3 id="1b6a551d-035a-81dd-a465-fbbe51d08cdb" class="">(2)Chroma的快速使用</h3><h3 id="1b6a551d-035a-8105-a97e-fd1683857893" class="">①collection的命名</h3><p id="1b6a551d-035a-81f7-a8e5-c98fe707d51f" class=""><code>collection</code>是<strong>Chroma</strong>中的向量数据库类，在一个<code>client</code>客户端中，可以储存多个向量数据库。每个<code>collection</code>都有自己的名字，给<code>collection</code>命名的要求如下：</p><ol type="1" id="1b6a551d-035a-8104-88e8-fb6fa5a09475" class="numbered-list" start="1"><li>名称的长度必须在3到63个字符之间。</li></ol><ol type="1" id="1b6a551d-035a-815c-bbe0-d2e649581fde" class="numbered-list" start="2"><li>名称必须以小写字母或数字开始和结束，中间可以包含点、破折号和下划线。</li></ol><ol type="1" id="1b6a551d-035a-811d-bd2a-ef6c22906e77" class="numbered-list" start="3"><li>名称不得包含连续两个点。</li></ol><ol type="1" id="1b6a551d-035a-816e-bd88-d2f3baa6ef24" class="numbered-list" start="4"><li>名称不能是一个有效的IP地址。</li></ol><h3 id="1b6a551d-035a-812a-9a22-e4ca53d768cb" class="">②创建一个collection</h3><p id="1b6a551d-035a-8153-b289-cfd6cea06e7f" class="">直接创建一个collection的方法如下：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-8176-b369-e5521fc686c5" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">collection = client.create_collection(name=&quot;my_collection&quot;)</code></pre><p id="1b6a551d-035a-81a7-b0ff-c8dcb80c24b6" class="">如果你需要指定embedding_function，那么还可以自定义该参数，如：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-81fc-a777-f4e1ea8c35ca" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">collection = client.create_collection(name=&quot;my_collection&quot;, embedding_function=emb_fn)</code></pre><p id="1b6a551d-035a-811a-86a6-e529cfcaf443" class="">这个<code>embedding_function</code>是Embedding的嵌入方法，在之前我们讲到过RAG的基础流程，我们需要将文本通过Embedding模型转换为向量后，才能储存到向量数据库中，而<strong>Chroma</strong>本身提供了向量化的方法，如果你想使用其自带的Embedding，那么也可以直接将文本导入向量库中，这里设置的<code>embedding_function</code>将会是文本转换为向量的工具，如果不做设置的话，<code>embedding_function</code>将会使用默认值。</p><p id="1b6a551d-035a-816e-a91f-c8bbbbadf108" class=""><code>create_collection</code> 方法也接受一个可选的 <code>metadata</code> 参数，通过设置 <code>hnsw:space</code> 的值，可以使用该参数来自定义嵌入空间的距离计算方法（简单说就是相似度算法）。</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-81cd-8879-cbbab3ffba08" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"> collection = client.create_collection(
+        name=&quot;collection_name&quot;,
+        metadata={&quot;hnsw:space&quot;: &quot;cosine&quot;} # l2 is the default    )</code></pre><p id="1b6a551d-035a-816f-bc17-d9e8322fb939" class=""><code>hnsw:space</code>设定使用的相似度算法，可以设置为以下几种（一般来说，余弦相似度是最常用的）：</p><ol type="1" id="1b6a551d-035a-8145-8524-c3e3a56b48fc" class="numbered-list" start="1"><li><code>&quot;l2&quot;</code>→L2范数</li></ol><ol type="1" id="1b6a551d-035a-81c8-be9d-eb389cedc82a" class="numbered-list" start="2"><li><code>&quot;ip&quot;</code>→内积</li></ol><ol type="1" id="1b6a551d-035a-818b-805a-d8dc74bad00f" class="numbered-list" start="3"><li><code>&quot;cosine&quot;</code>→余弦相似度<figure id="1b6a551d-035a-80fe-bd3b-e398597eae54" class="image"><a href="pic_3-1719299376730-35.png"><img style="width:319px" src="pic_3-1719299376730-35.png"/></a></figure></li></ol><h3 id="1b6a551d-035a-815f-8683-e27a04dc8e70" class="">③获取一个已创建的collection</h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-8126-bdb3-db709e858815" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">collection = client.get_collection(name=&quot;my_collection&quot;)</code></pre><p id="1b6a551d-035a-815e-ad09-e984db7ad157" class="">如果你在创建collection时使用了embedding_function，那么在获取时也需要添加同样的参数：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-8105-9e79-d42c787577dd" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">collection = client.get_collection(name=&quot;my_collection&quot;, embedding_function=emb_fn)</code></pre><h3 id="1b6a551d-035a-811f-80f2-c8814997a459" class="">④获取或创建一个collection</h3><p id="1b6a551d-035a-812e-aead-d4b4126564ac" class="">如果一个<code>collection</code>已存在，那么获取它，如果不存在，则创建它：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-810b-803a-ece4f6aa2e0c" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">collection = client.get_or_create_collection(name=&quot;test&quot;)</code></pre><h3 id="1b6a551d-035a-81b3-b5f2-d64c4125eb91" class="">⑤删除一个collection</h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-81fe-944e-f11b3c6640c1" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">client.delete_collection(name=&quot;my_collection&quot;)</code></pre><h3 id="1b6a551d-035a-816a-bea0-eaa272df6840" class="">⑥查看和修改collection信息</h3><p id="1b6a551d-035a-8186-9c0b-d83859f57505" class="">获得<code>collection</code>后，你可以对其进行以下简单操作：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-8109-a01b-edb7c1ba20a1" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">collection.peek()   # 返回该collection前十项的列表collection.count()  # 返回该collection的项目数collection.modify(name=&quot;new_name&quot;)  # 重命名该collection，或者collection的metadata</code></pre><h2 id="1b6a551d-035a-8135-834b-e8793c7b0a82" class="">Chroma的基础操作—数据的增删改查</h2><p id="1b6a551d-035a-8178-b80c-c9054232fb61" class="">增删改查操作演示</p><p id="1b6a551d-035a-8191-b52e-e4bd341a3a40" class="">代码解释</p><h3 id="1b6a551d-035a-811f-bab2-fde62c20bad0" class="">①添加</h3><p id="1b6a551d-035a-819a-b294-db8d65cf2986" class="">刚刚我们提到，<strong>Chroma</strong>提供了Embedding方法，如果<strong>Chroma</strong>接收到一个文档列表，它将自动使用集合的<code>embedding_function</code>对它们进行分词和嵌入处理（如果在创建集合时没有提供，默认嵌入函数将被使用）。Chroma同时也会存储这些文档本身。如果文档太大，无法使用选定的嵌入函数进行嵌入，则会抛出异常。</p><p id="1b6a551d-035a-811f-bb72-ea281295cc66" class="">每个文档必须有一个唯一的关联ID。尝试使用相同的ID重复执行<code>.add</code>操作，只会存储最初的值。可以为每个文档可选地提供一个元数据字典列表，以便存储额外信息并实现过滤功能。<code>collection</code>直接添加文档的代码如下：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-813b-9557-f3fc7954800e" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">collection.add(
+    documents=[&quot;我是Molly&quot;, &quot;doc2&quot;, &quot;doc3&quot;, ...],
+    metadatas=[{&quot;chapter&quot;: &quot;3&quot;, &quot;verse&quot;: &quot;16&quot;}, {&quot;chapter&quot;: &quot;3&quot;, &quot;verse&quot;: &quot;5&quot;}, {&quot;chapter&quot;: &quot;29&quot;, &quot;verse&quot;: &quot;11&quot;}, ...],
+    ids=[&quot;id1&quot;, &quot;id2&quot;, &quot;id3&quot;, ...]
+)</code></pre><blockquote id="1b6a551d-035a-8192-a4df-dc8d933c66bb" class="">注意！：Chroma数据库要求文档的ID必须唯一且为字符串，为保证其唯一性，Chorma官方文档建议使用UUID作为文档ID，使用方法如下：<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-81fb-b6bf-f32894a9acf7" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">import uuid
+id = str(uuid.uuid4())</code></pre></blockquote><p id="1b6a551d-035a-81a3-84f9-e01fa493fd9d" class="">代码里<code>chapter</code>和<code>verse</code>参数分别表示<strong>章节</strong>和<strong>小节</strong>，是元数据的一部分，通常用于描述文档的结构或内容。这些元数据参数能够细化文档的划分过程，使得模型在检索文档时，可以使用这些元数据进行过滤和排序。</p><p id="1b6a551d-035a-81e2-92bb-e43a7e8448e0" class="">如果你使用的是自己部署的Embedding模型，且已经获得了对应的向量，那么可以直接提供对应的向量列表，Chroma将存储这些关联的文档，而不会自己对它们进行嵌入处理。</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-81e0-932c-f583c23522a8" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">collection.add(
+    documents=[&quot;我是Molly&quot;, &quot;doc2&quot;, &quot;doc3&quot;, ...],
+    embeddings=[[1.1, 2.3, 3.2], [4.5, 6.9, 4.4], [1.1, 2.3, 3.2], ...],
+    metadatas=[{&quot;chapter&quot;: &quot;3&quot;, &quot;verse&quot;: &quot;16&quot;}, {&quot;chapter&quot;: &quot;3&quot;, &quot;verse&quot;: &quot;5&quot;}, {&quot;chapter&quot;: &quot;29&quot;, &quot;verse&quot;: &quot;11&quot;}, ...],
+    ids=[&quot;id1&quot;, &quot;id2&quot;, &quot;id3&quot;, ...]
+)</code></pre><p id="1b6a551d-035a-8156-b455-c06b2f9e030e" class="">如果你不导入文档，只导入向量也是可以的，但一般不推荐这么做：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-8131-a760-de48afef68b7" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">collection.add(
+    embeddings=[[1.1, 2.3, 3.2], [4.5, 6.9, 4.4], [1.1, 2.3, 3.2], ...],
+    metadatas=[{&quot;chapter&quot;: &quot;3&quot;, &quot;verse&quot;: &quot;16&quot;}, {&quot;chapter&quot;: &quot;3&quot;, &quot;verse&quot;: &quot;5&quot;}, {&quot;chapter&quot;: &quot;29&quot;, &quot;verse&quot;: &quot;11&quot;}, ...],
+    ids=[&quot;id1&quot;, &quot;id2&quot;, &quot;id3&quot;, ...]
+)</code></pre><blockquote id="1b6a551d-035a-816d-bb9d-d47426003803" class="">注意！：在一个collection内，提供的向量维度必须是一致的，否则会报错。</blockquote><h3 id="1b6a551d-035a-81c6-a4df-c8b4aa5b6f57" class="">②查询</h3><h3 id="1b6a551d-035a-8151-a66c-cfc64d5ee6d1" class="">.query方法</h3><p id="1b6a551d-035a-81a3-aba8-eef7613199a6" class=""><code>collection</code>的查询可以使用多种方式，使用<code>.query</code>的方法，你可以使用文本直接查询：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-8158-93d1-cb95823768c5" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">collection.query(
+    query_texts=[&quot;谁是Molly？&quot;, &quot;你好，我叫Molly&quot;, ...],
+    n_results=10,
+    where={&quot;chapter&quot;: &quot;3&quot;},
+    where_document={&quot;$contains&quot;:&quot;&lt;要查询的文档内容&gt;&quot;}
+)</code></pre><p id="1b6a551d-035a-81ec-a374-f08b65bd82ff" class="">该查询自动使用Embedding模型计算查询文本的嵌入向量，并返回与每个查询嵌入最接近的<code>n_results</code>个匹配项，按顺序排列。可以提供一个可选的<code>where</code>过滤字典，根据与每份文档相关的元数据进行过滤。此外，还可以提供一个可选的<code>where_document</code>过滤字典，根据文档内容进行过滤。</p><p id="1b6a551d-035a-818f-835f-cf8840a08a66" class="">如果你使用了其他的Embedding模型对你的查询文本进行向量化，那么你也可以可以直接输入嵌入后的向量进行查询：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-81ca-ad53-d0411948f779" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">collection.query(
+    query_embeddings=[[11.1, 12.1, 13.1],[1.1, 2.3, 3.2], ...],
+    n_results=10,
+    where={&quot;chapter&quot;: &quot;3&quot;},
+    where_document={&quot;$contains&quot;:&quot;&lt;要查询的文档内容&gt;&quot;}
+)</code></pre><h3 id="1b6a551d-035a-8191-8cf5-fbaa7d97e593" class="">.get方法</h3><p id="1b6a551d-035a-8131-99ad-e0337c433839" class="">你可以使用<code>id</code>检索指定项目：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-81bd-9630-f5a6de403356" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">collection.get(
+    ids=[&quot;id1&quot;, &quot;id2&quot;, &quot;id3&quot;, ...],
+    where={&quot;chapter&quot;: &quot;3&quot;}
+)</code></pre><p id="1b6a551d-035a-81cd-917e-e3549ed48f41" class=""><code>.get</code>方法也支持 <code>where</code> 和 <code>where_document</code> 过滤器。如果没有提供任何 <code>id</code>，它将返回集合中所有与 <code>where</code> 和 <code>where_document</code> 过滤条件匹配的项目。当<code>.get</code>方法不指定任何参数时，它返回向量数据库中的所有数据：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-81f9-98c8-d01b937e41f9" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">collection.get()</code></pre><p id="1b6a551d-035a-8150-ab77-e1698b944714" class="">在使用 <code>get</code> 或 <code>query</code> 时，您可以使用 <code>include</code> 参数来指定希望返回的数据类型——可以是 embeddings、documents、metadatas，以及在执行查询时，还可以包括 distances。默认情况下，Chroma 将返回 documents、metadatas，对于查询操作，还会返回结果的距离。为了性能考虑，默认不包含 embeddings，而 ids 始终会被返回。您可以通过向 <code>query</code> 或 <code>get</code> 方法的 <code>includes</code> 参数传递一个包含所需字段名的数组，来指定希望返回哪些数据类型。</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-8114-b65e-ecbbcb2ae139" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">collection.get(
+    include=[&quot;documents&quot;]
+)
+collection.query(
+    query_embeddings=[[11.1, 12.1, 13.1],[1.1, 2.3, 3.2], ...],
+    include=[&quot;documents&quot;]
+)</code></pre><h3 id="1b6a551d-035a-81e0-91af-f91609db2d63" class="">filter过滤</h3><p id="1b6a551d-035a-81a9-b70a-e8bd0678115c" class="">Chroma 支持<strong>通过元数据（metadatas）和文档内容（documents）进行查询过滤</strong>。其中，<code>where</code>过滤器用于根据元数据进行过滤，而 <code>where_document</code>过滤器则用于根据文档内容进行过滤。</p><p id="1b6a551d-035a-81d3-95c4-f2a8565b9836" class="">当使用<strong>元数据</strong>过滤时，可以使用以下结构：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-8106-a733-eb1b63db3365" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">{
+    &quot;metadata_field&quot;: {
+        &lt;Operator&gt;: &lt;Value&gt;    }
+}</code></pre><p id="1b6a551d-035a-8195-97ed-dabac8d47185" class="">其中<code>Operators</code>是一个可控制的参数，根据它的值来过滤后面的条件，它可以是：</p><ul id="1b6a551d-035a-81ba-a0fe-fbf1dfe6dfa0" class="bulleted-list"><li style="list-style-type:disc"><code>$eq</code> - 与目标值相同 (string, int, float)</li></ul><ul id="1b6a551d-035a-8119-8dd0-ffbbcdd3f181" class="bulleted-list"><li style="list-style-type:disc"><code>$ne</code> - 与目标值不同 (string, int, float)</li></ul><ul id="1b6a551d-035a-818f-a7fa-c392d22a6411" class="bulleted-list"><li style="list-style-type:disc"><code>$gt</code> - 大于目标值 (int, float)</li></ul><ul id="1b6a551d-035a-8106-b7cf-d863647dacbe" class="bulleted-list"><li style="list-style-type:disc"><code>$gte</code> - 大于等于目标值 (int, float)</li></ul><ul id="1b6a551d-035a-8107-a6ca-db3a6120ca5b" class="bulleted-list"><li style="list-style-type:disc"><code>$lt</code> - 小于目标值 (int, float)</li></ul><ul id="1b6a551d-035a-8106-bea8-d3cc29a41b73" class="bulleted-list"><li style="list-style-type:disc"><code>$lte</code> - 小于等于目标值 (int, float)</li></ul><p id="1b6a551d-035a-81df-b53e-f9b4d65e96cc" class="">你可以自由选择<code>operator</code>来进行<code>where</code>的过滤：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-81f2-9820-de2e98acebd6" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">{
+    &quot;metadata_field&quot;: &quot;search_string&quot;   # 默认是$eq}
+{
+    &quot;metadata_field&quot;: {
+        &quot;$eq&quot;: &quot;search_string&quot;  # 也可以写成这样    }
+}</code></pre><p id="1b6a551d-035a-8146-9bb4-d63f87201233" class="">当使用<strong>文档内容</strong>过滤时，可以使用如下两种方式，<code>$contains</code>和<code>not_contains</code>：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-8135-a79a-dfb5b78b9817" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">{
+    &quot;$contains&quot;: &quot;search_string&quot;    #}
+{
+    &quot;$not_contains&quot;: &quot;search_string&quot;}</code></pre><p id="1b6a551d-035a-8150-a241-fa7f6824f335" class="">这里的<code>$contains</code>是指文档中只要包含指定搜索字符，就会返回。如文档中是<code>&quot;Hello World&quot;</code>，如果<code>$contains</code>是<code>World</code>，那么就会返回该文档。</p><p id="1b6a551d-035a-81ed-9bd3-e6b7a281afb6" class="">同样，在过滤<strong>文档内容</strong>时，可以使用<code>Operator</code>，如我们可以使用<code>$and</code>和<code>$or</code>来组合多种过滤：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-8124-aef8-f0e92c04df0c" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># 两者都满足则返回{
+    &quot;$and&quot;: [
+        {
+            &quot;metadata_field&quot;: {
+                &lt;Operator&gt;: &lt;Value&gt;            }
+        },
+        {
+            &quot;metadata_field&quot;: {
+                &lt;Operator&gt;: &lt;Value&gt;            }
+        }
+    ]
+}</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-8177-b782-ee4035ce1850" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># 两者有一个满足则返回{
+    &quot;$or&quot;: [
+        {
+            &quot;metadata_field&quot;: {
+                &lt;Operator&gt;: &lt;Value&gt;            }
+        },
+        {
+            &quot;metadata_field&quot;: {
+                &lt;Operator&gt;: &lt;Value&gt;            }
+        }
+    ]
+}</code></pre><p id="1b6a551d-035a-815f-954e-cec1cb22c8aa" class="">还可以使用<code>$in</code>和<code>$nin</code>来过滤，</p><ul id="1b6a551d-035a-8122-8a2a-fdf5775e5d6e" class="bulleted-list"><li style="list-style-type:disc"><code>$in</code> - 值在给定的列表中 (string, int, float, bool)</li></ul><ul id="1b6a551d-035a-815b-8179-e533a8ea0d43" class="bulleted-list"><li style="list-style-type:disc"><code>$nin</code> - 值不在给定的列表中 (string, int, float, bool)</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-81ce-a62c-cec1a2ef58c6" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">{
+  &quot;metadata_field&quot;: {
+    &quot;$in&quot;: [&quot;value1&quot;, &quot;value2&quot;, &quot;value3&quot;]
+  }
+}</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-81ab-8e1c-fe131f0575ec" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">{
+  &quot;metadata_field&quot;: {
+    &quot;$nin&quot;: [&quot;value1&quot;, &quot;value2&quot;, &quot;value3&quot;]
+  }
+}</code></pre><h3 id="1b6a551d-035a-8178-9558-db7ee658c63e" class="">③更新</h3><h3 id="1b6a551d-035a-817e-b976-f60bd418c652" class="">.update</h3><p id="1b6a551d-035a-81bc-93f6-cc4c22825a23" class="">已存在collection中的项目可以使用<code>.update</code>来进行更新：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-818d-a36b-febd099a84da" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">collection.update(
+    ids=[&quot;id1&quot;, &quot;id2&quot;, &quot;id3&quot;, ...],
+    embeddings=[[1.1, 2.3, 3.2], [4.5, 6.9, 4.4], [1.1, 2.3, 3.2], ...],
+    metadatas=[{&quot;chapter&quot;: &quot;3&quot;, &quot;verse&quot;: &quot;16&quot;}, {&quot;chapter&quot;: &quot;3&quot;, &quot;verse&quot;: &quot;5&quot;}, {&quot;chapter&quot;: &quot;29&quot;, &quot;verse&quot;: &quot;11&quot;}, ...],
+    documents=[&quot;doc1&quot;, &quot;doc2&quot;, &quot;doc3&quot;, ...],
+)</code></pre><p id="1b6a551d-035a-8157-9ce2-ea9124215216" class="">如果在集合中找不到某个<code>id</code>，将会记录一个错误并且该更新将被忽略。如果提供了文档但没有对应的嵌入向量，那么将会使用集合的嵌入函数重新计算嵌入向量。</p><p id="1b6a551d-035a-81d4-ac6e-fb8e48da57a3" class="">如果提供的嵌入向量与集合的维度不一致，将会抛出一个异常。</p><h3 id="1b6a551d-035a-8166-805f-c1f95a062213" class="">.upsert</h3><p id="1b6a551d-035a-81e2-9342-eb75f62945ab" class=""><strong>Chroma</strong>还支持一种<code>upsert</code>操作，这个操作会更新已存在的项目，或者如果项目还不存在则将其添加到集合中。</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-81be-bea6-ce853362892a" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">collection.upsert(
+    ids=[&quot;id1&quot;, &quot;id2&quot;, &quot;id3&quot;, ...],
+    embeddings=[[1.1, 2.3, 3.2], [4.5, 6.9, 4.4], [1.1, 2.3, 3.2], ...],
+    metadatas=[{&quot;chapter&quot;: &quot;3&quot;, &quot;verse&quot;: &quot;16&quot;}, {&quot;chapter&quot;: &quot;3&quot;, &quot;verse&quot;: &quot;5&quot;}, {&quot;chapter&quot;: &quot;29&quot;, &quot;verse&quot;: &quot;11&quot;}, ...],
+    documents=[&quot;doc1&quot;, &quot;doc2&quot;, &quot;doc3&quot;, ...],
+)</code></pre><p id="1b6a551d-035a-8173-8f92-dd3cd8e63de7" class="">如果这个<code>id</code>没有出现在<code>collection</code>中，则会被当做<code>add</code>来进行创建，如果<code>id</code>存在，则会被当做<code>update</code>进行更新。</p><h3 id="1b6a551d-035a-8174-ba6b-f748d54b7758" class="">④删除</h3><p id="1b6a551d-035a-81dd-8883-ce1808863ba9" class=""><strong>Chroma</strong>支持通过使用<code>.delete</code>方法按<code>id</code>从集合中删除项目。与每个项目关联的嵌入、文档和元数据都将被删除。自然，这是一个破坏性操作，无法撤销。</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-817d-8948-d18305715750" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">collection.delete(
+    ids=[&quot;id1&quot;, &quot;id2&quot;, &quot;id3&quot;,...],
+    where={&quot;chapter&quot;: &quot;20&quot;}
+)</code></pre><p id="1b6a551d-035a-813d-8213-de1700376235" class=""><code>.delete</code>同样支持<code>where</code>过滤，如果没有指定<code>ids</code>，那么它会删除所有匹配<code>where</code>的过滤内容。</p><h2 id="1b6a551d-035a-81b9-9cd1-c0ee2294eb9e" class="">实战：“考神助手”</h2><p id="1b6a551d-035a-8185-b21f-d102fef8db5e" class="">相信通过刚刚的学习，你已经对chroma数据库有了更深的了解，掌握了数据库中的CRUD（增删改查）操作。那么接下来我们通过一个小实战来巩固一下刚刚学习的内容吧。</p><h3 id="1b6a551d-035a-811e-98d7-ff3597bcf7aa" class="">项目介绍</h3><p id="1b6a551d-035a-812e-b871-dda674934734" class=""><strong>背景：</strong>回顾之前的RAG学习，我们的文档数据集都是读取PDF文件中的大段文本信息。然后对这些文本信息进行切块、Embedding操作后存入数据库中。之后，当用户提问时，问题会经过embedding后，与数据库中的文本进行相似度匹配。再把匹配到的数据喂给大模型作为外部知识参考。但这种补充方法存在一定的缺陷：例如，当文本长度过长，内容比较杂乱的时候，命中率就不会很高。原因是文本段过长时，计算得到的问句与文本段的相似度值就难以表达真实的相似性。</p><p id="1b6a551d-035a-8102-9493-cc75d97e9d9c" class="">那么为了解决这个问题，我们可以使用关键词-知识补充数据。数据格式如下：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-8168-a555-fceab782005f" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">[
+    {&quot;keyword1&quot;:&quot;answers1&quot;},
+    {&quot;keyword2&quot;:&quot;answers2&quot;},
+    ...
+]</code></pre><p id="1b6a551d-035a-8193-8ca6-c409708c44f4" class="">可以看到，每条数据是一个键值对格式的字典。在这里keyword1表示answers1的关键信息。</p><p id="1b6a551d-035a-8175-bd88-d2e80cb6e4d6" class="">那么在使用用户问题进行检索时，我们可以直接用<code>干化词</code>keyword去做相似度匹配，这样就避免了因为文本长度过长，导致中率过低的问题。</p><p id="1b6a551d-035a-81bc-97fa-f0ef7cef4b71" class="">接下来，我们将演示如何处理数据，并存入Chroma向量数据库中。</p><h3 id="1b6a551d-035a-81bd-a881-c98848339262" class="">项目实现</h3><h3 id="1b6a551d-035a-8119-8853-e4e2dc7f21dd" class="">1.embedding.py实现</h3><p id="1b6a551d-035a-814e-b30c-dace743a9f6e" class="">首先，我们来实现embedding文件内容，这部分主要实现了通过闭源Embedding模型API和本地部署的开源模型对数据进行Embedding操作。</p><p id="1b6a551d-035a-81f0-a3ad-cd51477b0796" class="">首先还是导入必须的库包：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-810c-9532-fe020619175a" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">import torch
+import dashscope
+from http import HTTPStatus</code></pre><p id="1b6a551d-035a-8110-ae2b-fcd21d8f5f82" class="">这里的<code>torch</code>包主要用于处理模型的输入和输出。<code>dashScope</code> 是阿里云提供的一个自然语言处理（NLP）和计算机视觉（CV）服务的客户端库。它提供了访问阿里云百炼平台模型和服务的接口。最后的<code>HTTPStatus</code> 是一个枚举类，包含所有标准的HTTP状态码。在这里，它用于检查HTTP响应的状态码，以确定请求是否成功。</p><p id="1b6a551d-035a-81bc-98a5-d18506d020ba" class=""><code><strong>embed_with_qwen</strong></code><strong> 方法</strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-81fd-988e-e69601d538ee" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">def embed_with_qwen(text_list):
+    dashscope.api_key = &#x27;&lt;你的百炼平台API-Key&gt;&gt;&#x27;    embedding_list = []
+    for text in text_list:
+        resp = dashscope.TextEmbedding.call(
+            model=dashscope.TextEmbedding.Models.text_embedding_v2,
+            input=text)
+        if resp.status_code == HTTPStatus.OK:
+            embedding = resp.output[&#x27;embeddings&#x27;][0][&#x27;embedding&#x27;]
+            embedding_list.append(embedding)
+        else:
+            print(resp)
+            return resp
+    return embedding_list</code></pre><p id="1b6a551d-035a-8148-8dc2-f61f2a794981" class="">功能描述</p><ul id="1b6a551d-035a-81dd-8e37-c30d4db9fee2" class="bulleted-list"><li style="list-style-type:disc"><code>embed_with_qwen</code> 方法通过调用阿里云的DashScope平台提供的文本嵌入服务，将输入的文本列表转换为相应的嵌入向量列表。该方法首先设置API密钥，然后逐个文本调用DashScope的文本嵌入API，检查响应状态码以确保请求成功，并从响应中提取嵌入向量，最终返回包含所有文本嵌入向量的列表。</li></ul><p id="1b6a551d-035a-8173-a2f4-dd613673e99d" class="">重要步骤解析：</p><ol type="1" id="1b6a551d-035a-8145-885d-e1377f321232" class="numbered-list" start="1"><li><strong>设置API密钥</strong>：<p id="1b6a551d-035a-815e-bcb2-e6a15d4e4e7c" class=""><code>dashscope.api_key = &#x27;&lt;你的百炼平台API-Key&gt;&gt;&#x27;</code>：设置DashScope平台的API密钥，用于身份验证。</p></li></ol><ol type="1" id="1b6a551d-035a-8189-9e26-f6e3a50c02dc" class="numbered-list" start="2"><li><strong>调用DashScope API</strong>：<p id="1b6a551d-035a-8189-aef9-de39b92ff589" class=""><code>resp = dashscope.TextEmbedding.call(model=dashscope.TextEmbedding.Models.text_embedding_v2, input=text)</code>：调用DashScope的文本嵌入服务，使用 <code>text_embedding_v2</code> 模型生成嵌入向量。</p></li></ol><ol type="1" id="1b6a551d-035a-810d-a70c-e8537d4628dc" class="numbered-list" start="3"><li><strong>检查响应状态码</strong>：<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-8120-a4f3-cdc44aa73924" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">if resp.status_code == HTTPStatus.OK:</code></pre><p id="1b6a551d-035a-8167-8cb3-d70078d5aa09" class="">检查响应的状态码是否为200（表示请求成功）。如果成功，从响应中提取嵌入向量并添加到 <code>embedding_list</code> 中。</p><ul id="1b6a551d-035a-810b-b2ba-eb9d6a9bd54f" class="bulleted-list"><li style="list-style-type:disc"><code>embedding = resp.output[&#x27;embeddings&#x27;][0][&#x27;embedding&#x27;]</code>：提取嵌入向量。</li></ul><ul id="1b6a551d-035a-81e1-8ea5-d9c107902f50" class="bulleted-list"><li style="list-style-type:disc"><code>embedding_list.append(embedding)</code>：将嵌入向量添加到列表中。</li></ul><p id="1b6a551d-035a-811d-a940-c5bf2834c137" class="">如果请求失败，打印响应并返回响应对象。</p><ul id="1b6a551d-035a-8188-9eb6-d75b8fdeca7f" class="bulleted-list"><li style="list-style-type:disc"><code>print(resp)</code>：打印响应对象。</li></ul><ul id="1b6a551d-035a-8153-b2e8-f1b0330f7774" class="bulleted-list"><li style="list-style-type:disc"><code>return resp</code>：返回响应对象。</li></ul></li></ol><ol type="1" id="1b6a551d-035a-81c8-aff1-e8785b28e472" class="numbered-list" start="4"><li><strong>返回嵌入列表</strong>：<p id="1b6a551d-035a-8173-8469-ed00c27a0520" class=""><code>return embedding_list</code>：返回包含所有文本嵌入向量的列表。</p></li></ol><p id="1b6a551d-035a-81ae-90a3-c1c8f9cbbf4f" class=""><code><strong>embed_with_bge</strong></code><strong> 方法</strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-8197-bd9a-e64242fe64c6" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">def embed_with_bge(text_list, tokenizer, model):
+    # 对于短查询到长文档的检索任务, 为查询加上指令    # encoded_input = tokenizer([instruction + q for q in queries], padding=True, truncation=True, return_tensors=&#x27;pt&#x27;)    encoded_input = tokenizer(text_list, max_length=512, padding=True, truncation=True, return_tensors=&#x27;pt&#x27;)
+    with torch.no_grad():
+        model_output = model(**encoded_input)
+        # Perform pooling. In this case, cls pooling.    sentence_embeddings = model_output[0][:, 0]
+    sentence_embeddings_list = sentence_embeddings.tolist()
+    return sentence_embeddings_list</code></pre><p id="1b6a551d-035a-8163-b2d8-d07bb4b40a3a" class="">功能描述</p><ul id="1b6a551d-035a-81ca-a807-c654d22b2340" class="bulleted-list"><li style="list-style-type:disc"><code>embed_with_bge</code> 方法使用预训练的BERT模型将输入的文本列表转换为相应的嵌入向量列表。该方法首先使用分词器对输入文本进行编码，然后将编码后的输入传递给BERT模型进行前向传播，提取模型输出的第一个token（通常是 <code>[CLS]</code> token）的嵌入向量作为句子的嵌入向量，最后将这些嵌入向量转换为Python列表并返回。</li></ul><p id="1b6a551d-035a-8125-be8b-fcca59ed8fc3" class="">重要步骤解析：</p><ol type="1" id="1b6a551d-035a-8161-a089-ca1337e9fd7d" class="numbered-list" start="1"><li><strong>编码输入文本</strong>：<ul id="1b6a551d-035a-81f9-a99e-eef21479bdf2" class="bulleted-list"><li style="list-style-type:disc"><code>encoded_input = tokenizer(text_list, max_length=512, padding=True, truncation=True, return_tensors=&#x27;pt&#x27;)</code>：使用分词器对输入文本进行编码，限制最大长度为512，进行填充和截断，并返回PyTorch张量。</li></ul></li></ol><ol type="1" id="1b6a551d-035a-8162-a9da-d5a726e49e6b" class="numbered-list" start="2"><li><strong>池化操作</strong>：<ul id="1b6a551d-035a-8153-9a10-d57eacffbdf4" class="bulleted-list"><li style="list-style-type:disc"><code>sentence_embeddings = model_output[0][:, 0]</code>：提取模型输出的第一个token（通常是 <code>[CLS]</code> token）的嵌入向量，作为句子的嵌入向量。</li></ul></li></ol><ol type="1" id="1b6a551d-035a-813c-badc-ea851801c6aa" class="numbered-list" start="3"><li><strong>转换为列表</strong>：<ul id="1b6a551d-035a-8165-93b2-eee9b36c4df2" class="bulleted-list"><li style="list-style-type:disc"><code>sentence_embeddings_list = sentence_embeddings.tolist()</code>：将嵌入向量张量转换为Python列表。</li></ul></li></ol><ol type="1" id="1b6a551d-035a-8184-85a0-d8ae4185fd08" class="numbered-list" start="4"><li><strong>返回嵌入列表</strong>：<ul id="1b6a551d-035a-8170-9227-e9b4f7ecd55d" class="bulleted-list"><li style="list-style-type:disc"><code>return sentence_embeddings_list</code>：返回包含所有文本嵌入向量的列表。</li></ul></li></ol><h3 id="1b6a551d-035a-818b-848c-d7ab778f82cb" class="">2.main.py实现</h3><p id="1b6a551d-035a-8197-bb03-e036e70fd95e" class="">接下来，我们来实现项目的主函数：</p><p id="1b6a551d-035a-819b-8c77-d5bf67387f1a" class="">首先也还是导入必要的包：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-8168-ae45-e8bf8240c8f9" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">import json
+from embedding import embed_with_bge, embed_with_qwen
+import os
+import chromadb</code></pre><p id="1b6a551d-035a-81db-b4bd-c5a8aaa9037d" class="">然后是实现json文件读取并处理，在介绍具体函数之前，先说一下我们的数据集。下图是我们的数据集样例，可以看到我们的数据集样例中包含了一系列字典，每个字典中都有一个键 <code>k_qa_content</code>，其值是一个字符串，字符串中第一个<code>#</code>分隔了keyword和answer。</p><figure id="1b6a551d-035a-80b3-a156-c4eabff71c03" class="image"><a href="image-20241022165031835.png"><img style="width:709.9910888671875px" src="image-20241022165031835.png"/></a></figure><p id="1b6a551d-035a-8196-ade5-d86e4023cb63" class="">具体函数实现如下：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-8149-96e4-e9104a4b5b53" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">def json_parse(file_path):
+    with open(file_path, &#x27;r&#x27;, encoding=&#x27;utf-8&#x27;) as file:
+        data = json.load(file)
+    result = []
+    for item in data:
+        k_qa_content = item[&#x27;k_qa_content&#x27;]
+        keyword, answer = k_qa_content.split(&#x27;#&#x27;, maxsplit=1)
+        result.append([keyword, answer])
+    return result</code></pre><p id="1b6a551d-035a-8180-8c2b-f792808b0496" class="">这个函数主要是解析文件中的一系列字典中的键值对。然后解析键值对中的字符串，将每个 <code>keyword</code> 和 <code>answer</code> 分离出来，并将它们组合成一个二维列表，其中每个子列表包含一个 <code>keyword</code> 和对应的 <code>answer</code>。</p><p id="1b6a551d-035a-8121-aa7e-ebb70df0eafe" class="">最后是实现项目的主要部分——处理数据并存入Chroma向量数据库中：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-812f-9583-c264519a5705" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">def run(all_file_path):
+    file_names = os.listdir(all_file_path)
+    for file_name in file_names:
+        file_path = all_file_path + &quot;/&quot; + file_name
+        print(file_path)
+        text_list = json_parse(file_path)
+        keyword_list = []
+        answers_list = []
+        for text in text_list:
+            keyword_list.append(text[0])
+            answers_list.append({&#x27;answer&#x27;:text[1]})
+        # 使用闭源模型API        embedding_list = embed_with_qwen(keyword_list)
+        # 使用开源BGE模型        # tokenizer = AutoTokenizer.from_pretrained(&#x27;BAAI/bge-large-zh-v1.5&#x27;)        # model = AutoModel.from_pretrained(&#x27;BAAI/bge-large-zh-v1.5&#x27;)        # embedding_list = embed_with_bge(text_list, tokenizer, model)        if type(embedding_list) == list:
+            collection = client.get_or_create_collection(name=&quot;chromadb_rag&quot;)
+            len_ids = len(text_list)
+            ids_list = []
+            for i in range(len_ids):
+                ids_list.append(str(file_name)+str(i))
+            collection.add(
+                embeddings=embedding_list,
+                documents=keyword_list,
+                metadatas=answers_list,
+                ids=ids_list
+            )
+        else:
+            return &quot;error&quot;    return &quot;向量化完成！&quot;</code></pre><p id="1b6a551d-035a-81ab-900d-fb16faf557ea" class=""><code>run</code> 函数的处理步骤主要是遍历我们指定的目录下的所有文件，读取每个文件的内容（这里是假设我们由多个数据文件），解析出问题和答案，生成文本嵌入向量，并将这些嵌入向量及相关元数据添加到一个集合中。具体来说，它可以使用闭源模型API（如 <code>embed_with_qwen</code>）或开源模型（如 <code>embed_with_bge</code>）来生成嵌入向量。</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-81b1-9e2e-d0f317eb4089" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">collection.add(
+    embeddings=embedding_list,
+    documents=keyword_list,
+    metadatas=answers_list,
+    ids=ids_list
+)</code></pre><p id="1b6a551d-035a-813a-9e8a-e2632c6ab074" class="">在这段函数中，我们将得到的embedding向量列表、关键词文本列表、答案列表存入向量数据库中，需要注意的是<code>metadatas</code>字段需要的格式：数组中存放的是一系列的字典。</p><h3 id="1b6a551d-035a-8142-8bc7-ecf02e81500e" class="">项目运行及测试</h3><p id="1b6a551d-035a-81f4-ac68-c3211c2addd6" class="">接下来我们进行项目运行与测试，编辑main.py中的主函数：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-81c2-809a-eca363b6df10" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">if __name__ == &#x27;__main__&#x27;:
+    client = chromadb.HttpClient(host=&#x27;localhost&#x27;, port=8000)
+    client.delete_collection(name=&quot;chromadb_rag&quot;)
+    all_file_path = &quot;data_path&quot;    result = run(all_file_path)
+    print(result)</code></pre><p id="1b6a551d-035a-81e5-85ca-c3875d6510a7" class="">这段代码首先创建了一个连接到本地ChromaDB服务器的客户端，并删除名为 <code>chromadb_rag</code> 的集合（如果存在）。然后，指定一个包含JSON文件的目录路径，并调用 <code>run</code> 函数处理这些文件，生成嵌入向量并将它们添加到ChromaDB集合中。最后，打印 <code>run</code> 函数的返回结果，表示向量化是否完成。其中，<code>client = chromadb.HttpClient(host=&#x27;localhost&#x27;, port=8000)</code>：创建一个连接到本地ChromaDB服务器的客户端，指定主机为 <code>localhost</code>，端口为 <code>8000</code>。</p><p id="1b6a551d-035a-8111-b97f-e887571da284" class="">需要注意的是，在运行函数之前，我们需要先在终端中将ChromaDb运行起来：</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-8140-8cfa-eb64f5f37b4a" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">chroma run</code></pre><p id="1b6a551d-035a-81aa-9f43-e04c577a3c65" class="">下图是程序正常运行后，控制台输出的结果：</p><figure id="1b6a551d-035a-8041-acac-d091b7f1e46a" class="image"><a href="image-20241022163846238.png"><img style="width:685.0000610351562px" src="image-20241022163846238.png"/></a></figure><h3 id="1b6a551d-035a-81ed-9979-c329fb348ebe" class="">验证并测试</h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-81ba-b0a0-cb8a777b8102" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">collection = client.get_or_create_collection(name=&quot;chromadb_rag&quot;)
+input_text = &#x27;给我解释一下类和对象&#x27;search_embedding = embed_with_qwen([input_text])
+query_result = collection.query(query_embeddings=search_embedding,n_results=3)
+print(query_result)</code></pre><p id="1b6a551d-035a-8144-8802-d000c92db06a" class="">我们首先从ChromaDB客户端获取或创建一个名为 <code>chromadb_rag</code> 的集合。然后，使用闭源Embedding模型API <code>embed_with_qwen</code> 函数生成输入文本的嵌入向量。接着，使用生成的嵌入向量在集合中查询最相似的3个条目，并打印查询结果。</p><p id="1b6a551d-035a-81cb-a988-f9d5d2314b2f" class="">下图是我们的输出结果，可以看到控制台输出了一个字典，在<code>documents</code>字段中，输出了3条数据，可以看到第一条数据在语义相关性上与我们的问题是非常接近的。</p><figure id="1b6a551d-035a-8017-a430-deabfb757bec" class="image"><a href="image-20241022163909230.png"><img style="width:709.982177734375px" src="image-20241022163909230.png"/></a></figure><h1 id="1b6a551d-035a-81be-98a8-e26c4d03a5e5" class="">附录</h1><h2 id="1b6a551d-035a-811b-ab5a-d2560a8da9cc" class="">1.embedding.py</h2><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b6a551d-035a-8150-84f4-fa8133155c67" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">import torch
+import dashscope
+from http import HTTPStatus
+def embed_with_qwen(text_list):
+    dashscope.api_key = &#x27;&lt;你的百炼平台API-Key&gt;&gt;&#x27;    embedding_list = []
+    for text in text_list:
+        resp = dashscope.TextEmbedding.call(
+            model=dashscope.TextEmbedding.Models.text_embedding_v2,
+            input=text)
+        if resp.status_code == HTTPStatus.OK:
+            embedding = resp.output[&#x27;embeddings&#x27;][0][&#x27;embedding&#x27;]
+            embedding_list.append(embedding)
+        else:
+            print(resp)
+            return resp
+    return embedding_list
+def embed_with_bge(text_list, tokenizer, model):
+    # 对于短查询到长文档的检索任务, 为查询加上指令    # encoded_input = tokenizer([instruction + q for q in queries], padding=True, truncation=True, return_tensors=&#x27;pt&#x27;)    encoded_input = tokenizer(text_list, max_length=512, padding=True, truncation=True, return_tensors=&#x27;pt&#x27;)
+    with torch.no_grad():
+        model_output = model(**encoded_input)
+        # Perform pooling. In this case, cls pooling.    sentence_embeddings = model_output[0][:, 0]
+    sentence_embeddings_list = sentence_embeddings.tolist()
+    return sentence_embeddings_list
+</code></pre><h2 id="1b6a551d-035a-81f4-9e71-c5a2aafe5ab2" class="">2.main.py</h2><p id="1b6a551d-035a-809e-80de-f2aadba7999d" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
