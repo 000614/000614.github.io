@@ -1345,5 +1345,204 @@ if __name__ == &#x27;__main__&#x27;:
 
 
 
-</code></pre></details></li></ul><figure id="1b6a551d-035a-80ad-b384-c96a6539f413" class="link-to-page"><a href="Chroma%E5%90%91%E9%87%8F%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%9E%E6%88%98%E8%AE%B2%E4%B9%89%201b6a551d035a80adb384c96a6539f413.html">Chroma向量数据库实战讲义</a></figure><p id="1b6a551d-035a-80fd-8ea5-cf9e5afd7d0b" class="">
-</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
+</code></pre></details></li></ul><figure id="1b6a551d-035a-80ad-b384-c96a6539f413" class="link-to-page"><a href="https://www.notion.so/Chroma-1b6a551d035a80adb384c96a6539f413?pvs=21">Chroma向量数据库实战讲义</a></figure><p id="1b6a551d-035a-80fd-8ea5-cf9e5afd7d0b" class="">
+</p><h1 id="1baa551d-035a-8010-9068-d4b79618c781" class="">WK3-Gradio+rag+embedding</h1><p id="1baa551d-035a-8057-825a-ea795f7117d3" class="">as用法？</p><h2 id="1baa551d-035a-80f4-83d2-eec474249964" class="">Day01 Gradio库</h2><ul id="1baa551d-035a-8082-a12b-fda28e812d0e" class="toggle"><li><details open=""><summary>绘制+事件 基础demo代码块</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1baa551d-035a-8063-bc65-f45e35aed8cd" class="code"><code class="language-Python">import gradio as gr
+
+
+def greet(name,intensity):
+    return &quot;hello,&quot;+name + &quot;!&quot;* int(intensity)
+
+demo=gr.Interface(
+    #关联函数名称
+    fn=greet,
+    #输入
+    inputs=[&quot;text&quot;,&quot;slider&quot;],
+    #输出
+    outputs=[&#x27;text&#x27;]
+)
+
+demo.launch()</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1baa551d-035a-808e-a749-ce08b00b9069" class="code"><code class="language-Python">import gradio as gr
+
+def greet(input_name):
+    return &quot;hello,&quot;+input_name+&quot;!&quot;
+
+#创建自定义 页面内容
+with gr.Blocks() as demo:
+    #创建一个文本框，提示:Name
+    input_name=gr.Textbox(label=&#x27;Name&#x27;)
+    output_text=gr.Textbox(label=&#x27;output&#x27;)
+    #创建按钮，显示名称是：保存
+    btn=gr.Button(&quot;保存&quot;)
+    #给按钮添加事件（单击）,fn=函数名,inputs=输入对象，outputs=输出对象
+    btn.click(fn=greet,inputs=input_name,outputs=output_text)
+
+#启动
+demo.launch()</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1baa551d-035a-80b9-b0d4-fc40af19c992" class="code"><code class="language-Python">import gradio as gr
+
+def reset_text(input):
+    return &quot;&quot;
+
+with gr.Blocks() as demo:
+    input=gr.Textbox(label=&#x27;请输入文本&#x27;)
+    reset_btn=gr.Button(&#x27;重置&#x27;)
+    reset_btn.click(fn=reset_text,inputs=input,outputs=input)
+
+demo.launch()</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1baa551d-035a-8088-a20a-c54345fc058c" class="code"><code class="language-Python">import gradio as gr
+
+def messages(name,age,phone):
+    msg =&#x27;姓名:&#x27;+name+&#x27;,年龄:&#x27;+age+&#x27;,电话:&#x27;+phone
+    return msg
+
+with gr.Blocks() as demo:
+    name =gr.Textbox(label=&#x27;姓名&#x27;)
+    age =gr.Textbox(label=&#x27;年龄&#x27;)
+    phone =gr.Textbox(label=&#x27;电话&#x27;)
+    output_msg =gr.Textbox(label=&#x27;输出人员信息&#x27;)
+    submit_btn =gr.Button(&#x27;注册&#x27;)
+    submit_btn.click(fn=messages,inputs=[name,age,phone],outputs=output_msg)
+
+demo.launch()</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1baa551d-035a-80a7-9f15-cc949e6819dc" class="code"><code class="language-Python">import gradio as gr
+
+def greet(name):
+    return f&#x27;hello,{name}!&#x27;
+
+choices=[&#x27;科员&#x27;,&#x27;科长&#x27;,&#x27;处长&#x27;,&#x27;局长&#x27;]
+
+dd =gr.Dropdown(choices=choices,label=&#x27;请选择职务&#x27;)
+
+app =gr.Interface(fn=greet,inputs=dd,outputs=&#x27;text&#x27;)
+
+app.launch()</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1baa551d-035a-8028-a562-e4bb53cc268e" class="code"><code class="language-Python">import gradio as gr
+
+def greet(name):
+    return name
+
+with gr.Blocks() as demo:
+    #添加一行
+    with gr.Row():
+        #添加一列
+        with gr.Column():
+            input =gr.Textbox(label=&#x27;请输入姓名&#x27;)
+        #添加一列
+        with gr.Column():
+            output= gr.Textbox(label=&#x27;输出内容&#x27;)
+    #添加一行
+    with gr.Row():
+        submit_btn=gr.Button(&#x27;提交&#x27;)
+        submit_btn.click(fn=greet,inputs=input,outputs=output)
+demo.launch()</code></pre></details></li></ul><ul id="1baa551d-035a-80a7-a32a-c8006ca3edaa" class="toggle"><li><details open=""><summary>embedding.py（仅调用api实现）</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1baa551d-035a-80eb-87d1-f4653954acf0" class="code"><code class="language-Python">import  torch
+
+#调用阿里云大模型服务
+import dashscope
+import os
+#获取http请求的状态码,判断请求是否成功
+from http import HTTPStatus
+
+#定义个函数，用于使用qwen模型对输入的文本列表进行向量化处理
+def embed_with_qwen(text_list):
+    #设置dashscope的api秘钥,访问阿里云的相关服务
+    dashscope.api_key=os.getenv(&#x27;AL_API_KEY&#x27;)
+
+    #初始化一个空列表，储存每个文本的嵌入向量s
+    embedding_list=[]
+
+    #遍历输入的文本列表
+    for text in text_list:
+        #调用dashscope的TextEmbedding服务
+        resp =dashscope.TextEmbedding.call(
+            #使用模型为text_embedding_v2
+            model =dashscope.TextEmbedding.Models.text_embedding_v2,
+            #要进行向量化的处理文本
+            input=text
+        )
+
+        #检查请求状态码是否为200，表示请求成功
+        if resp.status_code ==HTTPStatus.OK:
+            #提取向量
+            embedding =resp.output[&#x27;embeddings&#x27;][0][&#x27;embedding&#x27;]
+            #embedding_list中
+            embedding_list.append(embedding)
+        else:
+            print(resp)
+            return resp
+
+    return embedding_list
+
+#使用本地大模型，BGE模型对输入的文本列表进行嵌入向量处理
+def embed_with_bge(text_list,tokenizer,model):
+    encode_input=tokenizer(text_list,max_length=512,padding=True,truncation=True,return_tendsors=&#x27;pt&#x27;)
+    with torch.no_grad():
+        model_output=model(**encode_input)
+
+    sentence_embeddings=model_output[0][:,0]
+
+    return sentence_embeddings.tolist()
+
+
+if __name__ == &#x27;__main__&#x27;:
+    print(embed_with_qwen([&#x27;今天星期一&#x27;]))
+</code></pre></details></li></ul><ul id="1baa551d-035a-803f-b5ac-dbd24d4e154f" class="toggle"><li><details open=""><summary>gradio_demo.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1baa551d-035a-80f6-b252-ef018e1f84e1" class="code"><code class="language-Python">import gradio as gr
+from zhipuai import ZhipuAI
+import time
+with gr.Blocks() as demo:
+    gr.Markdown(&quot;# 智能助手demo&quot;)
+
+    #创建一个聊天机器人组件，用于显示对话历史，数据类型为消息列表
+    chatbot =gr.Chatbot(type=&quot;messages&quot;)
+
+    #用户可以在这个文本框输入想要提问给智能助手的内容
+    msg=gr.Textbox()
+
+    #创建清空按钮
+    clear=gr.Button(&quot;Clear&quot;)
+
+    #将用户输入的消息添加到历史记录中，标记为用户角色
+    def user(user_messages,history:list):
+        return &quot;&quot;,history+[{&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:user_messages}]
+
+
+    def bot(history : list):
+        #创建智谱客户端实例，调用智谱的服务
+        client=ZhipuAI(api_key=&quot;你的智谱api-key&quot;)
+
+        messages =history
+
+        response =client.chat.completions.create(
+            model=&quot;glm-4&quot;, #指定模型 glm-4
+            messages=messages, #历史的提问和回答内容传给ai
+            stream=True, #流式输出
+        )
+
+        #在历史记录中添加一个空的助手回复消息
+        history.append({&quot;role&quot;:&quot;assistant&quot;,&quot;content&quot;:&quot;&quot;})
+
+        #遍历响应的每个数据块
+        for chunk in response:
+            #讲当前的数据块的内容追加到助手回复消息中
+            history[-1][&#x27;content&#x27;]+=chunk.choices[0].delta.content
+
+            #让用户能看到回复逐步生成的过程,延迟0.05秒
+            time.sleep(0.05)
+
+            #实时更新流式界面
+            yield history
+
+
+    #user:用户在文本框中点击回车键,消息的提交，调用user函数处理用户输入
+    #[msg,chatbot]:文本框输入和聊天机器人的历史记录作为输入参数
+    #[msg,chatbot]:将处理后的结果更新到文本框和聊天机器人组件中
+    #queue=False: 表示不使用消息队列处理该事件
+    msg.submit(user,[msg,chatbot],[msg,chatbot],queue=False).then(
+        #处理完用户输入后，接着调用bot函数，获取助手回复
+        bot,chatbot,chatbot
+    )
+
+    #清空按钮点击事件
+    #lambda :None 匿名函数，不做任何操作,只触发清空操作
+    #None 没有输出参数
+    #chatbot 聊天机器人内容清空
+    # queue=False: 表示不使用消息队列处理该事件
+    clear.click(lambda :None,None,chatbot,queue=False)
+
+#启动
+demo.launch()</code></pre></details></li></ul><h2 id="1baa551d-035a-80ac-84eb-ea468a4637a0" class="">Day02 +类方法调用+gradio.？（文件路径拖动获取）</h2><p id="1baa551d-035a-809a-ac73-c9bb3667b6bc" class="">&gt;</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
