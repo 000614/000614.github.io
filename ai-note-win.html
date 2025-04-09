@@ -1330,23 +1330,8 @@ if __name__ == &#x27;__main__&#x27;:
         query_embeddings=search_embedding,
         n_results=3
     )
-    print(query_result)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</code></pre></details></li></ul><figure id="1b6a551d-035a-80ad-b384-c96a6539f413" class="link-to-page"><a href="https://www.notion.so/Chroma-1b6a551d035a80adb384c96a6539f413?pvs=21">Chroma向量数据库实战讲义</a></figure><p id="1b6a551d-035a-80fd-8ea5-cf9e5afd7d0b" class="">
-</p><h1 id="1baa551d-035a-8010-9068-d4b79618c781" class="">WK3-Gradio+rag+embedding</h1><p id="1baa551d-035a-8057-825a-ea795f7117d3" class="">as用法？</p><h2 id="1baa551d-035a-80f4-83d2-eec474249964" class="">Day01 Gradio库</h2><ul id="1baa551d-035a-8082-a12b-fda28e812d0e" class="toggle"><li><details open=""><summary>绘制+事件 基础demo代码块</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1baa551d-035a-8063-bc65-f45e35aed8cd" class="code"><code class="language-Python">import gradio as gr
+    print(query_result)</code></pre></details></li></ul><figure id="1b6a551d-035a-80ad-b384-c96a6539f413" class="link-to-page"><a href="Chroma%E5%90%91%E9%87%8F%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%9E%E6%88%98%E8%AE%B2%E4%B9%89%201b6a551d035a80adb384c96a6539f413.html">Chroma向量数据库实战讲义</a></figure><p id="1b6a551d-035a-80fd-8ea5-cf9e5afd7d0b" class="">
+</p><h1 id="1baa551d-035a-8010-9068-d4b79618c781" class="">WK3-Gradio+rag+embedding</h1><h2 id="1baa551d-035a-80f4-83d2-eec474249964" class="">Day01 Gradio库</h2><ul id="1baa551d-035a-8082-a12b-fda28e812d0e" class="toggle"><li><details open=""><summary>绘制+事件 基础demo代码块</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1baa551d-035a-8063-bc65-f45e35aed8cd" class="code"><code class="language-Python">import gradio as gr
 
 
 def greet(name,intensity):
@@ -1545,4 +1530,2276 @@ with gr.Blocks() as demo:
     clear.click(lambda :None,None,chatbot,queue=False)
 
 #启动
-demo.launch()</code></pre></details></li></ul><h2 id="1baa551d-035a-80ac-84eb-ea468a4637a0" class="">Day02 +类方法调用+gradio.？（文件路径拖动获取）</h2><p id="1baa551d-035a-809a-ac73-c9bb3667b6bc" class="">&gt;</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
+demo.launch()</code></pre></details></li></ul><ul id="1bba551d-035a-8063-b3e8-f9d757000025" class="toggle"><li><details open=""><summary>chromadb_delete.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1bba551d-035a-8011-a9b2-cddffa95eede" class="code"><code class="language-Python">import chromadb
+try:
+    client =chromadb.HttpClient(host=&#x27;localhost&#x27;,port=8000)
+    collections =client.list_collections()
+    print(collections)
+    col_names =collections
+    for name in col_names:
+        client.delete_collection(name=name)
+        print(f&#x27;成功删除集合:{name}&#x27;)
+except Exception as e:
+    print(f&#x27;发生错误:{e}&#x27;)</code></pre></details></li></ul><ul id="1bba551d-035a-80ab-b165-da91b157a655" class="toggle"><li><details open=""><summary>chromadb_query.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1bba551d-035a-809c-a425-f246ed7133fc" class="code"><code class="language-Python">import chromadb
+try:
+    client =chromadb.HttpClient(host=&#x27;localhost&#x27;,port=8000)
+    collections=client.list_collections()
+    print(collections)
+    collection_name =&#x27;test8899&#x27;
+    if collection_name in collections:
+        col =client.get_collection(collection_name)
+        print(col.peek())
+    else:
+        print(f&#x27;集合{collection_name}不存在&#x27;)
+except Exception as e:
+    print(f&#x27;发生错误:{e}&#x27;)</code></pre></details></li></ul><h2 id="1baa551d-035a-80ac-84eb-ea468a4637a0" class="">Day02 rag集成 —— 类方法调用+gradio.File（文件路径拖动获取）</h2><figure id="1bba551d-035a-80b5-b775-c7b0417cea55" class="image"><a href="image%2010.png"><img style="width:709.982177734375px" src="image%2010.png"/></a></figure><ul id="1baa551d-035a-809a-ac73-c9bb3667b6bc" class="toggle"><li><details open=""><summary>main.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1bba551d-035a-8090-8daf-fa0b8d48ed87" class="code"><code class="language-Python">import gradio as gr
+from chromadb import HttpClient
+from file_to_chromadb import run as file_to_chromadb
+from RAG import Robot
+import chromadb
+from zhipuai import ZhipuAI
+#获取数据库集合列表
+def get_db_list():
+    client =chromadb.HttpClient(host=&#x27;localhost&#x27;,port=8000)
+    #获取所有集合列表
+    collections=client.list_collections()
+    return collections
+
+#创建数据库
+def build_db(file,dbname):
+    try:
+        #调用函数构建数据库
+        res =file_to_chromadb(file,dbname)
+        if res == &quot;success&quot;:
+            return gr.Info(&quot;数据库创建成功&quot;,duration=5)
+        else:
+            return gr.Error(&quot;数据库创建失败&quot;,duration=5)
+    except Exception as e:
+        print(f&quot;构建数据库出错：{e}&quot;)
+        return gr.Error(&quot;数据库构建失败&quot;,duration=5)
+
+#刷新数据库选择项
+def refresh_db_choices():
+    dbList =get_db_list()
+    return gr.update(choices=dbList)
+
+#处理用户输入
+def user(user_message,history:list):
+    #首次问答，添加提示词
+    if len(history) == 0:
+        history.append({&quot;role&quot;: &quot;system&quot;,&quot;content&quot;: &quot;你是一个名叫Molly的教育专家，对于用户提问的问题，你需要按照给出的【参考资料】对问题进行回答。你的回答需要按照以下两个步骤：1.分析用户问题和参考资料，判断是否有【参考资料】可以解答用户的问题，如果有则说明【参考资料】的名称，如果没有，则首先告知用户没有任何可参考的资料，需要注意答案的准确性。2.根据资料内容对问题进行解答。&quot;})
+    history.append({&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:user_message})
+    return &quot;&quot;,history
+
+#处理机器人回复
+def bot(history:list,dbname):
+    #获取用户最新输入文本
+    input_text =history[-1][&#x27;content&#x27;]
+    #调用机器人的GAG获取参考资料
+    result_rag =robot.RAG(input_text,dbname)
+    #参考资料添加到用户输入中
+    history[-1][&#x27;content&#x27;]+=f&quot;\n参考资料：\n{result_rag}&quot;
+    client =ZhipuAI(api_key=&#x27;7b16305a776744253ac1bad218a8f90c.p1EJxuKGhDmPKxfF&#x27;)
+    messages=history
+    response =client.chat.completions.create(
+        model=&quot;glm-4&quot;,
+        messages=messages,
+        stream=True
+    )
+
+    #使用&quot;参考资料&quot;作为分隔符，把文档分开
+    parts=history[-1][&#x27;content&#x27;].split(&quot;参考资料：&quot;,1)
+    #提第一个参考资料前的内容
+    history[-1][&#x27;content&#x27;]=parts[0].strip()
+    history.append({&quot;role&quot;: &quot;assistant&quot;,&quot;content&quot;: &quot;&quot;})
+
+    for chunk in response:
+        #模型回复的内容逐步添加到助手回复消息中
+        history[-1][&#x27;content&#x27;]+=chunk.choices[0].delta.content
+        yield history
+
+robot=Robot()
+dbList =get_db_list()
+
+with gr.Blocks() as demo:
+    with gr.Row():
+        gr.Markdown(&quot;# 智能学习助手&quot;)
+    with gr.Row():
+        with gr.Column(scale=2):
+            chatbot =gr.Chatbot(type=&quot;messages&quot;,label=&#x27;对话框&#x27;,height=500)
+            question =gr.Textbox(label=&#x27;请输入&#x27;)
+            clear_btn =gr.Button(&quot;clear&quot;)
+            gr.Examples([&quot;介绍一下类对象&quot;,&quot;解释一下面向对象&quot;],inputs=[question])
+        with gr.Column(scale=1):
+            gr.Markdown(&quot;### 数据库构建&quot;)
+            datafile =gr.Filex(type=&quot;filepath&quot;,label=&quot;上传文件&quot;)
+            dbname=gr.Textbox(label=&#x27;数据库名称&#x27;)
+            build_btn=gr.Button(&quot;开始构建&quot;)
+            gr.Markdown(&quot;### 数据库选择&quot;)
+            dbchoose =gr.Dropdown(choices=dbList,label=&quot;数据库名称&quot;)
+            dbrefresh_btn=gr.Button(&quot;刷新&quot;)
+
+
+    #用户在文本框中输入问题并提交时,调用user函数处理用户输入，然后调用bot函数获取机器人回复
+    question.submit(user,[question,chatbot],[question,chatbot],queue=False).then(bot,[chatbot,dbchoose],chatbot)
+    #用户点击“开始构建”,调用函数build_db 创建数据库,解析文件，向量化，加入到数据库的集合中
+    build_btn.click(build_db,[datafile,dbname],[])
+    #点击“刷新”，调用函数refresh_db_choices，刷新数据库集合下拉选项
+    dbrefresh_btn.click(refresh_db_choices,outputs=dbchoose)
+    #点击&quot;clear&quot;，清空聊天记录
+    clear_btn.click(lambda :None,None,chatbot,queue=False)
+
+#启动
+demo.launch()
+
+</code></pre></details></li></ul><ul id="1bba551d-035a-805a-8e30-fc666973b906" class="toggle"><li><details open=""><summary>RAG.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1bba551d-035a-8089-abe2-c1d300892d96" class="code"><code class="language-Python">from zhipuai import ZhipuAI
+from embedding import embed_with_bge,embed_with_qwen
+import chromadb
+from transformers import AutoTokenizer,AutoModel
+import  torch
+
+client =chromadb.HttpClient(host=&#x27;localhost&#x27;,port=8000)
+
+#定义一个生成器函数，实现流式对话输出
+def chatglm_stream(input_text,history_list):
+    client =ZhipuAI(api_key=&#x27;7b16305a776744253ac1bad218a8f90c.p1EJxuKGhDmPKxfF&#x27;)
+    messages =history_list
+    #在对话历史中添加用户最新输入
+    messages.append({&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:f&quot;{input_text}&quot;})
+    #调用智谱AI的聊天完成借口，使用glm-4模型，流式输出
+    response =client.chat.completions.create(
+        model=&#x27;glm-4&#x27;,
+        messages=messages,
+        stream=True,
+    )
+    #遍历流式响应的每个数据块
+    for chunk in response:
+        #从当前数据库中提取模型生成的回复内容
+        output =chunk.choices[0].delta.content
+        #将回复内容逐个返回，实现流式输出
+        yield output
+
+#定义一个类，封装与对话机器人相关的功能
+class Robot():
+    def __init__(self):
+        #空字符串，存储文本向量
+        self.embedding=&quot;&quot;
+
+    #定义rag方法，实现检索增强生成功能
+    def RAG(self,input_text,dbname):
+        #获得输入文本向量
+        #使用qwen的函数对输入文本进行向量化处理
+        search_embedding =embed_with_qwen([input_text])
+
+        #从chroma数据库客户端获得集合
+        collection =client.get_collection(name=dbname)
+
+        #从向量数据库中检索与输入文本向量最相似的文档，数量设置为3个
+        result =collection.query(
+            query_embeddings=search_embedding,
+            n_results=3,
+        )
+
+        #空字符串，存储文档和参考资料信息
+        result_all=&quot;&quot;
+
+        #遍历文档列表
+        for i in range(len(result[&#x27;documents&#x27;][0])):
+            #获取文档内容
+            result_documents=result[&#x27;documents&#x27;][0][i]
+            #获取参考资料内容
+            result_file =result[&#x27;metadatas&#x27;][0][i][&#x27;answer&#x27;]
+            #将文档内容和参考资料信息合并到result_all中
+            result_all+=result_documents+f&quot;\n【参考资料】：{result_file}\n\n&quot;
+
+        return result_all
+
+    def run_test(self):
+        history_list = [{&quot;role&quot;: &quot;system&quot;,&quot;content&quot;: &quot;你是一个名叫Molly的教育专家，对于用户提问的问题，你需要按照给出的【参考资料】对问题进行回答。你的回答需要按照以下两个步骤：1.分析用户问题和参考资料，判断是否有【参考资料】可以解答用户的问题，如果有则说明【参考资料】的名称，如果没有，则首先告知用户没有任何可参考的资料，需要注意答案的准确性。2.根据资料内容对问题进行解答。&quot;}]
+        while True:
+            input_text =input(&#x27;请输入:&#x27;)
+            if input_text ==&#x27;exit&#x27;:
+                break
+            dbname=&#x27;test8899&#x27;
+            result_rag=self.RAG(input_text,dbname)
+            input_text =input_text+f&#x27;参考资料：\n{result_rag}&#x27;
+            result =chatglm_stream(input_text,history_list)
+            result_all=&quot;&quot;
+            for res in result_all:
+                result_all+=res
+                print(res,end=&quot;&quot;,flush=True)
+            print(&quot;&quot;)
+            message_input ={&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:f&quot;{input_text}&quot;}
+            history_list.append(message_input)
+            message_output={&quot;role&quot;:&quot;assistant&quot;,&quot;content&quot;:f&quot;{result_all}&quot;}
+            history_list.append(message_output)
+            print(history_list)
+
+if __name__ == &#x27;__main__&#x27;:
+    robot =Robot()
+    robot.run_test()
+
+
+
+
+
+
+
+
+
+
+</code></pre></details></li></ul><ul id="1bba551d-035a-80ab-8f15-ffb71a43d086" class="toggle"><li><details open=""><summary>file_to_chromadb.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1bba551d-035a-806a-85f2-f8675c026769" class="code"><code class="language-Python">#1、解析文件 2、解析后文件向量化 3、向量化后加入到数据库中
+
+import json
+from embedding import embed_with_bge,embed_with_qwen
+import os
+import chromadb
+from transformers import AutoTokenizer,AutoModel
+
+#JSON文件解析
+def json_parse(file):
+    #以只读模式打开json文件，指定编码utf-8
+    with open(file,&#x27;r&#x27;,encoding=&#x27;utf-8&#x27;) as file:
+        #加载json文件
+        data =json.load(file)
+    #创建空列表
+    result =[]
+    #循环遍历data
+    for item in data:
+        #每个项k_qa_content,获取值
+        k_qa_content=item[&#x27;k_qa_content&#x27;]
+        #使用#作为分隔符，拆分关键词和答案
+        keyword,answer =k_qa_content.split(&#x27;#&#x27;,maxsplit=1)
+        #拆分后的关键词和答案添加到result列表中
+        result.append([keyword,answer])
+        #返回处理后的数据列表
+    return result
+
+def run(file_path,dbname):
+    #调用函数解析指定路径的json文件
+    text_list =json_parse(file_path)
+    print(text_list)
+    #空列表，存储关键词
+    keyword_list=[]
+    #空列表,存储答案
+    answer_list=[]
+    #遍历解析后的文件
+    for text in text_list:
+        #每项中的关键词添加到keyword_list列表中
+        keyword_list.append(text[0])
+        #每项中的答案以字典形式添加到answer_list列表中
+        answer_list.append({&quot;answer&quot;:text[1]})
+    #使用闭源模型API，调用embed_with_qwen函数对关键词列表进行向量化处理
+    embedding_list =embed_with_qwen(keyword_list)
+
+    if type(embedding_list) == list:
+        #创建chroma客户端，连接本地端口8000
+        client=chromadb.HttpClient(host=&#x27;localhost&#x27;,port=8000)
+        #获取或创建指定名的集合
+        collection=client.get_or_create_collection(name=dbname)
+        #创建ids： 数据库名+序列号
+        len_ids=len(text_list)
+        ids_list=[]
+        for i in range(len_ids):
+            ids_list.append(str(dbname)+str(i))
+        #向集合中添加向量化数据，关键词，答案元数据和唯一标识id
+        collection.add(
+            embeddings=embedding_list,
+            documents=keyword_list,
+            metadatas=answer_list,
+            ids=ids_list
+        )
+    else :
+        return &#x27;error&#x27;
+
+    print(&#x27;向量化完成&#x27;)
+    return &#x27;success&#x27;
+
+if __name__ == &#x27;__main__&#x27;:
+    file_path=&#x27;data_path/python基础（1）.json&#x27;
+    dbname=&#x27;test8899&#x27;
+    print(run(file_path, dbname))</code></pre></details></li></ul><ul id="1bba551d-035a-809a-9719-dae50ec2246a" class="toggle"><li><details open=""><summary>embedding.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1bba551d-035a-8051-b9a4-c910295b7cca" class="code"><code class="language-Python"># 导入 PyTorch 库，它是一个用于深度学习的开源库，提供了丰富的张量计算和自动求导功能
+import torch
+
+# 导入 dashscope 库，用于调用阿里云的大模型服务，这里可能用于文本嵌入相关操作
+import dashscope
+
+# 从 http 模块中导入 HTTPStatus 类，用于获取 HTTP 请求的状态码，方便后续判断请求是否成功
+from http import HTTPStatus
+
+
+# 定义一个函数 embed_with_qwen，用于使用 Qwen 模型对输入的文本列表进行嵌入处理
+def embed_with_qwen(text_list):
+    # 设置 dashscope 的 API 密钥，该密钥用于访问阿里云的相关服务
+    dashscope.api_key = &#x27;sk-eb40ccf62d6648dc92a16ecff1686efa&#x27;
+    # 初始化一个空列表，用于存储每个文本的嵌入向量
+    embedding_list = []
+    # 遍历输入的文本列表
+    for text in text_list:
+        # 调用 dashscope 的 TextEmbedding 服务，使用 text_embedding_v2 模型对当前文本进行嵌入处理
+        resp = dashscope.TextEmbedding.call(
+            # 指定使用的模型为 text_embedding_v2
+            model=dashscope.TextEmbedding.Models.text_embedding_v2,
+            # 要进行嵌入处理的文本
+            input=text
+        )
+        # 检查请求的状态码是否为 HTTP 200（OK），表示请求成功
+        if resp.status_code == HTTPStatus.OK:
+            # 从响应中提取嵌入向量
+            embedding = resp.output[&#x27;embeddings&#x27;][0][&#x27;embedding&#x27;]
+            # 将提取的嵌入向量添加到 embedding_list 中
+            embedding_list.append(embedding)
+        else:
+            # 如果请求失败，打印响应信息
+            print(resp)
+            # 并返回响应对象，方便后续排查问题
+            return resp
+    # 返回存储所有文本嵌入向量的列表
+    return embedding_list
+
+
+# 定义一个函数 embed_with_bge，用于使用 BGE 模型对输入的文本列表进行嵌入处理
+def embed_with_bge(text_list, tokenizer, model):
+    # 使用 tokenizer 对输入的文本列表进行编码处理，设置最大长度为 512，进行填充和截断操作，并将结果转换为 PyTorch 张量
+    encoded_input = tokenizer(text_list, max_length=512, padding=True, truncation=True, return_tensors=&#x27;pt&#x27;)
+    # 开启一个无梯度计算的上下文环境，在推理过程中不需要计算梯度，这样可以节省内存和计算资源
+    with torch.no_grad():
+        # 将编码后的输入传递给模型进行推理
+        model_output = model(**encoded_input)
+    # 进行池化操作，这里采用 CLS 池化，即取输出序列中第一个 token 的向量作为句子的表示
+    sentence_embeddings = model_output[0][:, 0]
+    # 将 PyTorch 张量转换为 Python 列表
+    sentence_embeddings_list = sentence_embeddings.tolist()
+    # 返回存储所有句子嵌入向量的列表
+    return sentence_embeddings_list
+
+
+# 程序的入口点，如果该脚本作为主程序运行，则执行以下代码
+if __name__ == &#x27;__main__&#x27;:
+    # 调用 embed_with_qwen 函数对文本 &quot;今天是个好日子&quot; 进行嵌入处理，并打印结果
+    # 注意：这里传入的应该是一个列表，如 [&quot;今天是个好日子&quot;]，原代码写法有误
+    print(embed_with_qwen([&quot;今天是个好日子&quot;]))</code></pre></details></li></ul><h2 id="1bba551d-035a-809b-b6eb-e131955cc511" class="">Day03  梳理上一天的代码+自习-学习设计模式</h2><p id="1bba551d-035a-801e-b3be-c785c76a9f53" class="">设计模式六大基本原则：<br/><br/><strong>开闭</strong> → 开闭原则<br/><br/><strong>里氏</strong> → 里氏代换原则<br/><br/><strong>倒</strong> → 依赖倒转原则（“倒”转）<br/><br/><strong>接口</strong> → 接口隔离原则<br/><br/><strong>迪米</strong> → 迪米特法则<br/><br/><strong>合</strong> → 合成复用原则</p><h2 id="1bca551d-035a-800d-9d02-d661344ed7b1" class="">Day04  召回+重排序</h2><p id="1bca551d-035a-8021-a2e9-d2980eff1a72" class="">迭代器？</p><ul id="1bda551d-035a-800a-ba5e-c815d2f52b97" class="toggle"><li><details open=""><summary>main.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1bda551d-035a-803a-9798-c2c610079202" class="code"><code class="language-Python"># 提问：骨折了怎么办？ ，大模型回答。
+# 1.解析txt，向量化，存在向量数据库中。
+# 2.问题向量化，检索数据库，召回（2种召回方式）
+# 3.重排序
+# 4得到结果返回给大模型，输出
+#---------------------------------------------------------
+#基于BM25算法的文档检索功能
+from langchain_community.retrievers import BM25Retriever
+#文档对象，对文档处理和操作
+from langchain_core.documents import Document
+#数据类型
+from typing import List
+#中文分词工具，可以将中文的文本分割成单个词语
+import jieba
+#实现BM25算法
+from rank_bm25 import BM25Okapi
+#长文本按照一定的规则递归的分割成较小的文本块
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+#高效处理向量数据库的库
+from langchain_community.vectorstores import FAISS
+#从文本文件中加载文档数据
+from langchain_community.document_loaders import TextLoader
+#与智谱AI进行交互，实现聊天对话功能
+from langchain_community.chat_models import ChatZhipuAI
+#基于_huggingface 模型嵌入向量，将文本转换为向量表示
+from langchain_huggingface import HuggingFaceEmbeddings
+#智谱AI
+from zhipuai import ZhipuAI
+
+#print(list(jieba.cut(&#x27;今天的天气特别缓和&#x27;)))
+
+#1.加载文档
+loader =TextLoader(r&#x27;C:\Users\admin\Desktop\rag_rank\medical_data.txt&#x27;,encoding=&#x27;utf-8&#x27;)
+#加载
+document=loader.load()
+#切割
+text_splitter=RecursiveCharacterTextSplitter(
+    chunk_size=500,
+    chunk_overlap=0,
+    length_function=len,
+    separators=[&#x27;\n&#x27;]
+)
+docs =text_splitter.split_documents(document)
+#打印加载的文档
+#print(docs)
+
+#2.分词
+def preprocessing_func(text:str):
+    return list(jieba.cut(text))
+
+#3.1创建BM25召回器
+#得到每个内容的片段
+texts=[i.page_content for i in docs]
+#调用分词器，得到分词内容
+texts_processed=[preprocessing_func(t) for t in texts]
+#得到召回器
+vectorizer=BM25Okapi(texts_processed)
+
+#3.2创建向量的相似度召回器
+#本地模型文件
+model_path = r&#x27;E:\bge-large-zh-v1___5&#x27;
+#创建
+embeddings=HuggingFaceEmbeddings(model_name=model_path)
+
+#第一次运行,保存数据
+#db=FAISS.from_documents(docs,embeddings)
+#指定保存路径
+#db.save_local(r&#x27;C:\Users\xupengcheng\PycharmProjects\pyRAGDay08\rag_rank\data&#x27;)
+
+#第二次运行，加载数据
+db =FAISS.load_local(
+    r&#x27;C:\Users\admin\Desktop\rag_rank\data&#x27;,
+    embeddings=embeddings,
+    allow_dangerous_deserialization=True #关闭警告
+)
+#4.1 BM25召回器 召回
+bm25_res =vectorizer.get_top_n(preprocessing_func(&#x27;骨折了怎么办?&#x27;),texts,n=10)
+#print(&#x27;使用BM25召回器召回:&#x27;,bm25_res)
+#print(&quot;=&quot;*50)
+#4.2 向量召回器 召回
+vector_res=db.similarity_search(&#x27;骨折了怎么办?&#x27;,k=10)
+#print(&#x27;向量数据库召回:&#x27;,vector_res)
+
+#5.重排序（RRF） 把两路的召回结果相加，排序，得到key-value集合（得分，文档）,返回 文档
+def rrf(vector_res:list[str],text_res:list[str],k:int =10 ,m:int =60):
+    &quot;&quot;&quot;
+    score = 1/(m+r1) +1/(m+r2)
+    :param vector_res:向量召回的结果
+    :param text_res:BM25召回的结果
+    :param k:排序后的钱K个值
+    :param m:超参数(1-60)
+    :return:排序后结果
+    &quot;&quot;&quot;
+    doc_scores={}
+    #rank 得分，每一个文档的id对应的得分
+    #第一个
+    for rank,doc_id in enumerate(vector_res):
+        doc_scores[doc_id]= doc_scores.get(doc_id,0)+1/(m+rank)
+    #第二个
+    for rank,doc_id in enumerate(text_res):
+        doc_scores[doc_id]= doc_scores.get(doc_id,0)+1/(m+rank)
+
+    #用户只关心文本，不想要得分，所以，只取文档内容
+    sorted_results=[doc for doc,_ in sorted(doc_scores.items(),key=lambda x:x[1],reverse=True)[:k]]
+
+    return sorted_results
+
+#6.执行重排序
+
+#RAG：
+#限定大语言模型不能使用超出索引数据之外的数据，必须根据检索结果，再回答。
+#否则RAG的功能失效了，就是为了避免大模型自身存在的幻觉缺陷，不让它回答除了检索以外的结果
+
+
+
+#文档生成器构建
+
+#返回向量
+vector_results =[i.page_content for i in vector_res]
+#返回BM25
+text_results=[i for i in bm25_res]
+
+#调用重排序函数
+rrf_res=rrf(vector_results,text_results)
+#print(&quot;=&quot;*100)
+#print(&quot;使用重排序后的结果:&quot;,rrf_res)
+
+#使用ai把检索出来的文档结果发给它，整合，输出
+
+#定义一个字符串模版，prompt,用于模型提问提示信息
+
+prompt=&quot;&quot;&quot;
+任务目标：根据检索出的文档回答用户问题
+任务要求：
+    1、不得脱离检索出的文档回答问题
+    2、若检索出的文档不包含用户问题的答案，请回答我不知道
+用户问题:
+{}
+检索出的文档:
+{}
+&quot;&quot;&quot;
+
+#创建一个智谱对象，指定模型
+model=ChatZhipuAI(
+    model=&#x27;glm-4-plus&#x27;,
+    api_key=&#x27;7b16305a776744253ac1bad218a8f90c.p1EJxuKGhDmPKxfF&#x27;
+)
+#调用大模型 invoke，传入格式化后的提示信息，向模型提问，得到回答
+res =model.invoke(prompt.format(&#x27;骨折了应该怎么办?&#x27;,&#x27;&#x27;.join(rrf_res)))
+print(res.content)</code></pre></details></li></ul><h2 id="1bca551d-035a-80d5-aaa5-c07023ef9cbc" class="">Day05  文档梳理 RAG（检索增强生成）</h2><p id="1c2a551d-035a-8036-ae79-f27813ae7cf2" class="">
+</p><h1 id="1bda551d-035a-8006-bc77-fe92314b556f" class="">WK4 项目实战</h1><h2 id="1c2a551d-035a-80a1-9ca3-c68c09c214fe" class="">Day01  添加单选框</h2><ul id="1c2a551d-035a-80b6-b5f8-e8d7ab003afa" class="toggle"><li><details open=""><summary>file_to_chroma.py（xlsx和json）</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c2a551d-035a-804a-ae03-ea69eeb23ce4" class="code"><code class="language-JavaScript">import json
+import os.path
+#从指定的pdf文件中提取所有文本内容
+
+import dashscope
+import chromadb
+import openpyxl
+from embedding import embed_with_glm,embed_with_qwen
+
+client =chromadb.HttpClient(host=&#x27;localhost&#x27;,port=8000)
+
+#解析excel文件
+def xlsx_parse(file_path):
+    workbook=openpyxl.load_workbook(file_path)
+    sheet =workbook.active
+    text=&#x27;&#x27;
+    for row in sheet.iter_rows(values_only=True):
+        text+=str(row)
+    return text
+
+#解析pdf文件
+def json_parse(file_path):
+    with open(file_path,&#x27;r&#x27;,encoding=&#x27;utf-8&#x27;) as file:
+        return json.load(file)
+
+def split_text_with_overlap(text,chunk_size=1000,overlap=100):
+    &quot;&quot;&quot;
+    将文本拆分为指定大小的段落，每个段落之间有重叠部分
+    :param text: 要处理的字符串
+    :param chunk_size: 每个段落的长度
+    :param overlap: 重叠字符数
+    :return: 拆分后的段落列表
+    &quot;&quot;&quot;
+    start =end =0
+    text_list=[]
+    while end&lt;len(text):
+        end =min(start+chunk_size,len(text)) #计算当前段落的结束位置，获取chunk_size和文本长度的较小值
+        text_list.append(text[start:end])#将当前段落追加到列表中
+        start =end - overlap #更新起始位置
+    return text_list
+
+def run(file_path:str,model_name,model_platform,dbname):
+    text=&#x27;&#x27;
+    #1.解析
+    if file_path.endswith(&#x27;.pdf&#x27;): #判断是.pdf格式文件，调用解析函数
+        pass
+
+    elif file_path.endswith(&#x27;.xlsx&#x27;): #判断是xlsx格式文件，调用解析函数
+        text=xlsx_parse(file_path)
+
+    #2.拆分
+    text_list =split_text_with_overlap(text) #调用函数解析文本，返回拆分后段落列表
+    embedding_list=[] #存储文本的嵌入向量
+    ids_list=[] #存储文档唯一标识
+    document_list=text_list #拆分后的文本、段落列表
+    metadatas_list=[] #存储元数据
+
+    #3. 调用模型
+    if model_platform == &#x27;ZhipuAI&#x27;:
+        embedding_list=embed_with_glm(text_list,model_name) #调用向量化zhipu函数，返回嵌入向量
+    elif model_platform == &#x27;Bailian&#x27;:
+        embedding_list=embed_with_qwen(text_list,model_name)#调用向量化qwen函数，返回嵌入向量
+
+    #4. 构造向量数据库所需要的格式
+    if type(embedding_list) == list:
+
+        collection =client.create_collection(dbname) #创建指定名称的集合
+        basename = os.path.basename(file_path) #获取文件路径的文件名部分
+        #遍历文档列表
+        for i in range(len(text_list)):
+            ids_list.append(str(basename)+str(i)) #生成唯一标识添加到ids_list中s
+            metadatas_list.append({&#x27;file_name&#x27;:str(basename)}) #生成元数据并添加到metadatas_list中
+
+        #构造向量数据库，加入数据
+        collection.add(
+            ids=ids_list,
+            embeddings=embedding_list,
+            documents=document_list,
+            metadatas=metadatas_list
+
+        )
+    else:
+        return &#x27;error&#x27;
+
+    return &#x27;success&#x27;
+
+if __name__ == &#x27;__main__&#x27;:
+    file_path =r&#x27;C:\Users\xupengcheng\PycharmProjects\pyRAGDay09\rag_gk\data_path\1_大学院校基础信息.xlsx&#x27;
+    model_name=&#x27;embedding-3&#x27; #指定模型名称
+    #model_name = dashscope.TextEmbedding.Models.text_embedding_v3  # 指定模型名称
+    model_patform=&#x27;ZhipuAI&#x27;
+    dbname=&#x27;col02&#x27;
+    print(run(file_path,model_name,model_patform,dbname))
+    print(client.get_collection(dbname).peek())</code></pre></details></li></ul><ul id="1c2a551d-035a-8004-8883-cdcbc215933a" class="toggle"><li><details open=""><summary>RAG.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c2a551d-035a-80ad-92d1-c6bb5a18887f" class="code"><code class="language-JavaScript">import chromadb
+from zhipuai import ZhipuAI
+from embedding import embed_with_glm,embed_with_qwen
+
+client =chromadb.HttpClient(host=&#x27;localhost&#x27;,port=8000)
+
+def chatglm_stream(question,history_list:list):
+    chient =ZhipuAI(api_key=&#x27;&#x27;)
+    history_list.append({&#x27;role&#x27;:&#x27;user&#x27;,&#x27;content&#x27;:f&#x27;{question}&#x27;})# 用户提问的问题添加到历史对话列表中
+    response=chient.chat.completions.create(
+        model=&#x27;glm-4&#x27;,
+        messages=history_list,
+        stream=True #设置为流式返回结果
+    )
+    for chunk in response:
+        output =chunk.choices[0].content
+        yield output
+
+class Robot():
+    def __init__(self):
+        self.embedding =&#x27;&#x27;
+    def RAG(self,question,dbname):
+        #使用函数生成问题的嵌入向量
+        search_embedding=embed_with_glm([question],model_name=&#x27;embedding-3&#x27;)
+        col=client.get_collection(name=dbname)
+        result =col.query(
+            query_embeddings=search_embedding, #传入问题的嵌入向量进行查询
+            n_results=3 #设置返回的结果数3条
+        )
+        result_all=&#x27;&#x27;
+        #遍历查询结果中的文档列表
+        for i in range(len(result[&#x27;documents&#x27;][0])):
+            result_document =result[&#x27;documents&#x27;][0][i] #文档内容
+            result_file =result[&#x27;metadatas&#x27;][0][i][&#x27;file_name&#x27;]
+            result_all+=f&#x27;{result_document}+\n【参考资料】:{result_file}\n\n&#x27;
+        return result_all #返回拼接好的结果内容</code></pre></details></li></ul><ul id="1c2a551d-035a-80b7-b4ae-d93c759ece42" class="toggle"><li><details open=""><summary>embedding.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c2a551d-035a-80a4-87db-c48d6547b3de" class="code"><code class="language-JavaScript">import dashscope
+from zhipuai import ZhipuAI
+from http import HTTPStatus
+
+#函数 qwen模型生成文本嵌入
+def embed_with_qwen(text_list,model_name):
+    dashscope.api_key=&#x27;&#x27;
+    embedding_list=[]
+    for text in text_list:
+        try:
+            resp =dashscope.TextEmbedding.call(
+                model=model_name,
+                input=text
+            )
+            if resp.status_code == HTTPStatus.OK:
+                embedding_list.append(resp.output[&#x27;embeddings&#x27;][0][&#x27;embedding&#x27;])
+
+        except Exception as e:
+            print(&#x27;调用qwen嵌入信息出错{e}&#x27;)
+    return embedding_list
+
+#函数 zhipu模型生成文本嵌入
+def embed_with_glm(text_list,model_name):
+    embedding_list=[]
+    api_key=&#x27;&#x27;
+    client=ZhipuAI(api_key=api_key)
+    for text in text_list:
+        try:
+            resp=client.embeddings.create(
+                input=text,
+                model=model_name
+            )
+            embedding_list.append(resp.data[0].embedding)
+        except Exception as e:
+            print(&#x27;调用zhipu嵌入信息出错{e}&#x27;)
+
+    return embedding_list
+
+if __name__ == &#x27;__main__&#x27;:
+    print(embed_with_glm([&#x27;今天的天气不错&#x27;,&#x27;今天星期一&#x27;],&#x27;embedding-3&#x27;))</code></pre></details></li></ul><ul id="1c2a551d-035a-80de-bd4c-c82b0e14b4da" class="toggle"><li><details open=""><summary>main.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c2a551d-035a-80f4-8bf4-d5f28ce828cb" class="code"><code class="language-JavaScript">import chromadb
+import gradio as gr
+from file_to_chroma import run as save_chroma
+from zhipuai import ZhipuAI
+from RAG import Robot
+
+def build_db(file,model_name,model_platform,dbname):
+    res =save_chroma(file,model_name,model_platform,dbname)
+    if res ==&#x27;success&#x27;:
+        gr.Info(&#x27;数据库创建成功&#x27;,duration=2)
+    elif res == &#x27;error&#x27;:
+        gr.Error(&quot;数据库创建失败&quot;,duration=2)
+
+def update_dropdown(model_platform):
+    if model_platform ==&#x27;ZhipuAI&#x27;:
+        return gr.update(choices=[&#x27;embedding-2&#x27;,&#x27;embedding-3&#x27;],value=&#x27;embedding-3&#x27;)
+    elif model_platform ==&#x27;Bailian&#x27;:
+        return gr.update(choices=[&#x27;text-embedding-v1&#x27;, &#x27;text-embedding-v2&#x27;,&#x27;text-embedding-v3&#x27;], value=&#x27;text-embedding-v3&#x27;)
+    else:
+        return gr.update(choices=[],value=None)
+
+def user(user_message,history:list):
+    if len(history) == 0:
+        history.append({&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: (
+            &quot;你是一个高考志愿智能问答系统，对于用户提问的问题，你需要按照给出的【参考资料】对问题进行回答。&quot;
+            &quot;你的回答需要按照以下两个步骤：&quot;
+            &quot;1.分析用户问题和参考资料，判断是否有【参考资料】可以解答用户的问题，如果有则说明【参考资料】的名称，&quot;
+            &quot;如果没有，则首先告知用户没有任何可参考的资料，需要注意答案的准确性。&quot;
+            &quot;2.根据资料内容对问题进行解答，若用户希望根据高考分数得到志愿推荐，那么首先关注学校的投档分，越接近越好，从好的学校推荐，并结合【参考资料】中的学校信息来说明。&quot;)
+                        })
+    history.append({&#x27;role&#x27;:&#x27;user&#x27;,&quot;content&quot;:user_message})
+    return &#x27;&#x27;,history
+
+def get_db_list():
+    client =chromadb.HttpClient() # 默认值,localhost,8000
+    collections =client.list_collections()
+    return  collections
+
+def dbref():
+    dblist=get_db_list()
+    return gr.update(choices=dblist,multiselect=False) #multiselect禁止多选
+
+def delete_db(dbchoice):
+    client =chromadb.HttpClient()
+    client.delete_collection(dbchoice)
+    gr.Info(&quot;数据库删除成功&quot;,duration=2)
+
+
+def bot(history:list,dbname):
+    input_text=history[-1][&#x27;content&#x27;] #用户最新输入的文本
+    result_rag =robot.RAG(input_text,dbname) #获取相关资料
+    history[-1][&#x27;content&#x27;]+=f&#x27;\n【参考资料】：\n{result_rag}&#x27;
+
+    client =ZhipuAI(api_key=&#x27;7b16305a776744253ac1bad218a8f90c.p1EJxuKGhDmPKxfF&#x27;)
+    messages =history
+    response =client.chat.completions.create(
+        model=&#x27;glm-4&#x27;,
+        messages=messages,
+        stream=True
+    )
+    parts =history[-1][&#x27;content&#x27;].split(&#x27;参考资料：&#x27;,1)
+    history[-1][&#x27;content&#x27;]=parts[0].strip() #提取第一个参考资料前的内容
+    history.append({&#x27;role&#x27;:&#x27;assistant&#x27;,&#x27;content&#x27;:&quot;&quot;}) #添加一个空的助手回复
+    for chunk in response:
+        history[-1][&#x27;content&#x27;]+=chunk.choices[0].delta.content #逐步添加回复内容
+        yield  history
+
+robot=Robot()
+dblist=get_db_list() #获取数据库列表
+
+with gr.Blocks() as demo:
+    with gr.Row():
+        gr.Markdown(&#x27;# 高考政策通&#x27;)
+    with gr.Row():
+        with gr.Column():
+            chatbot=gr.Chatbot(label=&#x27;对话框&#x27;,type=&#x27;messages&#x27;,height=500) #创建聊天组件
+            question=gr.Textbox(label=&#x27;请输入&#x27;) # 创建输入文本框
+            clear_btn=gr.Button(&#x27;clear&#x27;) #创建清除按钮
+            gr.Examples([&#x27;介绍一下北京大学&#x27;,&#x27;介绍一下清华大学&#x27;],inputs=question) #  创建示例输入
+        with gr.Column():
+            gr.Markdown(&#x27;### 请选择嵌入模型&#x27;)
+            model_platform=gr.Radio(label=&#x27;嵌入模型&#x27;,choices=[&#x27;ZhipuAI&#x27;,&#x27;Bailian&#x27;],value=&#x27;ZhipuAI&#x27;) #创建单选框，默认值ZhipuAI
+            model_name=gr.Dropdown(label=&#x27;模型名称&#x27;,choices=[&#x27;embedding-2&#x27;,&#x27;embedding-3&#x27;],value=&#x27;embedding-3&#x27;) #模型名称下拉框
+            model_platform.change(fn=update_dropdown,inputs=model_platform,outputs=model_name) #监听模型选择变化，更新模型名称下的内容
+            datafile=gr.File(label=&#x27;上传文件&#x27;,type=&#x27;filepath&#x27;)#创建上传组件
+            dbname=gr.Textbox(label=&#x27;数据库名称&#x27;)
+            build_btn =gr.Button(&#x27;开始构建&#x27;)
+            dbchoice =gr.Dropdown(label=&#x27;数据库名称&#x27;,choices=dblist)
+            with gr.Row():
+                dbref_btn =gr.Button(&#x27;刷新&#x27;)
+                dbdel_btn =gr.Button(&#x27;删除&#x27;)
+    question.submit(user,inputs=[question,chatbot],outputs=[question,chatbot]).then(bot,[chatbot,dbchoice],chatbot)
+    clear_btn.click(lambda :None,None,chatbot,queue=False)
+    build_btn.click(build_db,[datafile,model_name,model_platform,dbname],[])
+    dbref_btn.click(dbref,outputs=dbchoice)#刷新按钮时间
+    dbdel_btn.click(delete_db,inputs=dbchoice) #删除按钮事件
+
+demo.launch()</code></pre></details></li></ul><h2 id="1c2a551d-035a-804f-afb4-c9b123157fc3" class="">Day02  新数据库sqlite3</h2><ul id="1c2a551d-035a-80b9-8621-d16d756c1998" class="toggle"><li><details open=""><summary>main.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c2a551d-035a-80a8-a571-e8bae0715b72" class="code"><code class="language-JavaScript">import  gradio as gr
+import sqlite3
+from zhipuai import ZhipuAI
+from RAG import Robot
+import pandas as pd #用于数据处理和分析
+
+def build_db(datafile,dbname):
+    dataframe=pd.read_excel(datafile) #使用pandas解析上传的文件，存储在dataframe
+    #数据处理
+    dataframe=dataframe.dropna() #删除内容中的所有空值行，提高数据质量
+    # 将内容，列名中的空格替换为下划线，使列名更规范
+    dataframe.columns =[col.replace(&#x27; &#x27;,&#x27;_&#x27;) for col in dataframe.columns]
+
+    #创建sqlite数据库
+    conn =sqlite3.connect(f&#x27;{dbname}.db&#x27;)
+    #将dataframe中的数据写入到数据库的mytable表中，若存在则替换，不写入索引列
+    dataframe.to_sql(&#x27;mytable&#x27;,conn,if_exists=&#x27;replace&#x27;,index=False)
+    cursor =conn.cursor()
+    cursor.execute(&quot;select name from sqlite_master where type=&#x27;table&#x27; and name=&#x27;mytable&#x27;&quot;)
+    tables =cursor.fetchall()
+    if tables:
+        gr.Info(&#x27;数据库创建成功&#x27;,duration=2)
+    else:
+        gr.Info(&#x27;数据库创建失败&#x27;,duration=2)
+
+    conn.close() #释放资源
+
+
+
+def user(question,history:list):
+    if len(history) ==0 :
+        prompt =&quot;&quot;&quot;
+            你是一个高考志愿智能问答系统，对于用户提问的问题，你需要按照给出的【查询结果】对问题进行回答。
+            你的回答需要按照以下两个步骤：
+            1.分析用户问题和查询结果，判断是否有【查询结果】可以解答用户的问题，如果有则说明【查询结果】的名称，如果没有，则首先告知用户没有任何可参考的资料，需要主要答案的准确性。
+            2.根据资料内容对问题进行解答，若用户希望根据高考分数得到志愿推荐，那么首先关注学校的投档分，从好的学校推荐，并结合【查询结果】中的学校信息来说明。
+        &quot;&quot;&quot;
+        history.append({&#x27;role&#x27;:&#x27;system&#x27;,&#x27;content&#x27;:prompt})
+    history.append({&#x27;role&#x27;:&#x27;user&#x27;,&#x27;content&#x27;:question})
+    return &quot;&quot;,history
+
+def bot(history:list,dbname):
+    question =history[-1][&#x27;content&#x27;] #获取历史中最后一个用户问题
+    robot =Robot(dbname) #初始化类，创建对象，把数据库名传入
+    result =robot.query_db(question) #调用Robot的query_db函数，返回查询数据库获得结果
+    history[-1][&#x27;content&#x27;]+=f&#x27;\n【查询结果】{result}&#x27; # 将查询结果添加到最后一个用户问题的内容中
+    client =ZhipuAI(api_key=&#x27;6214aaa7fcde44bdbeec762dbed4101c.6ktZ2m9834ZrlAW5&#x27;)
+    resp =client.chat.completions.create(
+        model=&#x27;glm-4&#x27;,
+        messages=history, #将对话历史作为输入消息
+        stream=True #设置为流式返回结果
+    )
+    history[-1][&#x27;content&#x27;] =history[-1][&#x27;content&#x27;].split(&#x27;【查询结果】&#x27;,1)[0].strip()
+    history.append({&#x27;role&#x27;:&#x27;assistant&#x27;,&#x27;content&#x27;:&#x27;&#x27;}) #空助手回答记录
+    for chunk in resp:
+        history[-1][&#x27;content&#x27;]+=chunk.choices[0].delta.content # 逐步将流式返回回答内容添加到助手回答记录中
+        yield history #实时更新聊天界面
+
+
+with gr.Blocks() as demo:
+    with gr.Row():
+        gr.Markdown(&quot;# 高考政策通&quot;)
+    with gr.Row():
+        with gr.Column():
+            chatbot = gr.Chatbot(label=&#x27;对话框&#x27;, type=&quot;messages&quot;, height=500)
+            question = gr.Textbox(label=&#x27;请输入&#x27;)
+            chear_btn = gr.Button(&quot;clear&quot;)
+        with gr.Column():
+            gr.Markdown(&quot;### 数据库构建&quot;)
+            datafile = gr.File(label=&#x27;上传文件&#x27;, type=&#x27;filepath&#x27;)
+            dbname = gr.Textbox(label=&#x27;数据库名称&#x27;)
+            build_btn=gr.Button(&quot;开始构建&quot;)
+            gr.Markdown(&quot;### 数据库选择&quot;)
+            dbchoose = gr.Textbox(label=&#x27;数据库名称&#x27;)
+            with gr.Row():
+                dbdelete_btn = gr.Button(&quot;删除&quot;)
+    #清空按钮事件
+    chear_btn.click(lambda :None,inputs=None,outputs=chatbot,queue=False)
+    question.submit(user,inputs=[question,chatbot],outputs=[question,chatbot]).then(bot,[chatbot,dbchoose],chatbot)
+    build_btn.click(build_db,inputs=[datafile,dbname])
+
+
+demo.launch()</code></pre></details></li></ul><ul id="1c2a551d-035a-801d-bb86-ef543cf81d0e" class="toggle"><li><details open=""><summary>RAG.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c2a551d-035a-8078-b426-fb4bc27587f4" class="code"><code class="language-JavaScript">import sqlite3
+from zhipuai import ZhipuAI
+
+class Robot:
+    def __init__(self,dbname):
+        self.dbname =dbname
+
+    def query_db(self,question):
+        conn =sqlite3.connect(f&#x27;{self.dbname}.db&#x27;) #链接到指定的数据库名  .db
+        cursor =conn.cursor() #创建游标
+        prompt = &quot;&quot;&quot;
+                您是SQL专家级分析师。在适当的时候，根据用户问题和数据库架构生成SQL查询。
+                你的输出有且仅能是字符串类型的SQL查询语句,必须符合sql语句语法，可以执行的语句
+                例如：
+                question：介绍一下北京大学
+                answer：SELECT * FROM mytable WHERE 中文名字 = &#x27;北京大学&#x27;
+
+                数据库架构：
+                database_schema: [
+            {
+                &quot;table&quot;: &quot;mytable&quot;,
+                &quot;columns&quot;: [
+                    {&quot;name&quot;: &quot;中文名字&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;排名&quot;, &quot;type&quot;: &quot;INTEGER&quot;},
+                    {&quot;name&quot;: &quot;简称&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;英文名字&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;学校代码&quot;, &quot;type&quot;: &quot;REAL&quot;},
+                    {&quot;name&quot;: &quot;所在省份&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;所在城区&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;创建时间&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;女生比例&quot;, &quot;type&quot;: &quot;INTEGER&quot;},
+                    {&quot;name&quot;: &quot;男生比例&quot;, &quot;type&quot;: &quot;INTEGER&quot;},
+                    {&quot;name&quot;: &quot;自然类型&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;学校类型&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;所属机构&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;简单标签&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;是否艺术&quot;, &quot;type&quot;: &quot;INTEGER&quot;},
+                    {&quot;name&quot;: &quot;是否985&quot;, &quot;type&quot;: &quot;INTEGER&quot;},
+                    {&quot;name&quot;: &quot;是否211&quot;, &quot;type&quot;: &quot;INTEGER&quot;},
+                    {&quot;name&quot;: &quot;是否国重点&quot;, &quot;type&quot;: &quot;INTEGER&quot;},
+                    {&quot;name&quot;: &quot;是否是私立&quot;, &quot;type&quot;: &quot;INTEGER&quot;},
+                    {&quot;name&quot;: &quot;世界排名&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;排名汇总&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;硕士点&quot;, &quot;type&quot;: &quot;INTEGER&quot;},
+                    {&quot;name&quot;: &quot;博士点&quot;, &quot;type&quot;: &quot;INTEGER&quot;},
+                    {&quot;name&quot;: &quot;世界一流&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;一流大学&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;汇总标签&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;描述&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;本科or专科&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;招办电话&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;电子邮箱&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;通讯地址&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;官网&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;名人&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;评估结果&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;就业情况&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;推荐专业&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;图片ID&quot;, &quot;type&quot;: &quot;INTEGER&quot;},
+                ]
+            }
+        ]
+                &quot;&quot;&quot;
+        clinet =ZhipuAI(api_key=&#x27;6214aaa7fcde44bdbeec762dbed4101c.6ktZ2m9834ZrlAW5&#x27;)
+        response =clinet.chat.completions.create(
+            model=&#x27;glm-4&#x27;,
+            messages=[
+                {&quot;role&quot;:&quot;system&quot;,&quot;content&quot;:prompt},{&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:question}
+            ],
+            stream=False #设置非流式返回结果，一次性获取完成的相应信息
+        )
+        query =response.choices[0].message.content.strip()# 从响应的结果中提取生成的sql语句，去除字符串两端的空白字符
+        print(f&#x27;生成的sql====================={query}&#x27;)
+        cursor.execute(query) # 使用游标执行生成的sql语句
+        results =cursor.fetchall() #获取查询结果，返回所有匹配的行，以列表的形式呈现
+        conn.close()
+        return results</code></pre></details></li></ul><h2 id="1c2a551d-035a-80fe-be51-dfacb154f787" class="">Day03  测验两数据库</h2><ul id="1c2a551d-035a-80f1-b453-d1b922cb871f" class="toggle"><li><details open=""><summary>测验源码</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c2a551d-035a-8054-b898-db859c2c4f49" class="code"><code class="language-JavaScript">import torch
+import dashscope
+from http import HTTPStatus
+import gradio as gr
+import pandas as pd  # 用于数据处理和分析
+import sqlite3
+from zhipuai import ZhipuAI
+import chromadb
+
+def embed_with_qwen(text_list):
+    dashscope.api_key = &#x27;sk-eb40ccf62d6648dc92a16ecff1686efa&#x27;
+    embedding_list = []
+    for text in text_list:
+        resp = dashscope.TextEmbedding.call(
+            model=dashscope.TextEmbedding.Models.text_embedding_v2,
+            input=text
+        )
+        if resp.status_code == HTTPStatus.OK:
+            embedding = resp.output[&#x27;embeddings&#x27;][0][&#x27;embedding&#x27;]
+            embedding_list.append(embedding)
+        else:
+            print(resp)
+            return resp
+    return embedding_list
+
+
+def embed_with_bge(text_list, tokenizer, model):
+    encoded_input = tokenizer(text_list, max_length=512, padding=True, truncation=True, return_tensors=&#x27;pt&#x27;)
+    with torch.no_grad():
+        model_output = model(**encoded_input)
+    sentence_embeddings = model_output[0][:, 0]
+    sentence_embeddings_list = sentence_embeddings.tolist()
+    return sentence_embeddings_list
+
+
+def excel_parse(file):
+    dataframe = pd.read_excel(file)  # 使用pandas解析上传的文件，存储在dataframe
+    # 数据处理
+    dataframe = dataframe.dropna()  # 删除内容中的所有空值行，提高数据质量
+    # 将内容，列名中的空格替换为下划线，使列名更规范
+    dataframe.columns = [col.replace(&#x27; &#x27;, &#x27;_&#x27;) for col in dataframe.columns]
+    print(dataframe)
+    result = []
+    for _, row in dataframe.iterrows():
+        k_qa_content = row[&#x27;name&#x27;]
+        keyword, answer = k_qa_content.split(&#x27;#&#x27;, maxsplit=1)
+        result.append([keyword, answer])
+    return result
+
+
+def run(file_path, dbname):
+    text_list = excel_parse(file_path)
+    print(text_list)
+    keyword_list = []
+    answer_list = []
+    for text in text_list:
+        keyword_list.append(text[0])
+        answer_list.append({&quot;key&quot;: text[1]})
+    embedding_list = embed_with_qwen(keyword_list)
+
+    if type(embedding_list) == list:
+        client = chromadb.HttpClient(host=&#x27;localhost&#x27;, port=8000)
+        collection = client.get_or_create_collection(name=dbname)
+        len_ids = len(text_list)
+        ids_list = [str(dbname) + str(i) for i in range(len_ids)]
+        collection.add(
+            embeddings=embedding_list,
+            documents=keyword_list,
+            metadatas=answer_list,
+            ids=ids_list
+        )
+    else:
+        return &#x27;error&#x27;
+
+    print(&#x27;向量化完成&#x27;)
+    return &#x27;success&#x27;
+
+
+client = chromadb.Client()
+
+
+def chatglm_stream(input_text, history_list):
+    client = ZhipuAI(api_key=&#x27;6214aaa7fcde44bdbeec762dbed4101c.6ktZ2m9834ZrlAW5&#x27;)
+    messages = history_list
+    messages.append({&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: f&quot;{input_text}&quot;})
+    response = client.chat.completions.create(
+        model=&#x27;glm-4&#x27;,
+        messages=messages,
+        stream=True,
+    )
+    for chunk in response:
+        output = chunk.choices[0].delta.content
+        yield output
+
+
+class Robot():
+    def __init__(self):
+        self.embedding = &quot;&quot;
+
+    def RAG(self, input_text, dbname):
+        search_embedding = embed_with_qwen([input_text])
+        collection = client.get_collection(name=dbname)
+        result = collection.query(
+            query_embeddings=search_embedding,
+            n_results=3,
+        )
+        result_all = &quot;&quot;
+        for i in range(len(result[&#x27;documents&#x27;][0])):
+            result_documents = result[&#x27;documents&#x27;][0][i]
+            result_file = result[&#x27;metadatas&#x27;][0][i][&#x27;key&#x27;]
+            result_all += result_documents + f&quot;\n【参考资料】：{result_file}\n\n&quot;
+        return result_all
+
+    def run_test(self):
+        history_list = [{&quot;role&quot;: &quot;system&quot;,
+                         &quot;content&quot;: &quot;你是一个名叫Molly的教育专家，对于用户提问的问题，你需要按照给出的【参考资料】对问题进行回答。你的回答需要按照以下两个步骤：1.分析用户问题和参考资料，判断是否有【参考资料】可以解答用户的问题，如果有则说明【参考资料】的名称，如果没有，则首先告知用户没有任何可参考的资料，需要注意答案的准确性。2.根据资料内容对问题进行解答。&quot;}]
+        while True:
+            input_text = input(&#x27;请输入:&#x27;)
+            if input_text == &#x27;exit&#x27;:
+                break
+            dbname = &#x27;test8899&#x27;
+            result_rag = self.RAG(input_text, dbname)
+            input_text = input_text + f&#x27;参考资料：\n{result_rag}&#x27;
+            result = chatglm_stream(input_text, history_list)
+            result_all = &quot;&quot;
+            for res in result_all:
+                result_all += res
+                print(res, end=&quot;&quot;, flush=True)
+            print(&quot;&quot;)
+            message_input = {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: f&quot;{input_text}&quot;}
+            history_list.append(message_input)
+            message_output = {&quot;role&quot;: &quot;assistant&quot;, &quot;content&quot;: f&quot;{result_all}&quot;}
+            history_list.append(message_output)
+            print(history_list)
+
+
+def get_db_list():
+    collections = client.list_collections()
+    return collections
+
+
+def build_db(file, dbname):
+    try:
+        res = run(file, dbname)
+        if res == &quot;success&quot;:
+            return gr.Info(&quot;数据库创建成功&quot;, duration=5)
+        else:
+            return gr.Error(&quot;数据库创建失败&quot;, duration=5)
+    except Exception as e:
+        print(f&quot;构建数据库出错：{e}&quot;)
+        return gr.Error(&quot;数据库构建失败&quot;, duration=5)
+
+
+def refresh_db_choices():
+    dbList = get_db_list()
+    return gr.update(choices=dbList)
+
+
+def user(user_message, history: list):
+    if len(history) == 0:
+        history.append({&quot;role&quot;: &quot;system&quot;,
+                        &quot;content&quot;: &quot;你是一个名叫Molly的教育专家，对于用户提问的问题，你需要按照给出的【参考资料】对问题进行回答。你的回答需要按照以下两个步骤：1.分析用户问题和参考资料，判断是否有【参考资料】可以解答用户的问题，如果有则说明【参考资料】的名称，如果没有，则首先告知用户没有任何可参考的资料，需要注意答案的准确性。2.根据资料内容对问题进行解答。&quot;})
+    history.append({&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: user_message})
+    return &quot;&quot;, history
+
+
+def bot(history: list, dbname):
+    input_text = history[-1][&#x27;content&#x27;]
+    result_rag = robot.RAG(input_text, dbname)
+    history[-1][&#x27;content&#x27;] += f&quot;\n参考资料：\n{result_rag}&quot;
+    client_zhipu = ZhipuAI(api_key=&#x27;6214aaa7fcde44bdbeec762dbed4101c.6ktZ2m9834ZrlAW5&#x27;)
+    messages = history
+    response = client_zhipu.chat.completions.create(
+        model=&quot;glm-4&quot;,
+        messages=messages,
+        stream=True
+    )
+    parts = history[-1][&#x27;content&#x27;].split(&quot;参考资料：&quot;, 1)
+    history[-1][&#x27;content&#x27;] = parts[0].strip()
+    history.append({&quot;role&quot;: &quot;assistant&quot;, &quot;content&quot;: &quot;&quot;})
+
+    for chunk in response:
+        history[-1][&#x27;content&#x27;] += chunk.choices[0].delta.content
+        yield history
+
+
+robot = Robot()
+dbList = get_db_list()
+
+
+def switch_interface(interface_name):
+    if interface_name == &quot;sqlite3&quot;:
+        return gr.update(visible=True), gr.update(visible=False)
+    elif interface_name == &quot;chroma&quot;:
+        return gr.update(visible=False), gr.update(visible=True)
+switch_interface(&quot;sqlite3&quot;)
+
+class Robot_gaokao:
+    def __init__(self, dbname):
+        self.dbname = dbname
+
+    def query_db(self, question):
+        conn = sqlite3.connect(f&#x27;{self.dbname}.db&#x27;)  # 链接到指定的数据库名  .db
+        cursor = conn.cursor()  # 创建游标
+        prompt = &quot;&quot;&quot;
+                您是SQL专家级分析师。在适当的时候，根据用户问题和数据库架构生成SQL查询。
+                你的输出有且仅能是字符串类型的SQL查询语句,必须符合sql语句语法，可以执行的语句,不允许输出解释性语言
+                例如：
+                question：介绍一下北京大学
+                answer：SELECT * FROM mytable WHERE 中文名字 = &#x27;北京大学&#x27;
+
+                数据库架构：
+                database_schema: [
+            {
+                &quot;table&quot;: &quot;mytable&quot;,
+                &quot;columns&quot;: [
+                    {&quot;name&quot;: &quot;中文名字&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;排名&quot;, &quot;type&quot;: &quot;INTEGER&quot;},
+                    {&quot;name&quot;: &quot;简称&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;英文名字&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;学校代码&quot;, &quot;type&quot;: &quot;REAL&quot;},
+                    {&quot;name&quot;: &quot;所在省份&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;所在城区&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;创建时间&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;女生比例&quot;, &quot;type&quot;: &quot;INTEGER&quot;},
+                    {&quot;name&quot;: &quot;男生比例&quot;, &quot;type&quot;: &quot;INTEGER&quot;},
+                    {&quot;name&quot;: &quot;自然类型&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;学校类型&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;所属机构&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;简单标签&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;是否艺术&quot;, &quot;type&quot;: &quot;INTEGER&quot;},
+                    {&quot;name&quot;: &quot;是否985&quot;, &quot;type&quot;: &quot;INTEGER&quot;},
+                    {&quot;name&quot;: &quot;是否211&quot;, &quot;type&quot;: &quot;INTEGER&quot;},
+                    {&quot;name&quot;: &quot;是否国重点&quot;, &quot;type&quot;: &quot;INTEGER&quot;},
+                    {&quot;name&quot;: &quot;是否是私立&quot;, &quot;type&quot;: &quot;INTEGER&quot;},
+                    {&quot;name&quot;: &quot;世界排名&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;排名汇总&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;硕士点&quot;, &quot;type&quot;: &quot;INTEGER&quot;},
+                    {&quot;name&quot;: &quot;博士点&quot;, &quot;type&quot;: &quot;INTEGER&quot;},
+                    {&quot;name&quot;: &quot;世界一流&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;一流大学&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;汇总标签&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;描述&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;本科or专科&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;招办电话&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;电子邮箱&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;通讯地址&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;官网&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;名人&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;评估结果&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;就业情况&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;推荐专业&quot;, &quot;type&quot;: &quot;TEXT&quot;},
+                    {&quot;name&quot;: &quot;图片ID&quot;, &quot;type&quot;: &quot;INTEGER&quot;},
+                ]
+            }
+        ]
+                &quot;&quot;&quot;
+        client = ZhipuAI(api_key=&#x27;6214aaa7fcde44bdbeec762dbed4101c.6ktZ2m9834ZrlAW5&#x27;)
+        response = client.chat.completions.create(
+            model=&#x27;glm-4&#x27;,
+            messages=[
+                {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: prompt}, {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: question}
+            ],
+            stream=False  # 设置非流式返回结果，一次性获取完成的相应信息
+        )
+        query = response.choices[0].message.content.strip()  # 从响应的结果中提取生成的sql语句，去除字符串两端的空白字符
+        print(f&#x27;生成的sql====================={query}&#x27;)
+        cursor.execute(query)  # 使用游标执行生成的sql语句
+        results = cursor.fetchall()  # 获取查询结果，返回所有匹配的行，以列表的形式呈现
+        conn.close()
+        return results
+
+
+def build_db_gaokao(datafile, dbname):
+    dataframe = pd.read_excel(datafile)  # 使用pandas解析上传的文件，存储在dataframe
+    # 数据处理
+    dataframe = dataframe.dropna()  # 删除内容中的所有空值行，提高数据质量
+    # 将内容，列名中的空格替换为下划线，使列名更规范
+    dataframe.columns = [col.replace(&#x27; &#x27;, &#x27;_&#x27;) for col in dataframe.columns]
+
+    # 创建sqlite数据库
+    conn = sqlite3.connect(f&#x27;{dbname}.db&#x27;)
+    # 将dataframe中的数据写入到数据库的mytable表中，若存在则替换，不写入索引列
+    dataframe.to_sql(&#x27;mytable&#x27;, conn, if_exists=&#x27;replace&#x27;, index=False)
+    cursor = conn.cursor()
+    cursor.execute(&quot;select name from sqlite_master where type=&#x27;table&#x27; and name=&#x27;mytable&#x27;&quot;)
+    tables = cursor.fetchall()
+    if tables:
+        gr.Info(&#x27;数据库创建成功&#x27;, duration=2)
+    else:
+        gr.Info(&#x27;数据库创建失败&#x27;, duration=2)
+
+    conn.close()  # 释放资源
+
+def user_gaokao(question, history: list):
+    if len(history) == 0:
+        prompt = &quot;&quot;&quot;
+            你是一个高考志愿智能问答系统，对于用户提问的问题，你需要按照给出的【查询结果】对问题进行回答。
+            你的回答需要按照以下两个步骤：
+            1.分析用户问题和查询结果，判断是否有【查询结果】可以解答用户的问题，如果有则说明【查询结果】的名称，如果没有，则首先告知用户没有任何可参考的资料，需要主要答案的准确性。
+            2.根据资料内容对问题进行解答，若用户希望根据高考分数得到志愿推荐，那么首先关注学校的投档分，从好的学校推荐，并结合【查询结果】中的学校信息来说明。
+        &quot;&quot;&quot;
+        history.append({&#x27;role&#x27;: &#x27;system&#x27;, &#x27;content&#x27;: prompt})
+    history.append({&#x27;role&#x27;: &#x27;user&#x27;, &#x27;content&#x27;: question})
+    return &quot;&quot;, history
+
+def bot_gaokao(history: list, dbname):
+    question = history[-1][&#x27;content&#x27;]  # 获取历史中最后一个用户问题
+    robot = Robot_gaokao(dbname)  # 初始化类，创建对象，把数据库名传入
+    result = robot.query_db(question)  # 调用Robot的query_db函数，返回查询数据库获得结果
+    history[-1][&#x27;content&#x27;] += f&#x27;\n【查询结果】{result}&#x27;  # 将查询结果添加到最后一个用户问题的内容中
+    client = ZhipuAI(api_key=&#x27;6214aaa7fcde44bdbeec762dbed4101c.6ktZ2m9834ZrlAW5&#x27;)
+    resp = client.chat.completions.create(
+        model=&#x27;glm-4&#x27;,
+        messages=history,  # 将对话历史作为输入消息
+        stream=True  # 设置为流式返回结果
+    )
+    history[-1][&#x27;content&#x27;] = history[-1][&#x27;content&#x27;].split(&#x27;【查询结果】&#x27;, 1)[0].strip()
+    history.append({&#x27;role&#x27;: &#x27;assistant&#x27;, &#x27;content&#x27;: &#x27;&#x27;})  # 空助手回答记录
+    for chunk in resp:
+        history[-1][&#x27;content&#x27;] += chunk.choices[0].delta.content  # 逐步将流式返回回答内容添加到助手回答记录中
+        yield history  # 实时更新聊天界面
+
+
+with gr.Blocks() as demo:
+    with gr.Row():
+        interface_selector = gr.Radio(choices=[&quot;sqlite3&quot;, &quot;chroma&quot;], label=&quot;选择界面&quot;, value=&quot;chroma&quot;)
+    with gr.Row():
+        table_1 = gr.Markdown(&quot;# 高考政策通sqlite3&quot;)
+    with gr.Row():
+        with gr.Column():
+            chatbot_gaokao = gr.Chatbot(label=&#x27;对话框&#x27;, type=&quot;messages&quot;, height=500, visible=True)
+            question_gaokao = gr.Textbox(label=&#x27;请输入&#x27;)
+            chear_btn_gaokao = gr.Button(&quot;clear&quot;)
+        with gr.Column():
+            t_1 = gr.Markdown(&quot;### 数据库构建&quot;)
+            datafile_gaokao = gr.File(label=&#x27;上传文件&#x27;, type=&#x27;filepath&#x27;)
+            build_btn_gaokao = gr.Button(&quot;开始构建&quot;)
+            dbname_gaokao = gr.Textbox(label=&#x27;数据库名称&#x27;)
+            tt_1 = gr.Markdown(&quot;### 数据库选择&quot;)
+            dbchoose_gaokao = gr.Textbox(label=&#x27;数据库名称&#x27;)
+            with gr.Row():
+                dbdelete_btn_gaokao = gr.Button(&quot;删除&quot;)
+
+    with gr.Row():
+        table_2 = gr.Markdown(&quot;# 高考政策通chroma&quot;)
+    with gr.Row():
+        with gr.Column(scale=2):
+            chatbot_001_beifen = gr.Chatbot(type=&quot;messages&quot;, label=&#x27;对话框&#x27;, height=500, visible=False)
+            question_001_beifen = gr.Textbox(label=&#x27;请输入&#x27;)
+            clear_btn_001_beifen = gr.Button(&quot;clear&quot;)
+        with gr.Column(scale=1):
+            t_2 = gr.Markdown(&quot;### 数据库构建&quot;)
+            datafile_001_beifen = gr.File(type=&quot;filepath&quot;, label=&quot;上传文件&quot;)
+            dbname_001_beifen = gr.Textbox(label=&#x27;数据库名称&#x27;)
+            build_btn_001_beifen = gr.Button(&quot;开始构建&quot;)
+            tt_2 = gr.Markdown(&quot;### 数据库选择&quot;)
+            dbchoose_001_beifen = gr.Dropdown(choices=get_db_list(), label=&quot;数据库名称&quot;)
+            dbrefresh_btn_001_beifen = gr.Button(&quot;刷新&quot;)
+
+
+
+    chear_btn_gaokao.click(lambda: None, inputs=None, outputs=chatbot_gaokao, queue=False)
+    question_gaokao.submit(user_gaokao, inputs=[question_gaokao, chatbot_gaokao], outputs=[question_gaokao, chatbot_gaokao]).then(bot_gaokao, [chatbot_gaokao, dbchoose_gaokao], chatbot_gaokao)
+    build_btn_gaokao.click(build_db_gaokao, inputs=[datafile_gaokao, dbname_gaokao])
+
+    clear_btn_001_beifen.click(lambda: None, None, chatbot_001_beifen, queue=False)
+    question_001_beifen.submit(user, [question_001_beifen, chatbot_001_beifen], [question_001_beifen, chatbot_001_beifen], queue=False).then(bot, [chatbot_001_beifen, dbchoose_001_beifen], chatbot_001_beifen)
+    build_btn_001_beifen.click(build_db, [datafile_001_beifen, dbname_001_beifen], [])
+    dbrefresh_btn_001_beifen.click(refresh_db_choices, outputs=dbchoose_001_beifen)
+
+    interface_selector.change(switch_interface, inputs=interface_selector, outputs=[chatbot_gaokao, chatbot_001_beifen])
+    interface_selector.change(switch_interface, inputs=interface_selector, outputs=[question_gaokao, question_001_beifen])
+    interface_selector.change(switch_interface, inputs=interface_selector, outputs=[chear_btn_gaokao, clear_btn_001_beifen])
+    interface_selector.change(switch_interface, inputs=interface_selector, outputs=[t_1, t_2])
+    interface_selector.change(switch_interface, inputs=interface_selector, outputs=[datafile_gaokao, datafile_001_beifen])
+    interface_selector.change(switch_interface, inputs=interface_selector, outputs=[build_btn_gaokao, dbname_001_beifen])
+    interface_selector.change(switch_interface, inputs=interface_selector, outputs=[tt_1, build_btn_001_beifen])
+    interface_selector.change(switch_interface, inputs=interface_selector, outputs=[dbchoose_gaokao, tt_2])
+    interface_selector.change(switch_interface, inputs=interface_selector, outputs=[dbdelete_btn_gaokao, dbchoose_001_beifen])
+    interface_selector.change(switch_interface, inputs=interface_selector, outputs=[dbname_gaokao, dbrefresh_btn_001_beifen])
+    interface_selector.change(switch_interface, inputs=interface_selector, outputs=[table_1, table_2])
+
+demo.launch()
+</code></pre></details></li></ul><ul id="1c2a551d-035a-800b-9b6b-c9069bb3f867" class="toggle"><li><details open=""><summary>文件</summary><figure id="1c2a551d-035a-8046-9570-f1ccdffd06e5"><div class="source"><a href="1_%E5%A4%A7%E5%AD%A6%E9%99%A2%E6%A0%A1%E5%9F%BA%E7%A1%80%E4%BF%A1%E6%81%AF.xlsx">attachment:3987becd-5bb1-4604-bb61-df77ec136c52:1_大学院校基础信息.xlsx</a></div></figure></details></li></ul><h2 id="1c2a551d-035a-80ed-8692-e56cfed61d66" class="">Day05  Neo4j</h2><ul id="1cea551d-035a-8083-9e43-f63bf7b61937" class="toggle"><li><details open=""><summary>项目压缩包小说助手</summary><figure id="1cfa551d-035a-807a-b029-d02c54b235ec"><div class="source"><a href="https://www.notion.soundefined"></a></div></figure></details></li></ul><h2 id="1cea551d-035a-80a3-9099-f409ceca8849" class="">Day01  autogen+chainlit</h2><ul id="1cea551d-035a-8036-8594-c799fd082485" class="toggle"><li><details open=""><summary>text.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cea551d-035a-8099-9485-cbe0bdfbe4d4" class="code"><code class="language-JavaScript">import chainlit as cl
+from autogen_agentchat.agents import AssistantAgent
+from autogen_agentchat.conditions import MaxMessageTermination, TextMentionTermination
+
+from autogen_agentchat.teams import SelectorGroupChat
+from autogen_ext.models.openai import OpenAIChatCompletionClient
+import os
+
+# 仨模型全是免费的，随便跑，可惜deepseek是蒸馏版本的，因为有深度思考的thinking所以没用上
+model_data = {
+    &quot;qianwen&quot;: {
+        &quot;model&quot;: &quot;Qwen/Qwen2.5-7B-Instruct&quot;,
+        &quot;base_url&quot;: &quot;https://api.siliconflow.cn/v1&quot;,
+    },
+    &quot;deepseek&quot;: {
+        &quot;model&quot;: &quot;deepseek-ai/DeepSeek-R1-Distill-Qwen-7B&quot;,
+        &quot;base_url&quot;: &quot;https://api.siliconflow.cn/v1&quot;,
+    },
+    &quot;zhipu&quot;: {
+        &quot;model&quot;: &quot;THUDM/glm-4-9b-chat&quot;,
+        &quot;base_url&quot;: &quot;https://api.siliconflow.cn/v1&quot;,
+    }
+}
+api_key = os.getenv(&quot;GUIJI_API&quot;)
+
+def bd_chat_client(tags: str):
+    client = OpenAIChatCompletionClient(
+        model=model_data[tags][&quot;model&quot;],
+        base_url=model_data[tags][&quot;base_url&quot;],
+        api_key=api_key,
+        model_info={
+            &quot;name&quot;: tags,
+            &quot;vision&quot;: False,
+            &quot;function_calling&quot;: True,
+            &quot;json_output&quot;: True,
+            &quot;family&quot;: &quot;unknown&quot;,
+            &quot;structured_output&quot;: False
+        }
+    )
+    return client
+
+# 写进来一起创建了客户端，但是写完发现
+# 客户端只是我要的一个过程半成品，想要的产品其实是他们代表的agent，先实现功能，以后再看怎么改符合设计模式
+qianwen_client = bd_chat_client(&quot;qianwen&quot;)
+deepseek_client = bd_chat_client(&quot;deepseek&quot;)
+zhipu_client = bd_chat_client(&quot;zhipu&quot;)
+#正好蒸馏的模型代表性低，就用deepseek来当裁判罢
+caipan_agent = AssistantAgent(
+    &quot;caipan&quot;,
+    description = &quot;辩论的裁判，用于提示各agent的发言顺序，并且产出辩论终点标识 &#x27;END&#x27; &quot;,
+    model_client = qianwen_client,
+    system_message = &quot;&quot;&quot;
+    # 角色
+    你是一场辩论赛的裁判，要主持一场&quot;千问和质谱的大模型谁更好&quot;的辩论赛
+    # 任务
+    1. 根据当前对话历史分析前一个发言内容
+    2. 轮流提示两位选手进行针对性回应
+    3. 当检测到脏话或达到10轮时，立即输出&quot;END&quot;结束辩论
+    # 规则
+    - 首轮发言由用户指定
+    - 后续发言需分析前一个选手的论点进行反驳
+    - 每次只提示当前应该发言的选手
+    - 在输出最后加上以下字符：&#x27;——裁判&#x27;
+    &quot;&quot;&quot;
+)
+qianwen_agent = AssistantAgent(
+    &quot;qianwen&quot;,
+    description = &quot;主张千问大模型更好的选手&quot;,
+    model_client = qianwen_client,
+    system_message = &quot;&quot;&quot;
+    # 角色
+    你是一场辩论赛的选手，要参加一场&quot;千问和质谱的大模型谁更好用&quot;的辩论赛，你的目的是强调千问比质谱更好用
+    # 任务
+    以辩论赛的角度发言，根据对方的言论做针对性回答和反制
+    # 限制
+    -只输出辩论内容，不输出任何解释性语言
+    -每次发言不能超过100个字
+    -在输出最后加上以下字符：&#x27;——千问选手&#x27;
+    &quot;&quot;&quot;
+)
+zhipu_agent = AssistantAgent(
+    &quot;zhipu&quot;,
+    description = &quot;主张质谱大模型更好的选手&quot;,
+    model_client = zhipu_client,
+    system_message = &quot;&quot;&quot;
+    # 角色
+    你是一场辩论赛的选手，要参加一场&quot;千问和质谱的大模型谁更好&quot;的辩论赛，你的目的是强调质谱比千问更好用
+    # 任务
+    以辩论赛的角度发言，根据对方的言论做针对性回答和反制
+    # 限制
+    -只输出辩论内容，不输出任何解释性语言
+    -每次发言不能超过100个字
+    -在输出最后加上以下字符：&#x27;——质谱选手&#x27;
+    &quot;&quot;&quot;
+)
+
+
+@cl.on_chat_start
+async def main():
+    await cl.Message(content = &quot;你好，这边是千问，deepseek和质谱的一次辩（吵）论（架），请您指定谁先发言？&quot;).send()
+
+text_mention_termination = TextMentionTermination(&quot;END&quot;)  # 修改终止词为&quot;END&quot;
+messageTermination = MaxMessageTermination(max_messages=25)
+team = SelectorGroupChat(
+    [caipan_agent, qianwen_agent, zhipu_agent],
+    model_client = deepseek_client,
+    termination_condition = MaxMessageTermination(max_messages=10),
+)
+
+
+async def run_steam(query:str):
+    
+    response_stream = team.run_stream(task=query)
+    
+    async for msg in response_stream:
+        if hasattr(msg, &quot;source&quot;) and msg.source != &quot;user&quot; and hasattr(msg, &quot;content&quot;):
+            msg_cl = cl.Message(content=msg.content, author=msg.source)
+            await msg_cl.send()
+
+@cl.on_message
+async def main(message: cl.Message):
+    await run_steam(message.content)</code></pre></details></li></ul><ul id="1cea551d-035a-8005-bdc8-e9a1de86a974" class="toggle"><li><details open=""><summary>课堂演示代码</summary><ul id="1cea551d-035a-802c-9934-e19473064d58" class="toggle"><li><details open=""><summary>quickstart.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cea551d-035a-802e-8035-dcd4e66b4708" class="code"><code class="language-JavaScript">import os
+#这个类用户创建可进行对话的智能体
+from autogen import ConversableAgent
+
+# os.environ[&quot;DEEPSEEK_API_KEY&quot;]=&quot;sk-19a6e044d00c4962b62434ec87302a87&quot;
+#
+# os.environ[&quot;DEEPSEEK_API_BASE&quot;]=&quot;https://api.deepseek.com/v1&quot;
+
+api_key = os.getenv(&#x27;GUIJI_API&#x27;)
+
+#创建ConversableAgent对象实例-创建智能体
+agent =ConversableAgent(
+    &quot;chatbot&quot;,
+    #设置大语言模型相关信息
+    llm_config={
+        &quot;config_list&quot;:[{
+            &quot;model&quot;:&quot;THUDM/glm-4-9b-chat&quot;,
+            &quot;api_key&quot;:api_key,
+            &quot;base_url&quot;:&quot;https://api.siliconflow.cn/v1&quot;
+        }]
+    },
+    #代码执行配置，关闭代码执行功能
+    code_execution_config=False,
+    #函数映射配置，设置为None，表示没有注册任何函数
+    function_map=None,
+    #人工输入模式,任何情况喜爱都不会请求人工输入
+    human_input_mode=&quot;NEVER&quot;
+)
+#调用agent.generate_reply，生成回复
+#messages 消息列表，每个消息是个字典
+reply=agent.generate_reply(messages=[{&quot;content&quot;:&quot;给我讲一个笑话&quot;,&quot;role&quot;:&quot;user&quot;}])
+print(reply)</code></pre></details></li></ul><ul id="1cea551d-035a-80c7-90b0-f59650d10e88" class="toggle"><li><details open=""><summary>demo1.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cea551d-035a-80a9-b569-d1d33550416b" class="code"><code class="language-JavaScript">#简单对话系统，用户代理智能体可以向助手智能体发送问题，助手智能体借助deepseek 模型给出回答。
+import os
+#UserProxyAgent 用户模拟用户与其他智能体进行交互
+#AssistantAgent 提供回答和协助的智能体
+from autogen import UserProxyAgent,AssistantAgent
+
+from autogen_ext.models.openai import OpenAIChatCompletionClient
+
+#配置模型信息
+model_info={
+    &quot;name&quot;:&quot;deepseek-chat&quot;, #设置模型名称
+    &quot;parameters&quot;:{
+        &quot;max_tokens&quot;:2048, #每次输出最大的token数,deepseek官方数据: 1个英文字符约等于0.3个token，1个中文字符约等于0.6个token。
+        &quot;temperature&quot;:0.4, #模型随机参数，数字越大，生成的结果随机性越大，一般为0.7。
+                            # 如果想要ai提供更多的想法，调大数字
+        &quot;top_p&quot;:0.9, #模型随机参数,接近1时：模型几乎考虑所有的词，只有概率极低的词才会排除，随机性也就越强.
+                    # 接近0时：只有概率非常高的极少数词会被考虑，这会使模型的输出变得非常保守和确定
+    },
+    &quot;family&quot;:&quot;unknown&quot;, #模型类别
+    &quot;functions&quot;:[], #如果模型支持函数调用，可以在这里定义函数信息
+    &quot;vision&quot;:False, #必填字段,标识模型是否支持图像输入，False不支持
+    &quot;json_output&quot;:True,#是否支持json格式输出，True表示支持
+    &quot;function_calling&quot;:True, #必填字段，标识模型是否支持函数的调用，如果模型需要使用工具函数，该字段为True
+    &quot;structured_out&quot;:False #结构化数据，设置为不输出
+}
+
+#创建模型客户端
+model_client =OpenAIChatCompletionClient(
+    model=&quot;deepseek-chat&quot;,
+    base_url=&quot;https://api.deepseek.com&quot;,
+    api_key=&quot;sk-19a6e044d00c4962b62434ec87302a87&quot;,
+    model_info=model_info #传入之前配置的模型信息
+)
+
+#创建用户代理智能体，模拟用户与其他智能体进行交互
+user_proxy=UserProxyAgent(
+    name=&quot;user_proxy&quot;,
+    human_input_mode=&quot;NEVER&quot;, #不需要人工输入
+    code_execution_config={&quot;use_docker&quot;:False} # 设置为不使用Docker
+)
+
+#助手智能体用于回答和协助
+assistant_agent=AssistantAgent(
+    &quot;assistant&quot;,
+    llm_config={
+        &quot;config_list&quot;:[{
+            &quot;model&quot;:&quot;deepseek-chat&quot;,
+            &quot;api_key&quot;:&quot;sk-19a6e044d00c4962b62434ec87302a87&quot;,
+            &quot;base_url&quot; : &quot;https://api.deepseek.com&quot;
+        }]
+    },
+    system_message=&quot;你是一个有用的助手，能回答各种问题.&quot;
+)
+
+#用户代理发送的消息内容，用于启动与助手智能体的对话
+message=&quot;请告诉我一些有趣的事实.&quot;
+#用户代理智能体发送与助手智能体的聊天，发送消息
+user_proxy.initiate_chat(
+    assistant_agent,message=message
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</code></pre></details></li></ul><ul id="1cea551d-035a-8048-9ecc-e1cd7878d4df" class="toggle"><li><details open=""><summary>demo2.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cea551d-035a-8080-a68d-edc0ccfb8db3" class="code"><code class="language-JavaScript">#简单对话系统，用户代理智能体可以向助手智能体发送问题，助手智能体借助deepseek 模型给出回答。
+import os
+#UserProxyAgent 用户模拟用户与其他智能体进行交互
+#AssistantAgent 提供回答和协助的智能体
+from autogen import UserProxyAgent,AssistantAgent
+
+from autogen_ext.models.openai import OpenAIChatCompletionClient
+
+#配置模型信息
+model_info={
+    &quot;name&quot;:&quot;deepseek-chat&quot;, #设置模型名称
+    &quot;parameters&quot;:{
+        &quot;max_tokens&quot;:2048, #每次输出最大的token数,deepseek官方数据: 1个英文字符约等于0.3个token，1个中文字符约等于0.6个token。
+        &quot;temperature&quot;:0.4, #模型随机参数，数字越大，生成的结果随机性越大，一般为0.7。
+                            # 如果想要ai提供更多的想法，调大数字
+        &quot;top_p&quot;:0.9, #模型随机参数,接近1时：模型几乎考虑所有的词，只有概率极低的词才会排除，随机性也就越强.
+                    # 接近0时：只有概率非常高的极少数词会被考虑，这会使模型的输出变得非常保守和确定
+    },
+    &quot;family&quot;:&quot;unknown&quot;, #模型类别
+    &quot;functions&quot;:[], #如果模型支持函数调用，可以在这里定义函数信息
+    &quot;vision&quot;:False, #必填字段,标识模型是否支持图像输入，False不支持
+    &quot;json_output&quot;:True,#是否支持json格式输出，True表示支持
+    &quot;function_calling&quot;:True, #必填字段，标识模型是否支持函数的调用，如果模型需要使用工具函数，该字段为True
+    &quot;structured_out&quot;:False #结构化数据，设置为不输出
+}
+
+#创建模型客户端
+model_client =OpenAIChatCompletionClient(
+    model=&quot;deepseek-chat&quot;,
+    base_url=&quot;https://api.deepseek.com&quot;,
+    api_key=&quot;sk-19a6e044d00c4962b62434ec87302a87&quot;,
+    model_info=model_info #传入之前配置的模型信息
+)
+
+#创建用户代理智能体，模拟用户与其他智能体进行交互
+user_proxy=UserProxyAgent(
+    name=&quot;user_proxy&quot;,
+    human_input_mode=&quot;NEVER&quot;, #不需要人工输入
+    code_execution_config={&quot;use_docker&quot;:False} # 设置为不使用Docker
+)
+
+#助手智能体用于回答和协助
+assistant_agent=AssistantAgent(
+    &quot;assistant&quot;,
+    llm_config={
+        &quot;config_list&quot;:[{
+            &quot;model&quot;:&quot;deepseek-chat&quot;,
+            &quot;api_key&quot;:&quot;sk-19a6e044d00c4962b62434ec87302a87&quot;,
+            &quot;base_url&quot; : &quot;https://api.deepseek.com&quot;
+        }]
+    },
+    system_message=&quot;你是一个有用的助手，能回答各种问题.&quot;
+)
+
+#用户代理发送的消息内容，用于启动与助手智能体的对话
+message=&quot;请告诉我一些有趣的事实.&quot;
+#用户代理智能体发送与助手智能体的聊天，发送消息
+user_proxy.initiate_chat(
+    assistant_agent,message=message
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</code></pre></details></li></ul><ul id="1cea551d-035a-8075-b8cd-e42972621291" class="toggle"><li><details open=""><summary>demo3.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cea551d-035a-8076-999f-f18003e3b45d" class="code"><code class="language-JavaScript">#构建交互式俩天应用
+import chainlit as cl
+
+from autogen_agentchat.agents import AssistantAgent
+
+#MaxMessageTermination 设置消息对话上限，达到上限时终止对话
+#TextMentionTermination 包含特定文本时终止对话
+from autogen_agentchat.conditions import MaxMessageTermination,TextMentionTermination
+#创建一个智能体团队，实现团队内智能体之间的协作对话
+from autogen_agentchat.teams import SelectorGroupChat
+from autogen_ext.models.openai import OpenAIChatCompletionClient
+model_client =OpenAIChatCompletionClient(
+    model=&quot;deepseek-chat&quot;,
+    base_url=&quot;https://api.deepseek.com&quot;,
+    api_key=&quot;sk-19a6e044d00c4962b62434ec87302a87&quot;,
+    model_info={
+        &quot;vision&quot;:False,
+        &quot;function_calling&quot;:True,
+        &quot;json_output&quot;:True,
+        &quot;family&quot;:&quot;unknown&quot;
+    } #传入之前配置的模型信息
+)
+
+#创建一个规划团队智能体实例
+planning_agent=AssistantAgent(
+    &quot;PlanningAgent&quot;,
+    #说明该智能体用途
+    description=&quot;用于规划的Agent,当一个任务到达时此Agent是第一个参与者&quot;,
+    #指定使用的模型客户端
+    model_client=model_client,
+    system_message=&quot;&quot;&quot;
+     你是一个任务规划智能体。
+    你的工作是将复杂的任务分解为更小的、可管理的子任务。
+    你的团队成员有3个，分别是：
+        DentalPulpAgent: 牙体牙髓科智能体
+        RestorativeAgent: 牙齿修复科智能体
+        DentalImplantAgent: 牙齿种植科智能体
+
+    你只计划和委派任务，而不自己执行它们
+
+    分配任务时，请使用此格式:
+    1. &lt;agent&gt; : &lt;task&gt;
+
+    当所有智能体把任务完成后，再总结结果以&quot;TERMINATE&quot;结束。 
+    &quot;&quot;&quot;
+)
+
+#创建一个牙体牙髓科智能体
+dental_pulp_agent =AssistantAgent(
+    &quot;DentalPulpAgent&quot;,
+    description=&quot;牙体牙髓科智能体&quot;,
+    model_client=model_client,
+    system_message=&quot;&quot;&quot;
+    你是一个口腔医院的牙体牙髓科智能体。
+    你可以解答关于牙体牙髓科中患者提出的问题，你的解答非常专业，且可靠.
+    &quot;&quot;&quot;
+)
+#创建一个牙齿修复科智能体
+restorative_agent =AssistantAgent(
+    &quot;RestorativeAgent&quot;,
+    description=&quot;牙齿修复科智能体&quot;,
+    model_client=model_client,
+    system_message=&quot;&quot;&quot;
+    你是一个口腔医院的牙齿修复科智能体。
+    你可以解答关于牙齿修复科中患者提出的问题，比如牙冠、烤瓷牙修复等。你的解答非常专业，且可靠.
+    &quot;&quot;&quot;
+)
+#创建一个牙体牙髓科智能体
+dental_implant_agent =AssistantAgent(
+    &quot;DentalImplantAgent&quot;,
+    description=&quot;牙齿种植科智能体&quot;,
+    model_client=model_client,
+    system_message=&quot;&quot;&quot;
+    你是一个口腔医院的牙齿种植科智能体。
+    你可以解答关于牙齿种植科中患者提出的问题，你的解答非常专业，且可靠.
+    &quot;&quot;&quot;
+)
+
+#当聊天开始时，执行下面异步函数
+@cl.on_chat_start
+async def main():
+    await cl.Message(content=&quot;你好，这里是口腔医院专家团队，有什么可以帮你？&quot;).send()
+
+async def run_steam(query:str):
+    #终止词3
+    text_mention_termination=TextMentionTermination(&quot;TERMINATE&quot;)
+    #设置对话上限
+    messageTermination=MaxMessageTermination(max_messages=25)
+
+    team =SelectorGroupChat(
+        #团队成员列表
+        [planning_agent,dental_pulp_agent,restorative_agent,dental_implant_agent],
+        model_client=model_client,
+        #设置对话终止条件
+        termination_condition=messageTermination,
+    )
+
+    #调用团队的run_stream函数，以流式方式运行，处理用户的查询
+    #返回异步生成器对象
+    response_stream=team.run_stream(task=query)
+
+    #使用异步for玄幻遍历流式响应
+    async for msg in response_stream:
+        #检查消息对象有没有source属性，且消息来源不时用户
+        #检查消息对象是否有content属性
+        if hasattr(msg,&quot;source&quot;) and msg.source !=&quot;user&quot; and hasattr(msg,&quot;content&quot;):
+            #创建一个chainlit的消息实例，内容为消息对象的内容，作者为消息来源
+            msg =cl.Message(content=msg.content,author=msg.source)
+            #异步发送该消息给用户
+            await msg.send()
+
+#提高效率与响应性，与chainlit框架兼容
+@cl.on_message
+async def main(message:cl.Message):
+    #调用run_steam函数，将用户消息的内容作为查询传递给智能体团队，进行处理
+    await run_steam(message.content)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</code></pre></details></li></ul></details></li></ul><h2 id="1cfa551d-035a-80f4-b158-fdaf70e4ed1f" class="">Day02  langchain+openai镜像</h2><ul id="1cfa551d-035a-800f-bfe3-f79258f12353" class="toggle"><li><details open=""><summary>langchain+openai镜像</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cfa551d-035a-8039-8c25-df843aa20df3" class="code"><code class="language-JavaScript">#添加历史聊天记录
+
+#存储和管理聊天 消息历史记录
+from langchain_community.chat_message_histories import ChatMessageHistory
+#它是聊天消息历史记录类的基类
+from langchain_core.chat_history import BaseChatMessageHistory
+#让模型在运行时结合聊天消息历史记录
+from langchain_core.runnables.history import RunnableWithMessageHistory
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import HumanMessage,SystemMessage
+import os
+
+# 一个免费api列表，按顺序轮流检查，使用第一个可用的api;
+# 后面发现免费的openai镜像再在后面追加
+# 第一个注释掉的是测试无效跳过功能用的，注释保留了
+llm_api = {
+    # &quot;bug_text&quot;: {
+    #     &quot;api_key&quot;: &quot;hk-e&quot;,
+    #     &quot;base&quot;: &quot;https://api.com&quot;
+    # },
+    # 这个GPT-API-free是从github上面发现的项目，也是用的openai协议，按每天的免费次数算的
+    &quot;GPT-API-free&quot;: {
+        &quot;api_key&quot;: &quot;sk-WsX5IosThRA057bUxujAHKSH9YMRtG0Rgq7IRBsYKMfCECFP&quot;,
+        &quot;base&quot;: &quot;https://api.chatanywhere.tech&quot;
+    },
+    # 注释一下备忘：这个是按账号总余额算的，赠费一美元，用一点少一点不再增加
+    &quot;OpenAI-HK&quot;: {
+        &quot;api_key&quot;: &quot;hk-ev8m741000053754530c9d59b22b9986f2f3726d962d6926&quot;,
+        &quot;base&quot;: &quot;https://api.openai-hk.com&quot;
+    },
+}
+
+#此函数使用了课堂代码test01.py的基础用法，invoke快速使用:
+def try_api_getmodel():
+    for _, value in llm_api.items():
+        try:
+            os.environ[&quot;OPENAI_API_KEY&quot;] = value[&quot;api_key&quot;]
+            os.environ[&quot;OPENAI_API_BASE&quot;] = value[&quot;base&quot;]
+
+            model_try = ChatOpenAI(model = &quot;gpt-3.5-turbo&quot;)
+            # 节省token，只返回一个数字做连通性检查
+            print(model_try.invoke([SystemMessage(content=&quot;只能输出数字字符，不要输出任何其他字符和解释性内容&quot;),
+                                HumanMessage(content = &quot;你好，请输出阿拉伯数字1&quot;)]).content)
+            return model_try
+        except:
+            continue
+model = try_api_getmodel()
+
+#给总记忆字典改了个名
+memory_all = {}
+def get_session_history(session_id: str) -&gt; BaseChatMessageHistory:
+    if session_id not in memory_all:
+        memory_all[session_id] = ChatMessageHistory()
+    return memory_all[session_id]
+
+with_message_history = RunnableWithMessageHistory(model, get_session_history)
+config_person_1 = {&quot;configurable&quot;: {&quot;session_id&quot;: &quot;person_1&quot;}}
+config_person_2 = {&quot;configurable&quot;: {&quot;session_id&quot;: &quot;person_2&quot;}}
+response = with_message_history.invoke(
+    [
+        SystemMessage(content = &quot;请你重复输出用户输入给你的话，并在最后加上以下字符&#x27;——大模型回答&#x27;&quot;),
+        HumanMessage(content = &quot;person1的第 一 次输入&quot;)
+    ],
+    config = config_person_1,
+)
+with_message_history.invoke(
+    [
+        SystemMessage(content = &quot;请你重复输出用户输入给你的话，并在最后加上以下字符&#x27;——大模型回答&#x27;&quot;),
+        HumanMessage(content = &quot;person1的第 二 次输入&quot;)
+    ],
+    config = config_person_1
+)
+with_message_history.invoke(
+    [
+        SystemMessage(content = &quot;请你重复输出用户输入给你的话，并在最后加上以下字符&#x27;——大模型回答&#x27;&quot;),
+        HumanMessage(content = &quot;person2的第 一 次输入&quot;)
+    ],
+    config = config_person_2,
+)
+# 我想看看记忆字典的结构，怎么存的
+for key, value in memory_all.items():
+    print(key)
+    print(value)
+    print(&quot;=&quot;*50+&quot;person记忆隔离线&quot;+&quot;=&quot;*50)# 按person的分割线
+#
+# os.environ[&quot;OPENAI_API_KEY&quot;]=&#x27;你的api_key&#x27;
+# os.environ[&quot;OPENAI_API_BASE&quot;]=&#x27;https://api.openai-hk.com/v1&#x27;
+# #创建openai的实例
+# model=ChatOpenAI(model=&quot;gpt-3.5-turbo&quot;)
+#
+# #顶一个字典store，用于存储不同会话的聊天历史记录
+# store={}
+#
+# #用于根据会话id获取对应的聊天消息历史记录
+# #输入参数session_id 是一个字符串，表示会话的唯一标识
+# def get_session_history(session_id:str) -&gt;BaseChatMessageHistory:
+#     #检查会话id是否不在store字典中
+#     if session_id not in store:
+#         #如果不存在，为该会话id创建一个新的ChatMessageHistory实例并存储到store中
+#         store[session_id] =ChatMessageHistory()
+#     return  store[session_id]
+#
+# #创建RunnableWithMessageHistory类的实例
+# #将之前创建的model和get_session_history函数传入，在运行模型时结合聊天消息历史记录
+# with_message_history=RunnableWithMessageHistory(model,get_session_history)
+#
+# #配置字典config，用于指定会话id， 会话id：第一个对话
+# config={&quot;configurable&quot;:{&quot;session_id&quot;:&quot;第一个对话&quot;}}
+#
+# #调用with_message_history的invoke方法，向模型发送消息
+# #传入一个包含HumanMessage实体列表,代表用户的消息内容
+# #同时传入配置字典config
+# response=with_message_history.invoke(
+#     [HumanMessage(content=&quot;你好，我叫tom&quot;)],
+#     config=config,
+# )
+#
+# #打印模型回复内容
+# print(response.content)
+#
+# #同一个会话“第一个对话”，提问，模型根据历史记录回答我叫什么
+# response=with_message_history.invoke(
+#     [HumanMessage(content=&quot;我叫什么名字?&quot;)],
+#     config=config,
+# )
+#
+# print(response.content)
+#
+# #配置字典config，将回话id改为：第二个对话
+# config={&quot;configurable&quot;:{&quot;session_id&quot;:&quot;第二个对话&quot;}}
+#
+# #第二个对话提问
+# response=with_message_history.invoke(
+#     [HumanMessage(content=&quot;我是谁？&quot;)],
+#     config=config,
+# )
+#
+# print(response.content)</code></pre></details></li></ul><ul id="1cfa551d-035a-80f1-992b-f3414c683ae3" class="toggle"><li><details open=""><summary>langchain链的用法和流式输出</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cfa551d-035a-80b2-97dd-da29a44aa8e2" class="code"><code class="language-JavaScript">from langchain_community.chat_message_histories import ChatMessageHistory
+from langchain_core.chat_history import BaseChatMessageHistory
+from langchain_core.runnables.history import RunnableWithMessageHistory
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import HumanMessage, SystemMessage
+import os
+
+llm_data = {
+    # 这个GPT-API-free是从github上面发现的项目，也是用的openai协议，按每天的免费次数算的
+    &quot;GPT-API-free&quot;: {
+        &quot;api_key&quot;: &quot;sk-WsX5IosThRA057bUxujAHKSH9YMRtG0Rgq7IRBsYKMfCECFP&quot;,
+        &quot;base&quot;: &quot;https://api.chatanywhere.tech&quot;
+    },
+    # 注释一下备忘：这个是按账号总余额算的，赠费一美元，用一点少一点不再增加
+    &quot;OpenAI-HK&quot;: {
+        &quot;api_key&quot;: &quot;hk-ev8m741000053754530c9d59b22b9986f2f3726d962d6926&quot;,
+        &quot;base&quot;: &quot;https://api.openai-hk.com&quot;
+    },
+}
+
+# 这回没把模型写死,把前面的也改了
+def try_get_model(model_name: str):
+    for _, value in llm_data.items():
+        try:
+            os.environ[&quot;OPENAI_API_KEY&quot;] = value[&quot;api_key&quot;]
+            os.environ[&quot;OPENAI_API_BASE&quot;] = value[&quot;base&quot;]
+            model_try = ChatOpenAI(model = model_name)
+            # 一样，先用response来检查联通性，毕竟这样是多api通用的
+            model_try.invoke([
+                SystemMessage(content = &quot;只允许按要求输出阿拉伯数字，不允许输出任何其他字符&quot;),
+                HumanMessage(content = &quot;请输出数字1&quot;)])
+            return model_try
+        except:
+            continue
+
+model = try_get_model(&quot;gpt-3.5-turbo&quot;)
+
+prompt = ChatPromptTemplate.from_messages(
+    [
+        (
+            &quot;system&quot;,
+            &quot;语言请按{language}回答&quot;
+        ),
+        MessagesPlaceholder(variable_name = &quot;messages&quot;),
+    ],
+)
+
+# 链的用法， | 是管道操作符，负责连接
+chain = prompt | model
+for response in chain.stream({&quot;messages&quot;: [HumanMessage(content = &quot;你好,给我写首歌词&quot;)], &quot;language&quot;: &quot;English&quot;}):
+    print(response.content, end = &quot;&quot;)
+
+memory = {}
+
+def get_session_history(session_id: str) -&gt; BaseChatMessageHistory:
+    if session_id not in memory:
+        memory[session_id] = ChatMessageHistory()
+    return memory[session_id]
+
+with_message_history = RunnableWithMessageHistory(
+    chain,
+    get_session_history,
+    input_messages_key = &quot;messages&quot;,
+)
+
+messages = {
+    &quot;messages&quot;: [HumanMessage(content = &quot;你好，写首诗给我&quot;)],
+    &quot;language&quot;: &quot;火星文&quot;
+}
+for response in chain.stream(messages):
+    print(response.content, end = &quot;&quot;)</code></pre></details></li></ul><ul id="1d0a551d-035a-8038-8ae1-c402874f87a3" class="toggle"><li><details open=""><summary>链的进阶用法</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d0a551d-035a-80ff-8869-f65d6e6699de" class="code"><code class="language-JavaScript">#RAG实现
+from langchain_chroma import Chroma
+from langchain_openai import ChatOpenAI
+from langchain_openai import OpenAIEmbeddings
+from langchain_core.documents import Document
+import os
+
+os.environ[&#x27;OPENAI_API_KEY&#x27;] = &#x27;hk-tmixsf100005368923ebf9dce1f21fc86aea24943d6cedbf&#x27;
+os.environ[&quot;OPENAI_API_BASE&quot;] = &quot;https://api.openai-hk.com/v1&quot;
+model =ChatOpenAI(model=&#x27;gpt-3.5-turbo&#x27;)
+
+#================================
+#1.数据准备阶段
+#代码厉创建了文档列表documents，这些文档可被看做是知识源
+#运用Chroma 向量数据库，借助OpenAIEmbeddings把文档转化为向量形式并存储，这样就可以进行高效的相似性检索
+#================================
+documents=[
+    Document(page_content=&quot;Molly是一个人工智能教育机器人。&quot;,metadata={&quot;source&quot;:&quot;ai-doc&quot;}),
+    Document(page_content=&quot;《快乐星球》是一部早期的电视剧.&quot;,metadata={&quot;source&quot;:&quot;ai-doc&quot;}),
+    Document(page_content=&quot;NBA比赛实况&quot;,metadata={&quot;source&quot;:&quot;nba-doc&quot;})
+    #可以添加更多的其他文档
+]
+#Chroma两种工作模式: 客户端-服务器模式，本地嵌入式模式(不需要开启服务,在python进程中直接运行)
+#使用Chroma类的from_documents函数创建一个向量存储对象
+#将文档列表和OpenAIEmbeddings 实例 传入，将文档转换为向量并存储在Chroma数据库中
+vectorstore=Chroma.from_documents(
+    documents,
+    embedding=OpenAIEmbeddings(),
+)
+
+#================================
+#2.检索阶段
+#构建1个检索器retriever,对向量数据库vectorstore的similarity_search方法的封装，每次检索返回最相似的一个结果（k=1）
+#================================
+from langchain_core.runnables import RunnableLambda
+#创建检索器
+retriever =RunnableLambda(vectorstore.similarity_search).bind(k=1)
+
+#使用检索器的batch，批量处理多个查询，返回与每个查询最相似的文档
+response=retriever.batch([&quot;Molly是什么？&quot;,&quot;什么是快乐星球&quot;])
+print(response)
+
+#================================
+#3. 生成阶段
+#定义一个提示词模版prompt,作用是把问题和检索到的上下文组合成一个完整的提示信息
+#================================
+#创建聊天提示模版
+from langchain_core.prompts import ChatPromptTemplate
+#直接传递输入
+from langchain_core.runnables import RunnablePassthrough
+model =ChatOpenAI(model=&#x27;gpt-3.5-turbo&#x27;)
+
+#定义一个消息模版，构建提示消息
+#要求回答问题时仅使用提供的上下文，包含问题和上下文两个变量
+message=&quot;&quot;&quot;
+回答这个问题，只使用提供的上下文
+
+{question}
+
+上下文:
+{context}
+&quot;&quot;&quot;
+#ChatPromptTemplate的from_messages函数创建一个提示模板对象
+#将消息包装成一个人类消息
+prompt =ChatPromptTemplate.from_messages([(&quot;human&quot;,message)])
+
+#================================
+#4.RAG链的构建与执行
+#创建rag_chain对象，它会把输入的问题传递给检索器获取上下文，同时将问题本身也传递下去。
+#接着把上下文和问题组合成提示信息，最后将消息传递给ChatOpenAI模型进行推理
+#================================
+rag_chain={&quot;context&quot;:retriever,&quot;question&quot;:RunnablePassthrough()} | prompt | model
+#链对象处理一个问题，获取模型的回复
+response=rag_chain.invoke(&quot;告诉我关于Molly的信息&quot;)
+#打印回复内容
+print(response)
+
+
+
+
+
+
+
+
+
+
+
+
+</code></pre></details></li></ul><h2 id="1d0a551d-035a-80a4-a6ec-dbf9c832890b" class="">Day03  langchain工具调用（自定义+api）</h2><ul id="1d0a551d-035a-806d-85e5-cc7fa0da907d" class="toggle"><li><details open=""><summary>test01.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d0a551d-035a-800b-a10c-efe07089238b" class="code"><code class="language-Python">#单次工具调用
+#工具类，用于执行Tavily搜索
+from langchain_community.tools.tavily_search import TavilySearchResults
+import os
+
+#设置TAVILY API秘钥，调用搜索服务所需的凭证
+# 是专门做LLM的搜索引擎工具的平台
+os.environ[&quot;TAVILY_API_KEY&quot;] = os.getenv(&quot;TAVILY_API&quot;)
+
+#定义函数，用于获取搜索结果
+#query参数，代表要搜索的查询内容
+def get_search_results(query:str):
+    #创建一个实例，设置最大的返回数结果为2
+    search =TavilySearchResults(max_resules=2)
+    #调用实例的invoke方法，传入查询内容，获取搜索结果
+    result=search.invoke(query)
+    #返回结果
+    return result
+
+#调用get_search_results函数，传入搜索内容，打印返回结果
+print(get_search_results(&quot;NBA比赛结果&quot;))
+
+#调用大模型进行回答
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import HumanMessage,SystemMessage
+import  os
+os.environ[&quot;OPENAI_API_KEY&quot;]=&quot;sk-WsX5IosThRA057bUxujAHKSH9YMRtG0Rgq7IRBsYKMfCECFP&quot;
+os.environ[&quot;OPENAI_API_BASE&quot;]=&quot;https://api.chatanywhere.tech&quot;
+model=ChatOpenAI(model=&quot;gpt-3.5-turbo&quot;)
+
+input_message=input(&quot;请输入你要查询的问题:&quot;)
+#调用函数，传入从键盘输入的问题,返回结果
+result =get_search_results(input_message)
+#构建一个消息列表，用于与大模型进行交互
+messages=[
+    #提示大模型询问的是体育赛事结果
+    SystemMessage(content=&quot;询问体育赛事结果&quot;),
+    #用户消息，包含互联网搜索结果和用户的原始问题，让大模型根据搜索结果回答问题
+    HumanMessage(content=f&quot;互联网查询结果:{result}\n\n&quot;f&quot;根据以上结果回答问题:{input_message}&quot;)
+]
+
+# 我换成流式输出了，避免等待时间过长影响排查问题
+for res in model.stream(messages):
+    print(res.content, end = &quot;&quot;)</code></pre></details></li></ul><ul id="1d0a551d-035a-80e9-9ab9-d98b6cee58e6" class="toggle"><li><details open=""><summary>test02.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d0a551d-035a-8078-86c7-e7dfef661bac" class="code"><code class="language-Python">#自定义工具
+import os
+from langchain_core.tools import tool
+from langchain_openai import ChatOpenAI
+#使用数学相关的函数
+import  math
+
+#@tool 装饰器 将下面的函数转换为langchain工具
+@tool
+def caluculate_sphere_volume(radius):
+    &quot;&quot;&quot;
+    此函数用于计算球体的体积。
+
+    参数:
+    radius (float): 球体的半径。
+
+    返回:
+    float: 球体的体积。
+    &quot;&quot;&quot;
+    #球体体积  radius 球体半径, 返回 float 的球体体积
+    return (4/3) * math.pi * radius **3
+
+#绑定工具列表，通常会使用多个工具，当前只有一个
+tools=[caluculate_sphere_volume]
+
+#初始化工具输出结果
+tool_output=0.0
+#从键盘接收一个问题
+input_message =input(&quot;请输入一个问题:&quot;)
+
+os.environ[&quot;OPENAI_API_KEY&quot;]=&#x27;你的api&#x27;
+os.environ[&quot;OPENAI_API_BASE&quot;]=&#x27;https://api.openai-hk.com/v1&#x27;
+model=ChatOpenAI(model=&quot;gpt-3.5-turbo&quot;)
+#将模型与工具列表绑定了，模型可以调用列表中的工具
+model_with_tools=model.bind_tools(tools)
+#调用绑定工具的模型，传入用户输入的问题，让模型根据问题决定是否调用工具并生成响应
+ai_msg=model_with_tools.invoke(input_message)
+#查看响应结果
+#print(ai_msg)
+
+#解析模型响应中调用工具的相关信息
+for tool_call in ai_msg.tool_calls:
+    #字典中的键值对获取
+    selected_tool={&quot;caluculate_sphere_volume&quot;:caluculate_sphere_volume}[tool_call[&#x27;name&#x27;].lower()]
+    #调用选中的工具函数，传入工具调用时的参数，将工具计算的结果赋值给tool_output变量
+    tool_output=selected_tool.invoke(tool_call[&#x27;args&#x27;])
+    #打印，查看工具计算结果
+    print(tool_output)
+
+#不使用工具，直接调用模型对用户输入的问题进行响应
+result_without_tools=model.invoke(input_message)
+print(&quot;不使用工具：&quot;,result_without_tools.content)
+
+#使用工具计算得到结果，将用户的问题和工具计算结果组合成新的输入，再次调用模型,要求模型直接回答结果，不加入推理
+result_with_tools=model.invoke(f&quot;{input_message},计算结果是:{tool_output},请直接回答这个结果，不加入自己的推理步骤&quot;)
+print(&quot;使用工具：&quot;,result_with_tools.content)
+</code></pre></details></li></ul><ul id="1d0a551d-035a-80a6-a202-dfe4dbf8fcd9" class="toggle"><li><details open=""><summary>zuoye.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d0a551d-035a-80cb-acb9-e5cbde756f3e" class="code"><code class="language-Python">from langchain_community.tools.tavily_search import TavilySearchResults
+import os
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import HumanMessage, SystemMessage
+from langchain_core.tools import tool
+import math
+
+os.environ[&quot;TAVILY_API_KEY&quot;] = os.getenv(&quot;TAVILY_API_KEY&quot;)
+all_openai_api_data = {
+    &quot;bug_test&quot;: {
+        &quot;api_key&quot;: &quot;balbalbal&quot;,
+        &quot;base_url&quot;: &quot;https......&quot;
+    },
+    &quot;GPT-API-free&quot;: {
+        &quot;api_key&quot;: os.getenv(&quot;GPT-API-free_API_KEY&quot;),
+        &quot;base_url&quot;: os.getenv(&quot;GPT-API-free_BASE_URL&quot;)
+    },
+    &quot;OpenAI-HK&quot;:{
+        &quot;api_key&quot;: os.getenv(&quot;OpenAI-HK_API_KEY&quot;),
+        &quot;base_url&quot;: os.getenv(&quot;OpenAI-HK_BASE_URL&quot;)
+    },
+}
+
+def try_api_bd_model(model_name: str) -&gt; ChatOpenAI | None:
+    for key, value in all_openai_api_data.items():
+        try:
+            os.environ[&quot;OPENAI_API_KEY&quot;] = value[&quot;api_key&quot;]
+            os.environ[&quot;OPENAI_API_BASE&quot;] = value[&quot;base_url&quot;]
+            model_try = ChatOpenAI(model = model_name)
+            model_try.invoke(&quot;请输出数字字符：&#x27;1&#x27;，不要输出任何其他字符，也不要输出任何其他内容以及解释性语言&quot;)
+            print(f&quot;目前使用的是【{key}】平台的api&quot;)
+            return model_try
+        except:
+            print(f&quot;{key}平台的api已经失效，建议替换，正在测试检查下一组api的连通性&quot;)
+            continue
+    print(&quot;已经没有可用的api了...建议检查网络&quot;)
+
+model = try_api_bd_model(&quot;gpt-3.5-turbo&quot;)
+# 这个实例放进函数里的话每次调用都新创建一个实例...拿出来之后发现函数只剩一行了...
+# 于是直接用原本的search功能了
+# 于是函数部分我打算用在langchain的tool工具里，把两个范例写到一起吧,用api的这个也写进自定义函数里
+# 第一个范例的query就先写死了
+search = TavilySearchResults(max_results = 2)
+
+# query = input(&quot;请输入你要查询的问题：&quot;)
+query = &quot;今年气候对比往年怎么样？&quot;
+
+print(&quot;正在使用联网查询气候问题，请等待..&quot;)
+result = search.invoke(query)
+print(&quot;查找气候问题完毕，正在给llm总结..&quot;)
+messages = [
+    SystemMessage(content = &quot;根据联网的查询结果回答用户的问题&quot;),
+    HumanMessage(content = f&quot;联网查询结果:[{result}],用户问题：[{query}]&quot;)
+]
+
+print(model.invoke(messages).content)
+# for res in model.stream(messages):
+#     print(res.content, end = &quot;&quot;)
+
+
+# 自定义工具就写成这样了,类型也改了一下
+@tool
+def search_net(query: str) -&gt; str:
+    &quot;&quot;&quot;
+    执行网络查询并返回结果摘要。
+
+    参数:
+    - query (str): 需要搜索的查询字符串
+
+    返回:
+    - str: 搜索结果的文本摘要（包含标题、URL 和内容）
+    &quot;&quot;&quot;
+    print(&quot;正在联网查询您的问题，请等待..\n&quot;)
+    res = search.invoke(query)
+    print(&quot;查找问题完毕，正在给llm总结..\n&quot;)
+    return res
+
+tools = [search_net]
+
+tool_output = &quot;&quot;
+
+model_with_tools = model.bind_tools(tools)
+print()
+print(&quot;=&quot;*200)
+print()
+print()
+query = input(&quot;请输入一个问题(记得提示模型要联网查询，不然模型判断可能不会选择调用联网工具):&quot;)
+
+response = model_with_tools.invoke(query)
+
+# # 流式解析content信息，但是用绑定过工具的model流式输出就报错，然后想起来还要拼接...
+# print(&quot;解析content信息（流式）:&quot;)
+# for res in model_with_tools.stream(query):
+#     print(res.content, end = &quot;&quot;)
+# print(&quot;=&quot;*200)
+
+# 流式解析工具调用信息
+print(&quot;查看工具调用信息（列表里只有字典元素,...假装这样写stream就是流式）:&quot;)
+for tool_call in response.tool_calls:
+    selected_tool = {&quot;search_net&quot;: search_net}[tool_call[&quot;name&quot;].lower()]
+    for tool_output in selected_tool.stream(tool_call[&quot;args&quot;]):
+        print(tool_output, end = &quot;&quot;)
+print()
+print(&quot;=&quot;*200)
+print()
+
+print(&quot;查看工具查到的网页的content:&quot;)
+for tool_call in response.tool_calls:
+    selected_tool = {&quot;search_net&quot;: search_net}[tool_call[&quot;name&quot;].lower()]
+    tool_output = selected_tool.invoke(tool_call[&quot;args&quot;])
+    # 这里把每个网页的字典都遍历一遍，查看其中的content，其实只有两个
+    for tool_output_page in tool_output:
+        print(f&quot;网页{tool_output_page[&#x27;url&#x27;]}的content为：\n{tool_output_page[&#x27;content&#x27;]}&quot;, end = &quot;\n\n&quot;)
+print()
+print(&quot;=&quot;*200)
+print()
+# 这里再做流式输出吧
+print(&quot;LLM总结网页结果回答为：&quot;)
+for res in model.stream(f&quot;用户问题为[{query}],参考资料为：[{tool_output}]，请参照参考资料回答用户问题&quot;):
+    print(res.content, end = &quot;&quot;)</code></pre></details></li></ul><p id="1d0a551d-035a-80e6-9094-ef45cda5151a" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
