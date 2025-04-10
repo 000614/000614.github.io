@@ -4048,6 +4048,7 @@ def try_api_bd_model(model_name: str) -&gt; ChatOpenAI | None:
     print(&quot;已经没有可用的api了...建议检查网络&quot;)
 
 # 封装起来变成接口？这个思路是这么回事儿吗？
+# 不是不是，误打误撞的简单工厂模式
 class TryChat:
     def try_bd_model(self, model_name):
         return try_api_bd_model(model_name)
