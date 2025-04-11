@@ -4057,5 +4057,262 @@ class TryChat:
 if __name__ == &quot;__main__&quot;:
 # try_api_bd_model(&quot;gpt-3.5-turbo&quot;)
     client = TryChat()
-    model = client.try_bd_model(&quot;gpt-3.5-turbo&quot;)</code></pre></details></li></ul><p id="1d1a551d-035a-80fb-8c59-ee993ae35863" class="">
+    model = client.try_bd_model(&quot;gpt-3.5-turbo&quot;)</code></pre></details></li></ul><h2 id="1d2a551d-035a-8066-bceb-e316500c9ec4" class="">Day05  项目练习</h2><ul id="1d1a551d-035a-80fb-8c59-ee993ae35863" class="toggle"><li><details open=""><summary>houduan.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d2a551d-035a-80e1-b025-c2db953ec202" class="code"><code class="language-Python">from abc import ABCMeta, abstractmethod
+import requests
+import openai
+import json
+import os
+from zhipuai import ZhipuAI
+# 昨天刷到了接口隔离的用法，而且要先写接口，今天，尝尝咸淡，看看是不是可读性杠杠的
+# # 工具列表整个接口
+# class ZhipuAI_tools(metaclass = ABCMeta):
+#     @abstractmethod
+#     def zhipu_tools_list(self):
+#         pass
+# class OpenAI_tools(metaclass = ABCMeta):
+#     @abstractmethod
+#     def openai_tools_list(self):
+#         pass
+
+# 工具函数也整个接口：查股票信息的,查nba球星的
+# 写着写着后来发现，外部需要调用的好像只有个回答，写这些接口意义不大
+class ZhipuAI_Tools_Function(metaclass = ABCMeta):
+    @abstractmethod
+    def get_stock_info(self,gid):
+        pass
+    @abstractmethod
+    def get_nba_name(self,nba_name):
+        pass
+
+class OpenAI_Tools_Function(metaclass = ABCMeta):
+    @abstractmethod
+    def get_stock_info(self,gid):
+        pass
+    @abstractmethod
+    def get_nba_name(self, nba_name):
+        pass
+
+# 打算在这，把最终要调用的，和要输出的，用接口限制一下，意义点应该是在这里吧...
+
+class ZhipuAI_Res(metaclass = ABCMeta):
+    @abstractmethod
+    def get_response_withtool(self, input: str) -&gt; str:
+        pass
+class OpenAI_Res(metaclass = ABCMeta):
+    @abstractmethod
+    def get_response_withtool(self, input: str) -&gt; str:
+        pass
+
+
+class Zhipu_Manager(ZhipuAI_Tools_Function, ZhipuAI_Res):
+    def __init__(self):
+        self.tools_data =  [
+            {
+                &quot;type&quot;: &quot;function&quot;,
+                &quot;function&quot;: {
+                    &quot;name&quot;: &quot;get_stock_info&quot;,
+                    &quot;description&quot;: &quot;根据股票编号, 查询该股票信息&quot;,
+                    &quot;parameters&quot;: {
+                        &quot;type&quot;: &quot;object&quot;,
+                        &quot;properties&quot;: {
+                            &quot;gid&quot;: {
+                                &quot;type&quot;: &quot;string&quot;,
+                                &quot;description&quot;: &quot;股票编号，上海股市以sh开头，深圳股市以sz开头&quot;,
+                            },
+                        },
+                        &quot;required&quot;: [&quot;gid&quot;]
+                    },
+                },
+            },
+            {
+                &quot;type&quot;: &quot;function&quot;,
+                &quot;function&quot;: {
+                    &quot;name&quot;: &quot;get_nba_company&quot;,
+                    &quot;description&quot;: &quot;根据NBA球队名称，查询该球队头号球星的信息&quot;,
+                    &quot;parameters&quot;: {
+                        &quot;type&quot;: &quot;object&quot;,
+                        &quot;properties&quot;: {
+                            &quot;nba_name&quot;: {
+                                &quot;type&quot;: &quot;string&quot;,
+                                &quot;description&quot;: &quot;NBA球队名称&quot;
+                            },
+                        },
+                        &quot;required&quot;: [&quot;nba_name&quot;]
+                    },
+                }
+            },
+        ]
+    def get_stock_info(self,gid):
+        url = &quot;http://web.juhe.cn/finance/stock/hs&quot;
+        key = os.getenv(&quot;JUHE_API_KEY&quot;)
+        url = url + f&quot;?key = {key}&amp;gid = {gid}&quot;
+        # headers = {
+        #     &#x27;User-Agent&#x27;: &#x27;Apifox/1.0.0 (https://apifox.com)&#x27;,
+        # }
+        requestParams = {
+            &#x27;key&#x27;: key,
+            &#x27;gid&#x27;: gid,
+            # &#x27;type&#x27;: &#x27;&#x27;,
+        }
+        response = requests.get(url=url, params=requestParams)
+        return response.text
+    def get_nba_name(self,nba_name):
+        return {&quot;nba_company&quot;: &quot;勒布朗詹姆斯&quot;}
+    def get_response_withtool(self,input: str):
+        client = ZhipuAI(api_key=os.getenv(&quot;ZHIPU_API_KEY&quot;))
+        messages = []
+        messages.append({
+            &quot;role&quot;: &quot;system&quot;,
+            &quot;content&quot;: &quot;不要假设或猜测传入函数的参数值。如果用户的描述不明确，请要求用户提供必要信息&quot;
+        })
+        messages.append({
+            &quot;role&quot;: &quot;user&quot;,
+            &quot;content&quot;: input
+        })
+
+        response = client.chat.completions.create(
+            model=&quot;glm-4&quot;,
+            messages=messages,
+            tools=self.tools_data,
+        )
+        # 模型响应
+        print(response)
+
+        messages.append(response.choices[0].message.model_dump())
+
+        if response.choices[0].message.tool_calls:
+            tool_call = response.choices[0].message.tool_calls[0]
+            args = tool_call.function.arguments
+            function_result = {}
+
+            if tool_call.function.name == &quot;get_stock_info&quot;:
+                function_result = self.get_stock_info(**json.loads(args))
+
+            messages.append({
+                &quot;role&quot;: &quot;tool&quot;,
+                &quot;content&quot;: json.dumps(function_result),
+                &quot;tool_call_id&quot;: tool_call.id,
+            })
+
+            response = client.chat.completions.create(
+                model=&quot;glm-4&quot;,
+                messages=messages,
+                tools=self.tools_data,
+            )
+
+            message = response.choices[0].message
+
+            messages.append({
+                &quot;role&quot;: &quot;system&quot;,
+                &quot;content&quot;: str(message)
+            })
+            final_response = client.chat.completions.create(
+                model=&quot;glm-4&quot;,
+                messages=messages,
+            )
+
+            return final_response.choices[0].message.content
+        # 这个一会儿加 messages.append(response.choices[0].message.model_dump())
+
+class OpenAI_Manager(OpenAI_Tools_Function, OpenAI_Res):
+    def __init__(self):
+        self.tools_data = [
+            {
+                &quot;name&quot;: &quot;get_stock_info&quot;,
+                &quot;description&quot;: &quot;根据股票编号, 查询该股票信息&quot;,
+                &quot;parameters&quot;: {
+                    &quot;type&quot;: &quot;object&quot;,
+                    &quot;properties&quot;: {
+                        &quot;gid&quot;: {
+                            &quot;type&quot;: &quot;string&quot;,
+                            &quot;description&quot;: &quot;股票编号，上海股市以sh开头，深圳股市以sz开头&quot;
+                        }
+                    },
+                    &quot;required&quot;: [&quot;gid&quot;]
+                }
+            },
+            {
+                &quot;name&quot;: &quot;get_nba_company&quot;,
+                &quot;description&quot;: &quot;根据NBA球队名称，查询该球队头号球星的信息&quot;,
+                &quot;parameters&quot;: {
+                    &quot;type&quot;: &quot;object&quot;,
+                    &quot;properties&quot;: {
+                        &quot;nba_name&quot;: {
+                            &quot;type&quot;: &quot;string&quot;,
+                            &quot;description&quot;: &quot;NBA球队名称&quot;
+                        }
+                    },
+                    &quot;required&quot;: [&quot;nba_name&quot;]
+                }
+            }
+        ]
+    def get_stock_info(self, gid):
+        url = &quot;http://web.juhe.cn/finance/stock/hs&quot;
+        key = &quot;6b0359443b8e679effb1e2b01f98b628&quot;
+        url = url + f&quot;?key={key}&amp;gid={gid}&quot;
+
+        headers = {
+            &#x27;User-Agent&#x27;: &#x27;Apifox/1.0.0 (https://apifox.com)&#x27;,
+        }
+        # response = requests.request(&quot;GET&quot;, url, headers=headers)
+        response = requests.get(url=url, headers=headers)
+        return response.text
+    def get_nba_name(self, nba_name):
+        return {&quot;nba_company&quot;: &quot;勒布朗詹姆斯&quot;}
+    def get_response_withtool(self, input: str):
+        input = &quot;请帮我查询下NBA洛杉矶湖人队有哪些球星?&quot;
+
+        openai.base_url = &quot;https://api.openai-hk.com/v1/&quot;
+        openai.api_key = &quot;hk-tmixsf100005368923ebf9dce1f21fc86aea24943d6cedbf&quot;
+        # 创建消息
+        messages = [
+            {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: input}
+            # {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;请帮我查询下股票编号为sh601009的信息?&quot;}
+        ]
+
+        response = openai.chat.completions.create(
+            model=&quot;gpt-3.5-turbo&quot;,
+            messages=messages,
+            functions=self.tools_data,
+            function_call=&quot;auto&quot;,
+        )
+
+        print(response)  # 解析响应
+
+        message = response.choices[0].message
+
+        if message.function_call:
+            function_name = message.function_call.name
+            arguments = message.function_call.arguments
+
+            if function_name == &quot;get_stock_info&quot;:
+                gid = json.loads(arguments)[&quot;gid&quot;]
+                stock_info = self.get_stock_info(gid)
+                print(&quot;大模型解析了我们提出的问题，并自动调用&#x27;get stock info&#x27;函数获取股票信息:\n&quot;, stock_info)
+                messages.append({
+                    &quot;role&quot;: &quot;function&quot;,
+                    &quot;name&quot;: function_name,
+                    &quot;content&quot;: str(stock_info)
+                })
+            elif function_name == &quot;get_nba_company&quot;:
+                nba_name = json.loads(arguments)[&quot;nba_name&quot;]
+                nba_company = self.get_nba_name(nba_name)
+                print(&quot;大模型解析了我们提出的问题，并自动调用&#x27;get_nba_company&#x27;函数获取球星信息:\n&quot;, nba_company)
+
+                messages.append({
+                    &quot;role&quot;: &quot;function&quot;,
+                    &quot;name&quot;: function_name,
+                    &quot;content&quot;: str(nba_company)
+                })
+            final_response = openai.chat.completions.create(
+                model=&quot;gpt-3.5-turbo&quot;,
+                messages=messages,
+            )
+            return final_response.choices[0].message.content
+
+if __name__ == &quot;__main__&quot;:
+    openai_client = OpenAI_Manager()
+    print(openai_client.get_response_withtool(&quot;请帮我查询下NBA洛杉矶湖人队有哪些球星?&quot;))
+    zhipuai_client = Zhipu_Manager()
+    print(zhipuai_client.get_response_withtool(&quot;请帮我查询下股票编号为sh601009的信息&quot;))</code></pre></details></li></ul><p id="1d2a551d-035a-805b-93ac-e017535d5de3" class="">
 </p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
