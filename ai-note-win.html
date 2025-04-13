@@ -4081,7 +4081,7 @@ class ZhipuAI_Tools_Function(metaclass = ABCMeta):
     def get_stock_info(self,gid):
         pass
     @abstractmethod
-    def get_nba_name(self,nba_name):
+    def get_nba_company(self,nba_name):
         pass
 
 class OpenAI_Tools_Function(metaclass = ABCMeta):
@@ -4089,7 +4089,7 @@ class OpenAI_Tools_Function(metaclass = ABCMeta):
     def get_stock_info(self,gid):
         pass
     @abstractmethod
-    def get_nba_name(self, nba_name):
+    def get_nba_company(self, nba_name):
         pass
 
 # 打算在这，把最终要调用的，和要输出的，用接口限制一下，意义点应该是在这里吧...
@@ -4128,7 +4128,7 @@ class Zhipu_Manager(ZhipuAI_Tools_Function, ZhipuAI_Res):
                 &quot;type&quot;: &quot;function&quot;,
                 &quot;function&quot;: {
                     &quot;name&quot;: &quot;get_nba_company&quot;,
-                    &quot;description&quot;: &quot;根据NBA球队名称，查询该球队头号球星的信息&quot;,
+                    &quot;description&quot;: &quot;根据NBA球队名称，查询该球队所拥有球星的信息&quot;,
                     &quot;parameters&quot;: {
                         &quot;type&quot;: &quot;object&quot;,
                         &quot;properties&quot;: {
@@ -4156,7 +4156,7 @@ class Zhipu_Manager(ZhipuAI_Tools_Function, ZhipuAI_Res):
         }
         response = requests.get(url=url, params=requestParams)
         return response.text
-    def get_nba_name(self,nba_name):
+    def get_nba_company(self,nba_name):
         return {&quot;nba_company&quot;: &quot;勒布朗詹姆斯&quot;}
     def get_response_withtool(self,input: str):
         client = ZhipuAI(api_key=os.getenv(&quot;ZHIPU_API_KEY&quot;))
@@ -4187,6 +4187,8 @@ class Zhipu_Manager(ZhipuAI_Tools_Function, ZhipuAI_Res):
 
             if tool_call.function.name == &quot;get_stock_info&quot;:
                 function_result = self.get_stock_info(**json.loads(args))
+            elif tool_call.function.name == &quot;get_nba_company&quot;:
+                function_result = self.get_nba_company(**json.loads(args))
 
             messages.append({
                 &quot;role&quot;: &quot;tool&quot;,
@@ -4210,7 +4212,8 @@ class Zhipu_Manager(ZhipuAI_Tools_Function, ZhipuAI_Res):
                 model=&quot;glm-4&quot;,
                 messages=messages,
             )
-
+            if final_response.choices[0].message.content is None:
+                return &quot;未找到相关信息&quot;  # 避免None报错
             return final_response.choices[0].message.content
         # 这个一会儿加 messages.append(response.choices[0].message.model_dump())
 
@@ -4248,7 +4251,7 @@ class OpenAI_Manager(OpenAI_Tools_Function, OpenAI_Res):
         ]
     def get_stock_info(self, gid):
         url = &quot;http://web.juhe.cn/finance/stock/hs&quot;
-        key = &quot;6b0359443b8e679effb1e2b01f98b628&quot;
+        key = os.getenv(&quot;JUHE_API_KEY&quot;)
         url = url + f&quot;?key={key}&amp;gid={gid}&quot;
 
         headers = {
@@ -4257,13 +4260,12 @@ class OpenAI_Manager(OpenAI_Tools_Function, OpenAI_Res):
         # response = requests.request(&quot;GET&quot;, url, headers=headers)
         response = requests.get(url=url, headers=headers)
         return response.text
-    def get_nba_name(self, nba_name):
+    def get_nba_company(self, nba_name):
         return {&quot;nba_company&quot;: &quot;勒布朗詹姆斯&quot;}
     def get_response_withtool(self, input: str):
-        input = &quot;请帮我查询下NBA洛杉矶湖人队有哪些球星?&quot;
 
-        openai.base_url = &quot;https://api.openai-hk.com/v1/&quot;
-        openai.api_key = &quot;hk-tmixsf100005368923ebf9dce1f21fc86aea24943d6cedbf&quot;
+        openai.base_url = os.getenv(&quot;GPT-API-free_BASE_URL&quot;)
+        openai.api_key = os.getenv(&quot;GPT-API-free_API_KEY&quot;)
         # 创建消息
         messages = [
             {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: input}
@@ -4296,7 +4298,7 @@ class OpenAI_Manager(OpenAI_Tools_Function, OpenAI_Res):
                 })
             elif function_name == &quot;get_nba_company&quot;:
                 nba_name = json.loads(arguments)[&quot;nba_name&quot;]
-                nba_company = self.get_nba_name(nba_name)
+                nba_company = self.get_nba_company(nba_name)
                 print(&quot;大模型解析了我们提出的问题，并自动调用&#x27;get_nba_company&#x27;函数获取球星信息:\n&quot;, nba_company)
 
                 messages.append({
@@ -4308,11 +4310,70 @@ class OpenAI_Manager(OpenAI_Tools_Function, OpenAI_Res):
                 model=&quot;gpt-3.5-turbo&quot;,
                 messages=messages,
             )
+            if final_response is None:
+                return &quot;未找到相关信息&quot;  # 避免None报错
             return final_response.choices[0].message.content
 
 if __name__ == &quot;__main__&quot;:
-    openai_client = OpenAI_Manager()
-    print(openai_client.get_response_withtool(&quot;请帮我查询下NBA洛杉矶湖人队有哪些球星?&quot;))
-    zhipuai_client = Zhipu_Manager()
-    print(zhipuai_client.get_response_withtool(&quot;请帮我查询下股票编号为sh601009的信息&quot;))</code></pre></details></li></ul><p id="1d2a551d-035a-805b-93ac-e017535d5de3" class="">
+    # client = OpenAI_Manager()
+    client = Zhipu_Manager()
+    print(client.get_response_withtool(&quot;请帮我查询下NBA洛杉矶湖人队有哪些球星?&quot;))
+    # zhipuai_client = Zhipu_Manager()
+    # print(zhipuai_client.get_response_withtool(&quot;请帮我查询下股票编号为sh601009的信息&quot;))
+    # zhipuai_client = Zhipu_Manager()
+    # print(zhipuai_client.get_response_withtool(&quot;请帮我查询下股票编号为sh601009的信息&quot;))</code></pre></details></li></ul><ul id="1d2a551d-035a-802d-853d-d306055ff903" class="toggle"><li><details open=""><summary>main.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d2a551d-035a-80dc-b74b-e8fd2933a03d" class="code"><code class="language-Python">import gradio as gr
+# 这俩manager是已经写好的类，可以选择平台，只需调用一个方法；如果需要选模型，可再做
+from houduan import Zhipu_Manager, OpenAI_Manager
+
+
+# 暂时没把模型写活，所以用不到
+
+global client
+client = Zhipu_Manager()  # 初始化默认值，这个直接跟随单选框的默认值了
+
+def manager_choice(name: str):
+    global client  # 声明全局变量
+    if name == &#x27;ZhipuAI&#x27;:
+        client = Zhipu_Manager()
+    elif name == &#x27;OpenAI&#x27;:
+        client = OpenAI_Manager()
+
+
+def user(user_message, history: list):
+    history.append({&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: user_message})
+    return &quot;&quot;, history
+
+def get_response(history: list):
+    global client
+    input_text = history[-1][&quot;content&quot;]
+    res = client.get_response_withtool(input_text)
+    history.append({&quot;role&quot;: &quot;assistant&quot;, &quot;content&quot;: &quot;&quot;})
+    history[-1][&quot;content&quot;] += res
+    print(res)
+    return history
+    # for chunk in res:
+    #     history[-1][&quot;content&quot;] += chunk
+    #     yield history
+
+with gr.Blocks() as demo:
+    with gr.Row():
+        gr.Markdown(&quot;# 工具调用demo（nba球星查询，api股票查询）&quot;)
+    with gr.Row():
+        with gr.Column(scale = 2):
+            chatbot = gr.Chatbot(type = &quot;messages&quot;, label = &quot;对话框&quot;, height = 500)
+            question = gr.Textbox(label = &quot;说词儿啊&quot;)
+            clear_btn = gr.Button(&quot;clear_query&quot;)
+            gr.Examples([&quot;请帮我查询下NBA洛杉矶湖人队有哪些球星?&quot;, &quot;请帮我查询下股票编号为sh601009的信息&quot;], inputs = [question])
+        with gr.Column(scale = 1):
+            gr.Markdown(&quot;### 平台选择&quot;)
+            pingtai_name = gr.Radio(label = &quot;平台名称/协议类型&quot;, choices = [&quot;ZhipuAI&quot;, &quot;OpenAI&quot;], value = &quot;ZhipuAI&quot;)
+            # 这个outputs后面可以加上平台提供的模型名称列表，然后根据选择的平台一起更新
+            pingtai_name.change(fn = manager_choice,inputs = pingtai_name, outputs = [])
+
+
+    question.submit(fn = user, inputs = [question,chatbot], outputs = [question,chatbot]).then(fn = get_response, inputs = chatbot, outputs = chatbot)
+    clear_btn.click(lambda: None, None, question, queue=False)
+
+
+demo.launch()</code></pre></details></li></ul><p id="1d2a551d-035a-805b-93ac-e017535d5de3" class="">
 </p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
