@@ -509,7 +509,7 @@ blockquote {
 .pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
 .pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
 .highlight-default {
-	color: rgba(55, 53, 47, 1);
+	color: rgba(50, 48, 44, 1);
 }
 .highlight-gray {
 	color: rgba(120, 119, 116, 1);
@@ -548,7 +548,7 @@ blockquote {
 	fill: rgba(212, 76, 71, 1);
 }
 .highlight-default_background {
-	color: rgba(55, 53, 47, 1);
+	color: rgba(50, 48, 44, 1);
 }
 .highlight-gray_background {
 	background: rgba(248, 248, 247, 1);
@@ -3947,7 +3947,7 @@ def chatglm_tools(input):
 print(chatglm_tools(&quot;今天北京城市的天气预报怎么样？&quot;))
 print(&quot;=&quot;*100)
 print(chatglm_tools(&quot;4乘以6等于多少&quot;))
-</code></pre></details></li></ul><ul id="1d1a551d-035a-80ed-82c6-d265cde8b3c4" class="toggle"><li><details open=""><summary>agent使用工具-联网查询或RAG查询代码</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d1a551d-035a-80c8-8c02-ead399836bac" class="code"><code class="language-Python">from langchain.agents import AgentExecutor, create_tool_calling_agent, create_self_ask_with_search_agent, create_react_agent
+</code></pre></details></li></ul><ul id="1d1a551d-035a-80ed-82c6-d265cde8b3c4" class="toggle"><li><details open=""><summary>agent使用工具-联网查询或RAG查询代码</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d1a551d-035a-80c8-8c02-ead399836bac" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">from langchain.agents import AgentExecutor, create_tool_calling_agent, create_self_ask_with_search_agent, create_react_agent
 from langchain.prompts import PromptTemplate
 from langchain_community.document_loaders import PDFMinerLoader
 from langchain_community.tools.tavily_search import TavilySearchResults
@@ -4375,5 +4375,379 @@ with gr.Blocks() as demo:
     clear_btn.click(lambda: None, None, question, queue=False)
 
 
-demo.launch()</code></pre></details></li></ul><p id="1d2a551d-035a-805b-93ac-e017535d5de3" class="">
+demo.launch()</code></pre></details></li></ul><h1 id="1d5a551d-035a-8069-b81c-ce603c5343b0" class="">WK5 项目实战</h1><h2 id="1d2a551d-035a-805b-93ac-e017535d5de3" class="">Day01  项目练习（续）</h2><ul id="1d5a551d-035a-8044-b1b5-f5af1e7d1dd4" class="toggle"><li><details open=""><summary>houduan.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d5a551d-035a-8079-9830-dbd1bb846518" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">from abc import ABCMeta, abstractmethod
+import requests
+import openai
+import json
+import os
+from zhipuai import ZhipuAI
+from dashscope import Generation
+
+class ZhipuAI_Res(metaclass = ABCMeta):
+    @abstractmethod
+    def get_response_withtool(self, input: str) -&gt; str:
+        pass
+class OpenAI_Res(metaclass = ABCMeta):
+    @abstractmethod
+    def get_response_withtool(self, input: str, temperature) -&gt; str:
+        pass
+# 这回细了，把不一样的有区别的都提前准备在构造函数里或单独的函数里
+# 或者找其他方式分割出来
+# 其他尽可能全保持不变，这样改起来不用到处找,再改成继承的形式
+class Model_Fun_Tools:
+    def __init__(self):
+        self.common_tool_descriptions = [
+        {
+            &quot;name&quot;: &quot;get_stock_info&quot;,
+            &quot;description&quot;: &quot;根据股票编号, 查询该股票信息&quot;,
+            &quot;parameters&quot;: {
+                &quot;type&quot;: &quot;object&quot;,
+                &quot;properties&quot;: {
+                    &quot;gid&quot;: {
+                        &quot;type&quot;: &quot;string&quot;,
+                        &quot;description&quot;: &quot;股票编号，上海股市以sh开头，深圳股市以sz开头&quot;
+                    }
+                },
+                &quot;required&quot;: [&quot;gid&quot;]
+            }
+        },
+        {
+            &quot;name&quot;: &quot;get_nba_company&quot;,
+            &quot;description&quot;: &quot;根据NBA球队名称，查询该球队头号球星的信息&quot;,
+            &quot;parameters&quot;: {
+                &quot;type&quot;: &quot;object&quot;,
+                &quot;properties&quot;: {
+                    &quot;nba_name&quot;: {
+                        &quot;type&quot;: &quot;string&quot;,
+                        &quot;description&quot;: &quot;NBA球队名称&quot;
+                    }
+                },
+                &quot;required&quot;: [&quot;nba_name&quot;]
+            }
+        },
+        {
+            &quot;name&quot;: &quot;get_weather&quot;,
+            &quot;description&quot;: &quot;获取指定城市的当前实时天气，或未来的天气&quot;,
+            &quot;parameters&quot;: {
+                &quot;type&quot;: &quot;object&quot;,
+                &quot;properties&quot;: {
+                    &quot;city&quot;: {
+                        &quot;type&quot;: &quot;string&quot;,
+                        &quot;description&quot;: &quot;中文格式的城市名称，如北京、上海等&quot;  # 城市参数描述
+                    },
+                    &quot;is_future&quot;: {
+                        &quot;type&quot;: &quot;boolean&quot;,
+                        &quot;description&quot;: &quot;是否获取未来天气，False 表示当前天气，True 表示未来天气&quot;  # 是否获取未来天气参数描述
+                    }
+                },
+                &quot;required&quot;: [&quot;city&quot;, &quot;is_future&quot;]  # 必填参数
+            }
+        },
+    ]
+
+    def get_stock_info(self, gid):
+        url = &quot;http://web.juhe.cn/finance/stock/hs&quot;
+        key = os.getenv(&quot;JUHE_API_KEY&quot;)
+        url = url + f&quot;?key={key}&amp;gid={gid}&quot;
+
+        headers = {
+            &#x27;User-Agent&#x27;: &#x27;Apifox/1.0.0 (https://apifox.com)&#x27;,
+        }
+        # response = requests.request(&quot;GET&quot;, url, headers=headers)
+        response = requests.get(url=url, headers=headers)
+        return response.text
+    def get_nba_company(self, nba_name):
+        return {&quot;nba_company&quot;: &quot;勒布朗詹姆斯&quot;}
+    def get_weather(self, city, is_future = False):
+        try:
+            print(f&quot;已传入城市参数{city}&quot;)
+            url = &quot;http://apis.juhe.cn/simpleWeather/query&quot;
+            request_params = {
+                &quot;key&quot;: os.getenv(&quot;JUHE_WEATHER_API_KEY&quot;),
+                &quot;city&quot;: city,
+            }
+            response = requests.get(url, params = request_params)
+            response.raise_for_status()
+            data = response.json()
+            print(f&quot;天气接口get返回的响应为{data}&quot;)
+
+            weather = {
+                &quot;temperature&quot;: data[&quot;result&quot;][&quot;realtime&quot;][&quot;temperature&quot;],
+                &quot;description&quot;: data[&quot;result&quot;][&quot;realtime&quot;][&quot;direct&quot;] + data[&quot;result&quot;][&quot;realtime&quot;][&quot;info&quot;],
+                &quot;humidity&quot;: data[&quot;result&quot;][&quot;realtime&quot;][&quot;humidity&quot;],
+                &quot;city&quot;: data[&quot;result&quot;][&quot;city&quot;],
+                &quot;aqi&quot;: data[&quot;result&quot;][&quot;realtime&quot;][&quot;aqi&quot;],
+            }
+
+            if is_future:
+                weather[&quot;future&quot;] = data[&quot;result&quot;][&quot;future&quot;][1:]
+            return weather
+        except Exception as e:
+            print(f&quot;get_weather函数发生错误{e}&quot;)
+
+
+class Zhipu_Manager(ZhipuAI_Res, Model_Fun_Tools):
+    def __init__(self):
+        super().__init__()
+        self.client = ZhipuAI(api_key=os.getenv(&quot;ZHIPU_API_KEY&quot;))
+        self.tools_data = [{&quot;type&quot;: &quot;function&quot;, &quot;function&quot;: tool_openai} for tool_openai in self.common_tool_descriptions]
+
+    def get_response_withtool(self,input: str, temperature):
+        messages = [{
+            &quot;role&quot;: &quot;system&quot;,
+            &quot;content&quot;: &quot;不要假设或猜测传入函数的参数值。&quot;
+        },
+        {
+            &quot;role&quot;: &quot;user&quot;,
+            &quot;content&quot;: input
+        }]
+
+        response = self.client.chat.completions.create(
+            model=&quot;glm-4&quot;,
+            messages=messages,
+            tools=self.tools_data,
+            temperature = temperature,
+        )
+        # 模型响应,接下来解析出模型响应中的给工具函数的参数和对应使用的哪个工具函数
+        print(response)
+
+        messages.append(response.choices[0].message.model_dump())
+
+        if response.choices[0].message.tool_calls:
+            tool_call = response.choices[0].message.tool_calls[0]
+            args = tool_call.function.arguments
+            tool_result = {}
+
+            # 根据解析到的函数名+待传入的参数数据，解析出工具函数调用的结果
+            if tool_call.function.name == &quot;get_stock_info&quot;:
+                tool_result = self.get_stock_info(**json.loads(args))
+            elif tool_call.function.name == &quot;get_nba_company&quot;:
+                tool_result = self.get_nba_company(**json.loads(args))
+            elif tool_call.function.name == &quot;get_weather&quot;:
+                tool_result = self.get_weather(**json.loads(args))
+
+            print(f&quot;大模型解析了我们提出的问题，并自动调用{tool_call.function.name}函数获取工具调用结果:\n&quot;, tool_result)
+            messages.append({
+                &quot;role&quot;: &quot;tool&quot;,
+                &quot;content&quot;: json.dumps(tool_result),
+                &quot;tool_call_id&quot;: tool_call.id,
+            })
+
+            final_response = self.client.chat.completions.create(
+                model=&quot;glm-4&quot;,
+                messages=messages,
+                tools=self.tools_data,
+                tool_choice=&quot;auto&quot;,
+                temperature = temperature,
+            )
+            if final_response.choices[0].message.content is None:
+                return &quot;未找到相关信息&quot;  # 避免None报错
+            return final_response.choices[0].message.content
+        # 这个一会儿加 messages.append(response.choices[0].message.model_dump())
+
+class OpenAI_Manager(OpenAI_Res, Model_Fun_Tools):
+    def __init__(self):
+        super().__init__()
+        self.tools_data = self.common_tool_descriptions
+        openai.base_url = os.getenv(&quot;GPT-API-free_BASE_URL&quot;)
+        openai.api_key = os.getenv(&quot;GPT-API-free_API_KEY&quot;)
+    def get_response_withtool(self, input: str, temperature):
+        messages = [{
+            &quot;role&quot;: &quot;system&quot;,
+            &quot;content&quot;: &quot;不要假设或猜测传入函数的参数值。&quot;
+        },
+        {
+            &quot;role&quot;: &quot;user&quot;,
+            &quot;content&quot;: input
+        }]
+
+        response = openai.chat.completions.create(
+            model=&quot;gpt-3.5-turbo&quot;,
+            messages=messages,
+            functions=self.tools_data,
+            function_call=&quot;auto&quot;,
+            temperature=temperature,
+        )
+        # 模型响应,接下来解析出模型响应中的给工具函数的参数和对应使用的哪个工具函数
+        print(response)
+
+        message = response.choices[0].message
+
+        if message.function_call:
+            function_name = message.function_call.name
+            arguments = message.function_call.arguments
+            tool_result = None
+
+            # 根据解析到的函数名 + 待传入的参数数据，解析出工具函数调用的结果
+            if function_name == &quot;get_stock_info&quot;:
+                tool_result = self.get_stock_info(json.loads(arguments)[&quot;gid&quot;])
+            elif function_name == &quot;get_nba_company&quot;:
+                tool_result = self.get_nba_company(json.loads(arguments)[&quot;nba_name&quot;])
+            elif function_name == &quot;get_weather&quot;:
+                tool_result = self.get_weather(json.loads(arguments)[&quot;city&quot;], json.loads(arguments)[&quot;is_future&quot;])
+
+            print(f&quot;大模型解析了我们提出的问题，并自动调用{function_name}函数获取工具调用结果:\n&quot;, tool_result)
+            messages.append({
+                &quot;role&quot;: &quot;function&quot;,
+                &quot;name&quot;: function_name,
+                &quot;content&quot;: str(tool_result)
+            })
+            final_response = openai.chat.completions.create(
+                model=&quot;gpt-3.5-turbo&quot;,
+                messages=messages,
+                temperature=temperature,
+            )
+            if final_response is None:
+                return &quot;未找到相关信息&quot;  # 避免None报错
+            return final_response.choices[0].message.content
+
+class BaiLian_Manager(OpenAI_Res, Model_Fun_Tools):
+    def __init__(self):
+        super().__init__()
+        self.tools_data = [{&quot;type&quot;: &quot;function&quot;, &quot;function&quot;: tool_openai} for tool_openai in self.common_tool_descriptions]
+        self.key = os.getenv(&quot;BAILIAN_API_KEY&quot;)
+    def get_response_withtool(self, input: str, temperature):
+        messages = [{
+            &quot;role&quot;: &quot;system&quot;,
+            &quot;content&quot;: &quot;不要假设或猜测传入函数的参数值。&quot;
+        },
+        {
+            &quot;role&quot;: &quot;user&quot;,
+            &quot;content&quot;: input
+        }]
+
+        response = Generation.call(
+            api_key = self.key,
+            model=&#x27;qwen2.5-72b-instruct&#x27;,
+            messages=messages,
+            function_call=&quot;auto&quot;,
+            tools = self.tools_data,
+            result_format=&#x27;message&#x27;,  # 设置结果格式为消息
+            temperature=temperature,
+        )
+        # 模型响应,接下来解析出模型响应中的给工具函数的参数和对应使用的哪个工具函数
+        print(response)
+
+        # 百炼模型独有的取response消息结构，为解析做准备
+        message = response.output.choices[0].message
+
+        if hasattr(message, &#x27;tool_calls&#x27;) and message.tool_calls:
+            tool_call = message.tool_calls[0]
+            # function_name, weather_info =
+            function_name = tool_call[&#x27;function&#x27;][&#x27;name&#x27;]
+            arguments = tool_call[&#x27;function&#x27;][&#x27;arguments&#x27;]
+
+            # function_name = message.function_call.name
+            # arguments = message.function_call.arguments
+            tool_result = None
+
+            # 根据解析到的函数名 + 待传入的参数数据，解析出工具函数调用的结果
+            if function_name == &quot;get_stock_info&quot;:
+                tool_result = self.get_stock_info(json.loads(arguments)[&quot;gid&quot;])
+            elif function_name == &quot;get_nba_company&quot;:
+                tool_result = self.get_nba_company(json.loads(arguments)[&quot;nba_name&quot;])
+            elif function_name == &quot;get_weather&quot;:
+                tool_result = self.get_weather(json.loads(arguments)[&quot;city&quot;], json.loads(arguments)[&quot;is_future&quot;])
+
+            print(f&quot;大模型解析了我们提出的问题，并自动调用{function_name}函数获取工具调用结果:\n&quot;, tool_result)
+            # messages.append({
+            #     &quot;role&quot;: &quot;function&quot;,
+            #     &quot;name&quot;: function_name,
+            #     &quot;content&quot;: f&quot;根据可使用的工具提供的资料为： {str(tool_result)}&quot;
+            # })
+            # 这部分百炼识别不到，改成下面的message格式了
+            messages_bailian = [{
+                &quot;role&quot;: &quot;user&quot;,
+                &quot;content&quot;: input
+            },
+            {
+                &quot;role&quot;: &quot;assistant&quot;,
+                &quot;content&quot;: str(tool_result)
+            }]
+            final_response = Generation.call(
+                api_key = self.key,
+                model=&#x27;qwen2.5-72b-instruct&#x27;,
+                messages = messages_bailian,
+                function_call=&quot;auto&quot;,
+                # tools=self.tools_data,
+                result_format=&#x27;message&#x27;,  # 设置结果格式为消息
+                temperature=temperature,
+            )
+            if final_response is None:
+                return &quot;未找到相关信息&quot;  # 避免None报错
+            return final_response.output.choices[0].message.content
+
+if __name__ == &quot;__main__&quot;:
+    # client = OpenAI_Manager()
+    # print(client.get_response_withtool(&quot;今天北京天气怎么样&quot;))
+    # print(client.get_response_withtool(&quot;请帮我查询下NBA洛杉矶湖人队有哪些球星?&quot;))
+    # print(client.get_response_withtool(&quot;请帮我查询下股票编号为sh601009的信息&quot;))
+
+    # zhipuai_client = Zhipu_Manager()
+    # print(zhipuai_client.get_response_withtool(&quot;今天北京天气怎么样&quot;))
+    # print(zhipuai_client.get_response_withtool(&quot;请帮我查询下NBA洛杉矶湖人队有哪些球星?&quot;))
+    # print(zhipuai_client.get_response_withtool(&quot;请帮我查询下股票编号为sh601009的信息&quot;))
+
+    # client = BaiLian_Manager()
+    # print(client.get_response_withtool(&quot;今天北京天气怎么样&quot;))
+    # print(client.get_response_withtool(&quot;请帮我查询下NBA洛杉矶湖人队有哪些球星?&quot;))
+    # print(client.get_response_withtool(&quot;请帮我查询下股票编号为sh601009的信息&quot;))
+    pass</code></pre></details></li></ul><ul id="1d5a551d-035a-802a-aea8-ee257bd16a7e" class="toggle"><li><details open=""><summary>main.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d5a551d-035a-8054-ac50-c1fa704b69bc" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">import gradio as gr
+# 这俩manager是已经写好的类，可以选择平台，只需调用一个方法；如果需要选模型，可再做
+from school_workbook.houduan import Zhipu_Manager, OpenAI_Manager, BaiLian_Manager
+
+# 暂时没把模型写活，所以用不到
+
+global client
+client = Zhipu_Manager()  # 初始化默认值，这个直接跟随单选框的默认值了
+
+def manager_choice(name: str):
+    global client  # 声明全局变量
+    if name == &#x27;ZhipuAI&#x27;:
+        client = Zhipu_Manager()
+    elif name == &#x27;OpenAI&#x27;:
+        client = OpenAI_Manager()
+    elif name == &#x27;BaiLian&#x27;:
+        client = BaiLian_Manager()
+
+def user(user_message, history: list):
+    history.append({&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: user_message})
+    return &quot;&quot;, history
+
+def get_response(temperature, history: list):
+    global client
+    input_text = history[-1][&quot;content&quot;]
+    res = client.get_response_withtool(input_text, temperature)
+    history.append({&quot;role&quot;: &quot;assistant&quot;, &quot;content&quot;: &quot;&quot;})
+    history[-1][&quot;content&quot;] += res
+    print(res)
+    return history
+    # for chunk in res:
+    #     history[-1][&quot;content&quot;] += chunk
+    #     yield history
+
+with gr.Blocks() as demo:
+    with gr.Row():
+        gr.Markdown(&quot;# 工具调用demo（nba球星查询，api股票查询，当前和未来天气查询）&quot;)
+    with gr.Row():
+        with gr.Column(scale = 2):
+            chatbot = gr.Chatbot(type = &quot;messages&quot;, label = &quot;对话框&quot;, height = 500)
+            question = gr.Textbox(label = &quot;说词儿啊&quot;)
+            clear_btn = gr.Button(&quot;clear_query&quot;)
+            gr.Examples([&quot;请帮我查询下NBA洛杉矶湖人队有哪些球星?&quot;, &quot;请帮我查询下股票编号为sh601009的信息&quot;, &quot;今天北京天气怎么样&quot;, &quot;未来北京天气怎么样&quot;], inputs = [question])
+        with gr.Column(scale = 1):
+            gr.Markdown(&quot;### 平台选择&quot;)
+            pingtai_name = gr.Radio(label = &quot;平台名称/协议类型&quot;, choices = [&quot;ZhipuAI&quot;, &quot;OpenAI&quot;, &quot;BaiLian&quot;], value = &quot;ZhipuAI&quot;)
+            temperature = gr.Slider(minimum = 0, maximum=1,label = &quot;temperature&quot;, value = 0.8, step = 0.1)
+
+
+            # 这个outputs后面可以加上平台提供的模型名称列表，然后根据选择的平台一起更新
+            pingtai_name.change(fn = manager_choice,inputs = pingtai_name, outputs = [])
+
+
+    question.submit(fn = user, inputs = [question,chatbot], outputs = [question,chatbot]).then(fn = get_response, inputs = [temperature, chatbot], outputs = chatbot)
+    clear_btn.click(lambda: None, None, question, queue=False)
+
+
+demo.launch()</code></pre></details></li></ul><p id="1d5a551d-035a-8019-9d91-f57e1506b2f6" class="">
 </p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
