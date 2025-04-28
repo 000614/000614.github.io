@@ -1150,7 +1150,7 @@ print(text)
 for index,block in enumerate(text,start=1):
     print(f&quot;第{index}个文本内容:&quot;)
     print(block.page_content)
-    print(&quot;*&quot;*100)</code></pre></details></li></ul><hr id="1b4a551d-035a-8015-ad79-fa178bfe3f9c"/><h2 id="1b5a551d-035a-8038-8eb1-ebcb5a8f97ba" class="">Day04 Embedding模型部署</h2><p id="1b5a551d-035a-8047-9188-dac30f574f90" class="">自注意力机制：自动找到重点，关注重要的部分，忽略不重要的部分自动处理信息</p><p id="1b5a551d-035a-8061-b794-dec5242b510b" class=""><del>如何快速判断import的是方法还是类？—已经会了</del></p><p id="1b5a551d-035a-80df-8838-e03c4345ed6b" class="">余弦相似度原理举例：类似通过夹角余弦值判断向量是否相似</p><p id="1b5a551d-035a-809e-ab05-df808086fa76" class="">欧几里得距离：坐标差平方再开方，算出两点的直线距离</p><p id="1b5a551d-035a-808e-9a00-ef6071cbd695" class=""><del>Transformer，encoder，decoder，embedding，RAG，BERT之间的关系，联系和区别？搜完了懂了</del></p><p id="1b5a551d-035a-8071-a59f-de5f924e55ac" class="block-color-red"><a href="https://blog.csdn.net/Vessel_Liu/article/details/143090157">Transformer架构：Encoder-Decoder</a>：这篇文章讲的看起来很流畅，待读</p><ul id="1b5a551d-035a-80bc-9b0e-fb786037614b" class="toggle"><li><details open=""><summary>讲义文件</summary><figure id="1b5a551d-035a-80d9-9a23-d24069305a33"><div class="source"><a href="Embedding%E6%A8%A1%E5%9E%8B%E5%8E%9F%E7%90%86-%E8%AF%BE%E7%A8%8B%E8%AE%B2%E4%B9%89.pdf">attachment:561f0245-4831-42de-a494-012c2ebf8707:Embedding模型原理-课程讲义.pdf</a></div></figure><figure id="1b5a551d-035a-80bf-8d4c-f8ea30b6d4b5"><div class="source"><a href="Embedding%E5%9C%BA%E6%99%AF%E5%BA%94%E7%94%A8%E5%8F%8A%E5%AE%9E%E6%88%98V3.pdf">attachment:f41f14da-8956-4756-aca5-617162ccde51:Embedding场景应用及实战V3.pdf</a></div></figure></details></li></ul><ul id="1b5a551d-035a-802a-b0c5-dca4d6f2ccd0" class="toggle"><li><details open=""><summary>复习自检———————口头解释以下图【所有细节】</summary><ul id="1b5a551d-035a-8008-aa20-f331326ec987" class="toggle"><li><details open=""><summary>文本相似意义</summary><figure id="1b5a551d-035a-8036-a92e-f255198094b5" class="image"><a href="image%202.png"><img style="width:681.982177734375px" src="image%202.png"/></a></figure></details></li></ul><ul id="1b5a551d-035a-80ee-9bc9-eaf4355551a2" class="toggle"><li><details open=""><summary>rag中embedding作用</summary><figure id="1b5a551d-035a-8095-a7a1-ec69bf4defd5" class="image"><a href="image%203.png"><img style="width:681.9732666015625px" src="image%203.png"/></a></figure></details></li></ul><ul id="1b5a551d-035a-80f2-ae00-e102d5c702d9" class="toggle"><li><details open=""><summary>encoder和decoder联系（BERT，GPT）</summary><figure id="1b5a551d-035a-803a-bd17-eafecfe4de2e" class="image"><a href="image%204.png"><img style="width:681.9910888671875px" src="image%204.png"/></a></figure></details></li></ul><ul id="1b5a551d-035a-802f-b333-fe040ebcfe9e" class="toggle"><li><details open=""><summary>encoder</summary><figure id="1b5a551d-035a-80a6-ad1d-f8c679511233" class="image"><a href="image%205.png"><img style="width:681.9910888671875px" src="image%205.png"/></a></figure></details></li></ul><ul id="1b5a551d-035a-8035-b3e4-c364cf723fc1" class="toggle"><li><details open=""><summary>注意力</summary><figure id="1b5a551d-035a-80a1-b259-cdd4a7ae19db" class="image"><a href="image%206.png"><img style="width:682px" src="image%206.png"/></a></figure></details></li></ul><ul id="1b5a551d-035a-8007-acb6-fb963834c0d0" class="toggle"><li><details open=""><summary>参数</summary><figure id="1b5a551d-035a-80c9-b1af-da6b5702f1d1" class="image"><a href="image%207.png"><img style="width:453.0000305175781px" src="image%207.png"/></a></figure></details></li></ul><ul id="1b5a551d-035a-8046-a233-ff04c48434a6" class="toggle"><li><details open=""><summary>BERT</summary><figure id="1b5a551d-035a-8087-89ab-d743d847f8d6" class="image"><a href="image%208.png"><img style="width:681.9910888671875px" src="image%208.png"/></a></figure></details></li></ul><ul id="1b6a551d-035a-802f-95e1-c04063337757" class="toggle"><li><details open=""><summary>decoder+decoder block</summary><figure id="1b6a551d-035a-80cd-b479-ecffd54c2c71" class="image"><a href="image%209.png"><img style="width:1324px" src="image%209.png"/></a></figure></details></li></ul></details></li></ul><ul id="1b5a551d-035a-80af-a837-c5e6d7569b18" class="toggle"><li><details open=""><summary>直接调用阿里API代码</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b5a551d-035a-8083-b0cf-c2eb61c0c27a" class="code"><code class="language-Python">import dashscope
+    print(&quot;*&quot;*100)</code></pre></details></li></ul><hr id="1b4a551d-035a-8015-ad79-fa178bfe3f9c"/><h2 id="1b5a551d-035a-8038-8eb1-ebcb5a8f97ba" class="">Day04 Embedding模型部署</h2><p id="1b5a551d-035a-8047-9188-dac30f574f90" class="">自注意力机制：自动找到重点，关注重要的部分，忽略不重要的部分自动处理信息</p><p id="1b5a551d-035a-8061-b794-dec5242b510b" class=""><del>如何快速判断import的是方法还是类？—已经会了</del></p><p id="1b5a551d-035a-80df-8838-e03c4345ed6b" class="">余弦相似度原理举例：类似通过夹角余弦值判断向量是否相似</p><p id="1b5a551d-035a-809e-ab05-df808086fa76" class="">欧几里得距离：坐标差平方再开方，算出两点的直线距离</p><p id="1b5a551d-035a-808e-9a00-ef6071cbd695" class=""><del>Transformer，encoder，decoder，embedding，RAG，BERT之间的关系，联系和区别？搜完了懂了</del></p><p id="1b5a551d-035a-8071-a59f-de5f924e55ac" class="block-color-red"><a href="https://blog.csdn.net/Vessel_Liu/article/details/143090157">Transformer架构：Encoder-Decoder</a>：这篇文章讲的看起来很流畅，待读</p><ul id="1b5a551d-035a-80bc-9b0e-fb786037614b" class="toggle"><li><details open=""><summary>讲义文件</summary><figure id="1b5a551d-035a-80d9-9a23-d24069305a33"><div class="source"><a href="Embedding%E6%A8%A1%E5%9E%8B%E5%8E%9F%E7%90%86-%E8%AF%BE%E7%A8%8B%E8%AE%B2%E4%B9%89.pdf">attachment:561f0245-4831-42de-a494-012c2ebf8707:Embedding模型原理-课程讲义.pdf</a></div></figure><figure id="1b5a551d-035a-80bf-8d4c-f8ea30b6d4b5"><div class="source"><a href="Embedding%E5%9C%BA%E6%99%AF%E5%BA%94%E7%94%A8%E5%8F%8A%E5%AE%9E%E6%88%98V3.pdf">attachment:f41f14da-8956-4756-aca5-617162ccde51:Embedding场景应用及实战V3.pdf</a></div></figure></details></li></ul><ul id="1b5a551d-035a-802a-b0c5-dca4d6f2ccd0" class="toggle"><li><details open=""><summary>复习自检———————口头解释以下图【所有细节】</summary><ul id="1b5a551d-035a-8008-aa20-f331326ec987" class="toggle"><li><details open=""><summary>文本相似意义</summary><figure id="1b5a551d-035a-8036-a92e-f255198094b5" class="image"><a href="image%202.png"><img style="width:681.982177734375px" src="image%202.png"/></a></figure></details></li></ul><ul id="1b5a551d-035a-80ee-9bc9-eaf4355551a2" class="toggle"><li><details open=""><summary>rag中embedding作用</summary><figure id="1b5a551d-035a-8095-a7a1-ec69bf4defd5" class="image"><a href="image%203.png"><img style="width:681.9732666015625px" src="image%203.png"/></a></figure></details></li></ul><ul id="1b5a551d-035a-80f2-ae00-e102d5c702d9" class="toggle"><li><details open=""><summary>encoder和decoder联系（BERT，GPT）</summary><figure id="1b5a551d-035a-803a-bd17-eafecfe4de2e" class="image"><a href="image%204.png"><img style="width:672px" src="image%204.png"/></a></figure></details></li></ul><ul id="1b5a551d-035a-802f-b333-fe040ebcfe9e" class="toggle"><li><details open=""><summary>encoder</summary><figure id="1b5a551d-035a-80a6-ad1d-f8c679511233" class="image"><a href="image%205.png"><img style="width:681.9910888671875px" src="image%205.png"/></a></figure></details></li></ul><ul id="1b5a551d-035a-8035-b3e4-c364cf723fc1" class="toggle"><li><details open=""><summary>注意力</summary><figure id="1b5a551d-035a-80a1-b259-cdd4a7ae19db" class="image"><a href="image%206.png"><img style="width:682px" src="image%206.png"/></a></figure></details></li></ul><ul id="1b5a551d-035a-8007-acb6-fb963834c0d0" class="toggle"><li><details open=""><summary>参数</summary><figure id="1b5a551d-035a-80c9-b1af-da6b5702f1d1" class="image"><a href="image%207.png"><img style="width:453.0000305175781px" src="image%207.png"/></a></figure></details></li></ul><ul id="1b5a551d-035a-8046-a233-ff04c48434a6" class="toggle"><li><details open=""><summary>BERT</summary><figure id="1b5a551d-035a-8087-89ab-d743d847f8d6" class="image"><a href="image%208.png"><img style="width:681.9910888671875px" src="image%208.png"/></a></figure></details></li></ul><ul id="1b6a551d-035a-802f-95e1-c04063337757" class="toggle"><li><details open=""><summary>decoder+decoder block</summary><figure id="1b6a551d-035a-80cd-b479-ecffd54c2c71" class="image"><a href="image%209.png"><img style="width:1324px" src="image%209.png"/></a></figure></details></li></ul></details></li></ul><ul id="1b5a551d-035a-80af-a837-c5e6d7569b18" class="toggle"><li><details open=""><summary>直接调用阿里API代码</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b5a551d-035a-8083-b0cf-c2eb61c0c27a" class="code"><code class="language-Python">import dashscope
 from http import HTTPStatus
 import os
 def embed_with_str():
@@ -3127,30 +3127,7 @@ message=&quot;请告诉我一些有趣的事实.&quot;
 #用户代理智能体发送与助手智能体的聊天，发送消息
 user_proxy.initiate_chat(
     assistant_agent,message=message
-)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</code></pre></details></li></ul><ul id="1cea551d-035a-8075-b8cd-e42972621291" class="toggle"><li><details open=""><summary>demo3.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cea551d-035a-8076-999f-f18003e3b45d" class="code"><code class="language-JavaScript">#构建交互式俩天应用
+)</code></pre></details></li></ul><ul id="1cea551d-035a-8075-b8cd-e42972621291" class="toggle"><li><details open=""><summary>demo3.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cea551d-035a-8076-999f-f18003e3b45d" class="code"><code class="language-JavaScript">#构建交互式俩天应用
 import chainlit as cl
 
 from autogen_agentchat.agents import AssistantAgent
@@ -3267,27 +3244,7 @@ async def main(message:cl.Message):
     #调用run_steam函数，将用户消息的内容作为查询传递给智能体团队，进行处理
     await run_steam(message.content)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</code></pre></details></li></ul></details></li></ul><h2 id="1cfa551d-035a-80f4-b158-fdaf70e4ed1f" class="">Day02  langchain+openai镜像</h2><ul id="1cfa551d-035a-800f-bfe3-f79258f12353" class="toggle"><li><details open=""><summary>langchain+openai镜像</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cfa551d-035a-8039-8c25-df843aa20df3" class="code"><code class="language-JavaScript">#添加历史聊天记录
+</code></pre></details></li></ul></details></li></ul><h2 id="1cfa551d-035a-80f4-b158-fdaf70e4ed1f" class="">Day02  langchain+openai镜像</h2><ul id="1cfa551d-035a-800f-bfe3-f79258f12353" class="toggle"><li><details open=""><summary>langchain+openai镜像</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cfa551d-035a-8039-8c25-df843aa20df3" class="code"><code class="language-Python">#添加历史聊天记录
 
 #存储和管理聊天 消息历史记录
 from langchain_community.chat_message_histories import ChatMessageHistory
@@ -4749,5 +4706,1797 @@ with gr.Blocks() as demo:
     clear_btn.click(lambda: None, None, question, queue=False)
 
 
-demo.launch()</code></pre></details></li></ul><p id="1d5a551d-035a-8019-9d91-f57e1506b2f6" class="">
+demo.launch()</code></pre></details></li></ul><h2 id="1d5a551d-035a-8019-9d91-f57e1506b2f6" class="">Day02  医疗项目练习（加上上一个项目，没用到的就只剩召回重排和agent和其他webui界面库了，之后拆底层记得把功能加进去）</h2><p id="1d6a551d-035a-804d-b1a1-ea050df80208" class="">本项目仍未设计完整</p><ul id="1d6a551d-035a-8058-bcfc-fb912205cedb" class="toggle"><li><details open=""><summary>计划待用代码</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d6a551d-035a-80e0-b378-ff1c6f32e88e" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># 先转成面向对象，再写ui（功能分齐全），再拆底层
+from langchain.agents import AgentExecutor, create_tool_calling_agent, create_self_ask_with_search_agent, create_react_agent
+from langchain.prompts import PromptTemplate
+from langchain_community.document_loaders import PDFMinerLoader
+from langchain_community.tools.tavily_search import TavilySearchResults
+import os
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_openai import OpenAIEmbeddings
+from langchain_community.vectorstores import FAISS
+from langchain.tools.retriever import create_retriever_tool
+
+# 自己写了个外部的api轮流查看api能否可用，方便动态更新免费openai协议的api资源
+from openai_apikey import try_api_bd_model
+
+# 用自己写的外部，这个类算是接口类？网上学到的不清楚
+# chat_manager = TryChat()
+
+# 轮流检查api是否连通，函数写在openai_apikey
+model = try_api_bd_model(&quot;gpt-3.5-turbo&quot;)
+
+
+os.environ[&quot;TAVILY_API_KEY&quot;] = os.getenv(&quot;TAVILY_API_KEY&quot;)
+
+loader = PDFMinerLoader(r&quot;C:\Users\ding\Desktop\Python-master\school_1\text_pdf.pdf&quot;)
+docs = loader.load()
+documents = RecursiveCharacterTextSplitter(chunk_size = 1000, chunk_overlap = 200).split_documents(docs)
+vector = FAISS.from_documents(documents, OpenAIEmbeddings())
+retriever = vector.as_retriever()
+retriever_tools = create_retriever_tool(
+    retriever,
+    &quot;RAG_search&quot;,
+    &quot;搜索关于RAG的信息，任何有关了解RAG的信息都可以使用该工具&quot;,
+)
+
+search_tool = TavilySearchResults(max_results = 2)
+tools = [search_tool, retriever_tools]
+
+
+template = &quot;&quot;&quot;
+你是一个智能助手，擅长借助工具回答用户的问题。当你需要获取额外信息时，可调用提供的工具.
+问题:{input}
+可用工具:{tools_names}
+{agent_scratchpad}
+&quot;&quot;&quot;
+
+prompt = PromptTemplate(
+    input_variables = [&quot;input&quot;, &quot;tools_names&quot;, &quot;agent_scratchpad&quot;],
+    template = template,
+)
+
+# 用agent_executor接受用户输入，顺便准备agent其他需要的环境
+# 然后再由agent决定是否使用工具，把是否使用的结果再给agent_executor
+# 然后agent_executor再按照agent的要求使用工具查找，结果给agent
+# 然后agent再整合工具结果和自身的答案，给agent_executor
+# 然后agent_executor再输出最终结果
+agent_executor = AgentExecutor(agent = create_tool_calling_agent(model, tools, prompt), tools = tools)
+resp = agent_executor.invoke({&quot;input&quot;: &quot;c语言入门，教授c语言的郝斌老师现在人在哪里？怎么样了？&quot;, &quot;tools_names&quot;: &quot;联网搜索&quot;})
+print(resp[&quot;output&quot;])
+
+resp = agent_executor.invoke({&quot;input&quot;: &quot;幻觉效应是什么？&quot;, &quot;tools_names&quot;: &quot;RAG向量数据库检索&quot;})
+print(resp[&quot;output&quot;])
+
+</code></pre></details></li></ul><ul id="1d6a551d-035a-80f8-8f54-f13daeb35ef5" class="toggle"><li><details open=""><summary>chroma</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d6a551d-035a-80e2-802f-cd11b04ea92a" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># 导入 os 模块，用于与操作系统进行交互，例如操作文件路径、环境变量等
+import os
+# 导入 streamlit 库并别名为 st，Streamlit 用于快速创建数据应用程序和交互式界面
+import streamlit as st
+# 从 robot 模块中导入 Robot 类，Robot 类可能是用于处理聊天机器人相关的逻辑
+from robot import Robot
+# 从 chroma 模块中导入 MyChroma 类，MyChroma 类可能与向量数据库操作有关
+from chroma import MyChroma
+
+# 检查会话状态中是否存在名为&#x27;started&#x27;的键
+# 如果不存在，说明这是会话的首次加载或初始化
+if &#x27;started&#x27; not in st.session_state:
+    # 在会话状态中设置&#x27;started&#x27;键的值为 True，表示会话已开始初始化
+    st.session_state.started = True
+    # 从指定文件夹（&#x27;./files/rag&#x27;）加载数据到名为&#x27;rag_collection&#x27;的集合中，
+    # 创建 MyChroma 实例并存储在会话状态的&#x27;chroma&#x27;键下
+    st.session_state.chroma = MyChroma.from_folder(&#x27;./files/rag&#x27;, &#x27;rag_collection&#x27;)
+    # 使用指定的模型配置（&#x27;gpt-3.5-turbo&#x27;）和从会话状态中获取的检索器（来自 MyChroma）
+    # 创建 Robot 实例，并存储在会话状态的&#x27;robot&#x27;键下
+    st.session_state.robot = Robot({&#x27;model&#x27;: &#x27;gpt-3.5-turbo&#x27;}, st.session_state.chroma.as_retriever(k=3))
+    # 在会话状态中设置&#x27;session_id&#x27;键的值为 1，用于标识当前会话的 ID
+    st.session_state.session_id = 1
+
+# 导入自定义的 funcs 模块并别名为 funcs，该模块可能包含了一些业务逻辑函数
+import funcs as funcs
+
+# 定义 init_interface 函数，用于初始化和展示应用程序的界面
+def init_interface():
+    # 设置 Streamlit 应用程序的页面配置，包括页面标题为&quot;Medical Chatbot&quot;和布局为宽屏
+    st.set_page_config(page_title=&quot;Medical Chatbot&quot;, layout=&quot;wide&quot;)
+    # 在应用程序页面上显示标题&quot;Molly 医疗精灵&quot;
+    st.title(&quot;Molly 医疗精灵&quot;)
+    # 调用 funcs 模块中的 get_session_messages 函数获取当前会话的聊天消息列表
+    messages = funcs.get_session_messages()
+    # 遍历获取到的聊天消息列表
+    for message in messages:
+        # 解包消息元组，分别获取消息的角色（如&quot;Human&quot;或&quot;AI&quot;）和内容
+        role, content = message
+        # 根据消息的角色，在 Streamlit 聊天界面中显示相应的聊天消息
+        with st.chat_message(role):
+            st.write(content)
+    # 在应用程序中创建一个聊天输入框，提示用户输入问题，并将用户输入的内容赋值给 question 变量
+    question = st.chat_input(&quot;输入问题提问....&quot;)
+    # 如果用户输入了问题（question 不为 None）
+    if question is not None:
+        # 调用 funcs 模块中的 create_response 函数，根据用户问题生成回答
+        response = funcs.create_response(question)
+        # 在聊天界面中显示用户输入的问题，角色标识为&quot;Human&quot;
+        st.chat_message(&quot;Human&quot;).write(question)
+        # 在聊天界面中以流式输出的方式显示 AI 的回答，角色标识为&quot;AI&quot;
+        st.chat_message(&quot;AI&quot;).write_stream(response)
+    # 在应用程序的侧边栏中进行以下操作
+    with st.sidebar:
+        # 在侧边栏中显示当前对话的 ID，ID 从会话状态的&#x27;session_id&#x27;键获取
+        st.header(f&quot;当前对话ID：{st.session_state.session_id}&quot;)
+        # 在侧边栏中创建一个按钮，按钮文本为&quot;开始新对话&quot;，
+        # 点击按钮时调用 funcs 模块中的 start_session 函数
+        st.button(&quot;开始新对话&quot;, on_click=funcs.start_session)
+        # 遍历 funcs 模块中获取的所有会话 ID 列表
+        for session_id in funcs.get_all_session_ids():
+            # 在侧边栏中创建一个可展开的区域，标题为当前会话 ID
+            with st.expander(f&quot;对话ID：{session_id}&quot;):
+                # 在展开区域中创建两列布局
+                col1, col2 = st.columns(2)
+                # 在第一列中创建一个按钮，按钮文本为&quot;继续对话&quot;，
+                # 点击按钮时调用 funcs 模块中的 continue_session 函数，并传递当前会话 ID 作为参数
+                col1.button(&quot;继续对话&quot;, on_click=funcs.continue_session, args=(session_id,), key=f&quot;Restart_{session_id}&quot;)
+                # 在第二列中创建一个按钮，按钮文本为&quot;删除对话&quot;，
+                # 点击按钮时调用 funcs 模块中的 delete_session 函数，并传递当前会话 ID 作为参数
+                col2.button(&quot;删除对话&quot;, on_click=funcs.delete_session, args=(session_id,), key=f&quot;Delete_{session_id}&quot;)
+                # 调用 funcs 模块中的 get_session_messages 函数获取指定会话 ID 的聊天消息列表
+                messages = funcs.get_session_messages(session_id)
+                # 遍历获取到的聊天消息列表
+                for message in messages:
+                    # 解包消息元组，分别获取消息的角色（如&quot;Human&quot;或&quot;AI&quot;）和内容
+                    role, content = message
+                    # 根据消息的角色，在侧边栏的聊天界面中显示相应的聊天消息
+                    with st.chat_message(role):
+                        st.write(content)
+
+# 如果当前脚本是主程序入口
+if __name__ == &#x27;__main__&#x27;:
+    # 设置环境变量&quot;OPENAI_API_KEY&quot;的值，用于访问 OpenAI 的 API
+    os.environ[&quot;OPENAI_API_KEY&quot;] = &#x27;sk-WsX5IosThRA057bUxujAHKSH9YMRtG0Rgq7IRBsYKMfCECFP&#x27;
+    os.environ[&quot;OPENAI_API_BASE&quot;] = &#x27;https://api.siliconflow.cn/v1/chat/completions&#x27;
+    os.environ[&quot;OPENAI_API_BASE&quot;] = &#x27;https://api.chatanywhere.tech&#x27;
+    # 调用 init_interface 函数，初始化并展示应用程序的界面
+    init_interface()</code></pre></details></li></ul><ul id="1e0a551d-035a-809e-bb61-d1a0c1f05f66" class="toggle"><li><details open=""><summary>robot</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1e0a551d-035a-80b8-a24d-f753bf6b984b" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">import os
+#向量库
+import sqlite3
+#类型提示
+from typing import Iterator
+#创建聊天提示模板
+from langchain.prompts import ChatPromptTemplate
+#系统消息和AI消息
+from langchain_core.messages import SystemMessage,AIMessage
+# 构建可运行的链
+from langchain_core.runnables import RunnableWithMessageHistory,RunnableLambda,RunnablePassthrough
+# 聊天历史记录的基类
+from langchain_core.chat_history import BaseChatMessageHistory
+#openai聊天进行交互
+from langchain_openai import ChatOpenAI
+#将聊天历史记录存储到sql数据库中
+from  langchain_community.chat_message_histories.sql import SQLChatMessageHistory
+
+class Robot:
+    #定义系统提示，告诉AI如何回答用户的问题
+    system_propmt = &quot;你是一个名叫Molly的医学专家，\
+           对于用户提问的医学相关问题，你需要按照给出的参考文献资料对问题进行回答。\
+           你的回答需要按照以下步骤：\
+               1. 分析用户问题、对话历史以及参考文献，判断参考资料的哪些内容可以解答用户的问题，并将这一过程进行说明。\
+               2. 如果参考文献可以解答用户的问题，则根据文献内容对问题进行解答。\
+               3. 如果参考文献不能解答用户问题，告诉用户信息不足，无法回答，建议用户寻求专业人士帮助，不要自行发挥。\
+           你的回答需要注意以下几点： \
+               1. 保证你的回答是清晰的、明确的。如果你参考了参考资料，应该指出参考资料的标题等。\
+               2. 结合用户的对话历史，分析用户的问题意图。但不要复述问题。\
+               2. 回复用户时，使用对话的口吻，有礼貌地称呼用户为”您“，不要使用“用户”来称呼！\
+               3. 如果用户的问题与医学无关，判断用户的目的，并温柔地提示其回到医学话题。\
+           再次提醒：请严格遵守以上规则，当参考资料不足时，拒绝回答问题，不要自行发挥！&quot;
+    #问候语提示，AI与用户对话开始时候的欢迎语
+    greeting_prompt = &quot;你好！我是Molly医疗精灵，专注解决你的医疗问题。请问你需要什么帮助？&quot;
+    #定义提示模版，包含用户的问题，参考资料和对话历史
+    prompt_template = &quot;##用户问题：{input}\n\n ##参考资料：\n\n ##本地知识库：{rag_results}\n\n ##对话历史：{chat_history}&quot;
+
+    def __init__(self,model_config,retriever=None):
+        os.environ[&quot;OPENAI_API_KEY&quot;] = &#x27;hk-78s05w100005368902b62ce2a6216ecad6e94ed207fab3f7&#x27;
+        os.environ[&quot;OPENAI_API_BASE&quot;] = &#x27;https://api.openai-hk.com/v1&#x27;
+        #如果没有提供检索器，则创建一个默认的检索器，返回空的参考资料和对话历史
+        if retriever is None:
+            retriever =RunnableLambda(lambda input:{&quot;input&quot;:input,&quot;rag_results&quot;:&quot;&quot;,&quot;chat_history&quot;:&quot;&quot;})
+        #初始化模型，传入模型配置信息
+        self.model =ChatOpenAI(**model_config)
+        #保存检索器
+        self.retriever=retriever
+        #根据模版创建聊天提示
+        self.prompt=ChatPromptTemplate.from_messages([(&quot;human&quot;,self.prompt_template)])
+        #创建一个带有历史记录功能的运行链，赋值给model_with_message_history
+        self.model_with_message_history =RunnableWithMessageHistory(
+            #链式操作符， 提示模版 和语言模型 连接起来
+            self.prompt | self.model,
+            #可调用的函数，获取当前会话的聊天历史记录
+            get_session_history=self.get_session,
+            #输入消息在输入字典中的键名
+            input_messages_key=&#x27;input&#x27;,
+            history_messages_key=&#x27;chat_history&#x27;
+        )
+        #构建最终链； 将输入、检索器、历史聊天记录组合在一起
+        self.chain={&quot;input&quot;:RunnablePassthrough(),&quot;rag_results&quot;:self.retriever,&quot;chat_history&quot;:RunnablePassthrough()} | self.model_with_message_history
+        #加载会话数据
+        self.load_session_data()
+
+    def get_session(self,session_id:int)-&gt;BaseChatMessageHistory:
+        #如果会话id不在会话数据中，则创建一个新的会话记录
+        if session_id not in self.session_data.keys():
+            #session_id 存储聊天记录的会话id
+            #connection_string： 指定数据库的连接字符串
+            self.session_data[session_id]=SQLChatMessageHistory(session_id,connection_string=&#x27;sqlite:///files///chat_history.db&#x27;)
+            #系统提示消息
+            self.session_data[session_id].add_message(SystemMessage(self.system_propmt))
+            #添加问候语消息
+            self.session_data[session_id].add_message(AIMessage(self.greeting_prompt))
+
+        return self.session_data[session_id]
+
+    #加载会话记录
+    def load_session_data(self):
+        #连接到SQLite数据库
+        with sqlite3.connect(&quot;files/chat_history.db&quot;) as client:
+            #创建游标对象，执行sql语句
+            cur =client.cursor()
+            cur.execute(&quot;select count(*) from sqlite_master where type=&#x27;table&#x27; and name=&#x27;message_store&#x27;&quot;)
+            #如果表不存在
+            if cur.fetchall()[0][0] == 0:
+                #初始化会话数据为空字典
+                self.session_data={}
+            else:
+                #如果存在，查询所有不同的会话id
+                cur.execute(&quot;select distinct session_id from message_store&quot;)
+                session_ids=cur.fetchall()
+                #创建一个字典，存储每个会话的聊天历史记录对象
+                self.session_data={
+                    #字典的键是会话id，将会话id转换为整数类型
+                    int(session_id[0]):
+                    #字典的值:SQLChatMessageHistory的实例,管理会话的聊天历史记录
+                    SQLChatMessageHistory(
+                        int(session_id[0]),
+                        connection_string=&quot;sqlite:///files/chat_history.db&quot;
+                    )
+                    #字典推导式，遍历session_ids 列表中的每个会话id
+                    for session_id in session_ids
+                }
+
+    def chat(self,input:str,session_id:int)-&gt;AIMessage:
+        #配置会话
+        config ={&quot;configurable&quot;:{&#x27;session_id&#x27;:session_id}}
+        #调用链处理输入，获取响应
+        response=self.chain.invoke(input,config=config)
+
+        return response.content
+
+if __name__ == &#x27;__main__&#x27;:
+    rebot =Robot(model_config={&quot;model&quot;:&quot;gpt-3.5-turbo&quot;})
+    question=&quot;你好，请问你是谁?&quot;
+    print(&quot;问题:&quot;,question)
+    response=rebot.chat(question,1)
+    print(&quot;答复：&quot;,response)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</code></pre></details></li></ul><h2 id="1d6a551d-035a-809e-99b7-f4e671efcf5d" class="">Day03  医疗精灵项目（完整）</h2><ul id="1e0a551d-035a-8050-aecd-df269ce33a42" class="toggle"><li><details open=""><summary>chroma.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1e0a551d-035a-807f-b918-f8e73372e935" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># 导入 os 模块，用于与操作系统进行交互，例如文件路径操作等
+import os
+
+# 从 langchain_chroma 模块导入 Chroma 类，Chroma 是一个向量数据库，用于存储和检索文档向量
+from langchain_chroma import Chroma
+# 从 langchain_openai 模块导入 OpenAIEmbeddings 类，用于将文本转换为向量表示
+from langchain_openai import OpenAIEmbeddings
+# 从 langchain_community.document_loaders 模块导入 PDFMinerLoader 类，用于加载 PDF 文件并提取文本内容
+from langchain_community.document_loaders import PDFMinerLoader
+# 从 langchain_text_splitters 模块导入 RecursiveCharacterTextSplitter 类，用于将文本分割成较小的块
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+# 设置 OpenAI API 密钥
+os.environ[&quot;OPENAI_API_KEY&quot;]=&#x27;hk-78s05w100005368902b62ce2a6216ecad6e94ed207fab3f7&#x27;
+os.environ[&quot;OPENAI_API_BASE&quot;]=&#x27;https://api.openai-hk.com/v1&#x27;
+
+# 定义自定义的 MyChroma 类，继承自 Chroma 类
+class MyChroma(Chroma):
+    # 类属性，使用 OpenAIEmbeddings 作为嵌入函数，用于将文本转换为向量
+    embedding_function = OpenAIEmbeddings()
+
+    # 定义 add_file 方法，用于将指定文件名的 PDF 文件添加到向量数据库中
+    def add_file(self, filename):
+        # 使用 PDFMinerLoader 加载指定的 PDF 文件，将其内容转换为文档对象
+        document = PDFMinerLoader(filename).load()
+        # 使用 RecursiveCharacterTextSplitter 对文档进行分割，每个块大小为 200 字符，重叠部分为 40 字符
+        splits = RecursiveCharacterTextSplitter(chunk_size=200, chunk_overlap=40).split_documents(document)
+        # 将分割后的文档块添加到向量数据库中
+        self.add_documents(splits)
+
+    # 定义类方法 from_folder，用于从指定文件夹加载 PDF 文件并添加到向量数据库中
+    @classmethod
+    def from_folder(cls, persist_directory, collection_name, folder_path=None):
+        # 创建 MyChroma 类的实例，传入集合名称、嵌入函数和持久化目录
+        # cls：在类方法中，cls 是一个约定俗成的参数名，代表类本身，类似于实例方法中的 self 代表实例对象。
+        # 通过 cls 可以调用类的属性和方法，也可以用来创建类的实例。
+        self = cls(collection_name, cls.embedding_function, persist_directory)
+        # 如果指定了文件夹路径
+        if folder_path:
+            # 获取文件夹中所有以 .pdf 结尾的文件的完整路径
+            #1.os.listdir(folder_path)
+            #os.listdir(path) 这个函数能够返回指定路径 path 下的所有文件和文件夹名称所构成的列表。
+
+            #2. f.endswith(&#x27;.pdf&#x27;)
+            #endswith(suffix) 是字符串对象的一个方法，其作用是判断字符串是否以指定的后缀 suffix 结尾。
+            # 若以该后缀结尾，就返回 True；反之则返回 False。
+            #在这段代码里，f 代表 os.listdir(folder_path) 返回列表中的每个元素（也就是文件名）。
+            # f.endswith(&#x27;.pdf&#x27;) 会检查文件名是否以 .pdf 结尾，以此筛选出 PDF 文件。
+
+            #3. os.path.join(folder_path, f)
+            #os.path.join(folder_path, f) 会把文件夹路径和文件名组合成该文件的完整路径。
+
+            files = [os.path.join(folder_path, f) for f in os.listdir(folder_path) if f.endswith(&#x27;.pdf&#x27;)]
+            # 遍历所有 PDF 文件
+            for f in files:
+                # 调用 add_file 方法将每个 PDF 文件添加到向量数据库中
+                self.add_file(f)
+        # 返回创建好的 MyChroma 实例
+        return self
+
+
+if __name__ == &#x27;__main__&#x27;:
+    # 创建向量数据库，从指定文件夹加载 PDF 文件并添加到名为 &#x27;rag_collection&#x27; 的集合中，持久化目录为 &#x27;./files/rag&#x27;
+    chroma = MyChroma.from_folder(&#x27;./files/rag&#x27;, &#x27;rag_collection&#x27;, folder_path=&#x27;./files/docs&#x27;)
+
+    # # 读取现有向量数据库
+    chroma = MyChroma.from_folder(&#x27;./files/rag&#x27;, &#x27;rag_collection&#x27;)
+
+    # # 打印向量数据库数据
+    # documents = chroma.get()
+    # n_documents = len(documents[&#x27;ids&#x27;])
+    # for i in range(n_documents):
+    #     text = documents[&#x27;documents&#x27;][i].replace(&#x27;\n&#x27;, &#x27;&#x27;).replace(&#x27; &#x27;, &#x27;&#x27;)
+    #     #:&lt;.10s 是格式化说明符，: 用于分隔变量和格式化选项，&lt; 表示左对齐，.10s 表示截取字符串的前 10 个字符。
+    #     # 所以这部分的作用是输出文档 ID 的前 10 个字符，并且左对齐。
+    #     print(f&quot;Document {i}: {documents[&#x27;ids&#x27;][i]:&lt;.10s}... 内容：{text[:20]:&lt;20s}...{text[-20:]:&lt;20s}&quot;)
+
+    # # 删除向量数据库的数据
+    #chroma.delete(...)
+
+    # # 删除整个向量数据库
+    #chroma.reset_collection()
+
+    # # 创建检索器
+    # retriver = chroma.as_retriver()</code></pre></details></li></ul><ul id="1e0a551d-035a-800b-8b16-ed08f2e334d9" class="toggle"><li><details open=""><summary>funcs.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1e0a551d-035a-8091-9fd9-f5c521430afc" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># 导入 streamlit 库，用于快速创建 Web 应用程序
+import streamlit as st
+# 从 langchain_core.messages 模块导入 HumanMessage 类，用于处理人类消息
+from langchain_core.messages import HumanMessage
+
+# 定义一个函数，用于获取指定会话 ID 的聊天消息列表
+# session_id 为可选参数，若未提供则使用当前会话 ID
+def get_session_messages(session_id: int=None):
+    # 初始化一个空列表，用于存储消息元组
+    messages = []
+    # 如果 session_id 未提供，则使用 streamlit 会话状态中的 session_id
+    session_id = session_id or st.session_state.session_id
+    # 通过会话 ID 获取对应的会话对象
+    session = st.session_state.robot.get_session(session_id)
+    # 遍历会话对象中的消息列表，从第二个消息开始（跳过第一个可能的系统消息）
+    for message in session.messages[1:]:
+        # 判断消息是否为人类消息，如果是则将角色标记为 &quot;Human&quot;，否则标记为 &quot;AI&quot;
+        message = (&quot;Human&quot;, message.content) if isinstance(message, HumanMessage) else (&quot;AI&quot;, message.content)
+        # 将处理后的消息元组添加到消息列表中
+        messages.append(message)
+    # 返回消息列表
+    return messages
+
+# 定义一个函数，用于获取所有会话的 ID 列表
+def get_all_session_ids():
+    # 使用列表推导式从机器人的会话数据字典中提取所有会话 ID
+    return [session_id for session_id in st.session_state.robot.session_data.keys()]
+
+# 定义一个函数，用于根据用户问题生成 AI 回复
+# question 为用户提出的问题，session_id 为可选的会话 ID，默认为当前会话 ID
+def create_response(question: str, session_id: int = None):
+    # 如果 session_id 未提供，则使用 streamlit 会话状态中的 session_id
+    session_id = session_id or st.session_state.session_id
+    # 调用机器人的 stream 方法，传入问题和会话 ID，获取 AI 回复
+    response = st.session_state.robot.stream(question, session_id)
+    # 返回 AI 回复
+    return response
+
+# 定义一个函数，用于启动一个新的会话
+def start_session():
+    # 计算新的会话 ID，取当前所有会话 ID 中的最大值加 1
+    st.session_state.session_id = max(st.session_state.robot.session_data.keys(), default=0) + 1
+    # 根据新的会话 ID 获取对应的会话对象
+    st.session_state.robot.get_session(st.session_state.session_id)
+
+# 定义一个函数，用于继续指定会话 ID 的会话
+# session_id 为要继续的会话的 ID
+def continue_session(session_id: int):
+    # 将 streamlit 会话状态中的 session_id 更新为指定的会话 ID
+    st.session_state.session_id = session_id
+
+# 定义一个函数，用于删除指定会话 ID 的会话
+# session_id 为要删除的会话的 ID
+def delete_session(session_id: int):
+    # 从机器人的会话数据字典中移除指定会话 ID 对应的会话对象，并获取该对象
+    chathistory = st.session_state.robot.session_data.pop(session_id)
+    # 清空该会话对象的聊天历史记录
+    chathistory.clear()
+    # 更新 streamlit 会话状态中的 session_id 为剩余会话 ID 中的最大值，若没有则默认为 1
+    st.session_state.session_id = max(st.session_state.robot.session_data.keys(), default=1)</code></pre></details></li></ul><ul id="1e0a551d-035a-8042-b099-e5334a4c2b63" class="toggle"><li><details open=""><summary>main.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1e0a551d-035a-8037-b122-f9a69202f2b9" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># 导入 os 模块，用于与操作系统进行交互，例如操作文件路径、环境变量等
+import os
+# 导入 streamlit 库并别名为 st，Streamlit 用于快速创建数据应用程序和交互式界面
+import streamlit as st
+# 从 robot 模块中导入 Robot 类，Robot 类可能是用于处理聊天机器人相关的逻辑
+from robot import Robot
+# 从 chroma 模块中导入 MyChroma 类，MyChroma 类可能与向量数据库操作有关
+from chroma import MyChroma
+
+# 检查会话状态中是否存在名为&#x27;started&#x27;的键
+# 如果不存在，说明这是会话的首次加载或初始化
+if&#x27;started&#x27; not in st.session_state:
+    # 在会话状态中设置&#x27;started&#x27;键的值为 True，表示会话已开始初始化
+    st.session_state.started = True
+    # 从指定文件夹（&#x27;./files/rag&#x27;）加载数据到名为&#x27;rag_collection&#x27;的集合中，
+    # 创建 MyChroma 实例并存储在会话状态的&#x27;chroma&#x27;键下
+    st.session_state.chroma = MyChroma.from_folder(&#x27;./files/rag&#x27;, &#x27;rag_collection&#x27;)
+    # 使用指定的模型配置（&#x27;gpt-3.5-turbo&#x27;）和从会话状态中获取的检索器（来自 MyChroma）
+    # 创建 Robot 实例，并存储在会话状态的&#x27;robot&#x27;键下
+    st.session_state.robot = Robot({&#x27;model&#x27;: &#x27;gpt-3.5-turbo&#x27;}, st.session_state.chroma.as_retriever(k=3))
+    # 在会话状态中设置&#x27;session_id&#x27;键的值为 1，用于标识当前会话的 ID
+    st.session_state.session_id = 1
+
+# 导入自定义的 funcs 模块并别名为 funcs，该模块可能包含了一些业务逻辑函数
+import funcs as funcs
+
+# 定义 init_interface 函数，用于初始化和展示应用程序的界面
+def init_interface():
+    # 设置 Streamlit 应用程序的页面配置，包括页面标题为&quot;Medical Chatbot&quot;和布局为宽屏
+    st.set_page_config(page_title=&quot;Medical Chatbot&quot;, layout=&quot;wide&quot;)
+    # 在应用程序页面上显示标题&quot;Molly 医疗精灵&quot;
+    st.title(&quot;Molly 医疗精灵&quot;)
+    # 调用 funcs 模块中的 get_session_messages 函数获取当前会话的聊天消息列表
+    messages = funcs.get_session_messages()
+    # 遍历获取到的聊天消息列表
+    for message in messages:
+        # 解包消息元组，分别获取消息的角色（如&quot;Human&quot;或&quot;AI&quot;）和内容
+        role, content = message
+        # 根据消息的角色，在 Streamlit 聊天界面中显示相应的聊天消息
+        with st.chat_message(role):
+            st.write(content)
+    # 在应用程序中创建一个聊天输入框，提示用户输入问题，并将用户输入的内容赋值给 question 变量
+    question = st.chat_input(&quot;输入问题提问....&quot;)
+    # 如果用户输入了问题（question 不为 None）
+    if question is not None:
+        # 调用 funcs 模块中的 create_response 函数，根据用户问题生成回答
+        response = funcs.create_response(question)
+        # 在聊天界面中显示用户输入的问题，角色标识为&quot;Human&quot;
+        st.chat_message(&quot;Human&quot;).write(question)
+        # 在聊天界面中以流式输出的方式显示 AI 的回答，角色标识为&quot;AI&quot;
+        st.chat_message(&quot;AI&quot;).write_stream(response)
+    # 在应用程序的侧边栏中进行以下操作
+    with st.sidebar:
+        # 在侧边栏中显示当前对话的 ID，ID 从会话状态的&#x27;session_id&#x27;键获取
+        st.header(f&quot;当前对话ID：{st.session_state.session_id}&quot;)
+        # 在侧边栏中创建一个按钮，按钮文本为&quot;开始新对话&quot;，
+        # 点击按钮时调用 funcs 模块中的 start_session 函数
+        st.button(&quot;开始新对话&quot;, on_click=funcs.start_session)
+        # 遍历 funcs 模块中获取的所有会话 ID 列表
+        for session_id in funcs.get_all_session_ids():
+            # 在侧边栏中创建一个可展开的区域，标题为当前会话 ID
+            with st.expander(f&quot;对话ID：{session_id}&quot;):
+                # 在展开区域中创建两列布局
+                col1, col2 = st.columns(2)
+                # 在第一列中创建一个按钮，按钮文本为&quot;继续对话&quot;，
+                # 点击按钮时调用 funcs 模块中的 continue_session 函数，并传递当前会话 ID 作为参数
+                col1.button(&quot;继续对话&quot;, on_click=funcs.continue_session, args=(session_id,), key=f&quot;Restart_{session_id}&quot;)
+                # 在第二列中创建一个按钮，按钮文本为&quot;删除对话&quot;，
+                # 点击按钮时调用 funcs 模块中的 delete_session 函数，并传递当前会话 ID 作为参数
+                col2.button(&quot;删除对话&quot;, on_click=funcs.delete_session, args=(session_id,), key=f&quot;Delete_{session_id}&quot;)
+                # 调用 funcs 模块中的 get_session_messages 函数获取指定会话 ID 的聊天消息列表
+                messages = funcs.get_session_messages(session_id)
+                # 遍历获取到的聊天消息列表
+                for message in messages:
+                    # 解包消息元组，分别获取消息的角色（如&quot;Human&quot;或&quot;AI&quot;）和内容
+                    role, content = message
+                    # 根据消息的角色，在侧边栏的聊天界面中显示相应的聊天消息
+                    with st.chat_message(role):
+                        st.write(content)
+
+# 如果当前脚本是主程序入口
+if __name__ == &#x27;__main__&#x27;:
+    # 设置环境变量&quot;OPENAI_API_KEY&quot;的值，用于访问 OpenAI 的 API
+    os.environ[&quot;OPENAI_API_KEY&quot;] = &#x27;hk-78s05w100005368902b62ce2a6216ecad6e94ed207fab3f7&#x27;
+    os.environ[&quot;OPENAI_API_BASE&quot;] = &#x27;https://api.openai-hk.com/v1&#x27;
+    # 调用 init_interface 函数，初始化并展示应用程序的界面
+    init_interface()</code></pre></details></li></ul><ul id="1e0a551d-035a-8043-9e27-dac6ffb3a79c" class="toggle"><li><details open=""><summary>robot.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1e0a551d-035a-8063-90a8-dfeb28571e62" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">import os
+# 导入 sqlite3 库，用于与 SQLite 数据库进行交互
+import sqlite3
+# 从 typing 模块导入 Iterator 类型，用于类型提示
+from typing import Iterator
+# 从 langchain.prompts.chat 模块导入 ChatPromptTemplate 类，用于创建聊天提示模板
+from langchain.prompts.chat import ChatPromptTemplate
+# 从 langchain_core.messages 模块导入 SystemMessage 和 AIMessage 类，分别表示系统消息和 AI 消息
+from langchain_core.messages import SystemMessage, AIMessage
+# 从 langchain_core.runnables 模块导入 RunnableWithMessageHistory、RunnableLambda 和 RunnablePassthrough 类，用于构建可运行的链
+from langchain_core.runnables import RunnableWithMessageHistory, RunnableLambda, RunnablePassthrough
+# 从 langchain_core.chat_history 模块导入 BaseChatMessageHistory 类，作为聊天历史记录的基类
+from langchain_core.chat_history import BaseChatMessageHistory
+
+# 从 langchain_openai 模块导入 ChatOpenAI 类，用于与 OpenAI 的聊天模型进行交互
+from langchain_openai import ChatOpenAI
+# 从 langchain_community.chat_message_histories.sql 模块导入 SQLChatMessageHistory 类，用于将聊天历史记录存储到 SQL 数据库中
+from langchain_community.chat_message_histories.sql import SQLChatMessageHistory
+
+
+class Robot:
+    # 定义系统提示，告知 AI 如何回答用户的问题
+    system_propmt = &quot;你是一个名叫Molly的医学专家，\
+        对于用户提问的医学相关问题，你需要按照给出的参考文献资料对问题进行回答。\
+        你的回答需要按照以下步骤：\
+            1. 分析用户问题、对话历史以及参考文献，判断参考资料的哪些内容可以解答用户的问题，并将这一过程进行说明。\
+            2. 如果参考文献可以解答用户的问题，则根据文献内容对问题进行解答。\
+            3. 如果参考文献不能解答用户问题，告诉用户信息不足，无法回答，建议用户寻求专业人士帮助，不要自行发挥。\
+        你的回答需要注意以下几点： \
+            1. 保证你的回答是清晰的、明确的。如果你参考了参考资料，应该指出参考资料的标题等。\
+            2. 结合用户的对话历史，分析用户的问题意图。但不要复述问题。\
+            2. 回复用户时，使用对话的口吻，有礼貌地称呼用户为”您“，不要使用“用户”来称呼！\
+            3. 如果用户的问题与医学无关，判断用户的目的，并温柔地提示其回到医学话题。\
+        再次提醒：请严格遵守以上规则，当参考资料不足时，拒绝回答问题，不要自行发挥！&quot;
+    # 定义问候语提示，作为 AI 与用户对话开始时的欢迎语
+    greeting_prompt = &quot;你好！我是Molly医疗精灵，专注解决你的医疗问题。请问你需要什么帮助？&quot;
+    # 定义提示模板，包含用户问题、参考资料和对话历史
+    prompt_template = &quot;##用户问题：{input}\n\n ##参考资料：\n\n ##本地知识库：{rag_results}\n\n ##对话历史：{chat_history}&quot;
+
+    def __init__(self, model_config, retriever=None):
+        # 设置 OpenAI API 密钥，用于访问 OpenAI 的聊天模型
+        os.environ[&quot;OPENAI_API_KEY&quot;] = &#x27;hk-78s05w100005368902b62ce2a6216ecad6e94ed207fab3f7&#x27;
+        os.environ[&quot;OPENAI_API_BASE&quot;] = &#x27;https://api.openai-hk.com/v1&#x27;
+        # 如果没有提供检索器，则创建一个默认的检索器，返回空的参考资料和对话历史
+        if retriever is None:
+            retriever = RunnableLambda(lambda input: {&quot;input&quot;: input, &quot;rag_results&quot;: &quot;&quot;, &quot;chat_history&quot;: &quot;&quot;})
+        # 初始化 ChatOpenAI 模型，传入模型配置
+        self.model = ChatOpenAI(**model_config)
+        # 保存检索器
+        self.retriever = retriever
+        # 根据提示模板创建聊天提示
+        self.prompt = ChatPromptTemplate.from_messages([(&quot;human&quot;, self.prompt_template)])
+        # 创建一个带有消息历史记录处理功能的可运行链，将其赋值给 self.model_with_message_history 这个实例属性
+        self.model_with_message_history = RunnableWithMessageHistory(
+            # 这里使用链式操作符 | 将提示模板（self.prompt）和语言模型（self.model）连接起来。
+            # 意味着先将输入数据经过提示模板处理，然后将处理后的结果作为语言模型的输入
+            self.prompt | self.model,
+            # get_session_history 是一个可调用对象（通常是函数），它用于获取当前会话的聊天历史记录。
+            # self.get_session 是自定义的方法，用于返回当前会话对应的聊天历史记录列表
+            get_session_history=self.get_session,
+            # input_messages_key 指定了输入消息在输入字典中的键名。
+            # 当调用这个可运行链时，需要传入一个字典，其中用户输入的消息应该以 &#x27;input&#x27; 作为键名
+            input_messages_key=&#x27;input&#x27;,
+            # history_messages_key 指定了聊天历史记录在输入字典中的键名。
+            # 调用时，聊天历史记录应以 &#x27;chat_history&#x27; 作为键名存于输入字典中
+            history_messages_key=&#x27;chat_history&#x27;
+        )
+        # 构建最终的链，将输入、检索器和聊天历史记录组合在一起
+        self.chain = {&quot;input&quot;: RunnablePassthrough(), &quot;rag_results&quot;: self.retriever,
+                      &quot;chat_history&quot;: RunnablePassthrough()} | self.model_with_message_history
+        # 加载会话数据
+        self.load_session_data()
+
+    def get_session(self, session_id: int) -&gt; BaseChatMessageHistory:
+        # 如果会话 ID 不在会话数据中，则创建一个新的会话记录
+        if session_id not in self.session_data.keys():
+            #session_id：用于指定要存储聊天记录的会话 ID。
+            #connection_string：用于指定数据库的连接字符串。
+            # 这里使用的是 SQLite 数据库，sqlite:///files///chat_history.db 表明数据库文件名为 chat_history.db，并且存放在 files 目录下
+            self.session_data[session_id] = SQLChatMessageHistory(session_id,
+                                                                  connection_string=&quot;sqlite:///files///chat_history.db&quot;)
+            # 添加系统提示消息
+            self.session_data[session_id].add_message(SystemMessage(self.system_propmt))
+            # 添加问候语消息
+            self.session_data[session_id].add_message(AIMessage(self.greeting_prompt))
+        # 返回会话记录
+        return self.session_data[session_id]
+
+    def load_session_data(self):
+        # 连接到 SQLite 数据库
+        with sqlite3.connect(&quot;files/chat_history.db&quot;) as client:
+            # 创建游标对象，用于执行 SQL 语句
+            cur = client.cursor()
+            # 执行查询语句，检查名为 message_store 的表是否存在
+            cur.execute(
+                &quot;select count(*)  from sqlite_master where type=&#x27;table&#x27; and name = &#x27;message_store&#x27;&quot;)
+            # 如果表不存在
+            if cur.fetchall()[0][0] == 0:
+                # 初始化会话数据为空字典
+                self.session_data = {}
+            else:
+                # 如果表存在，查询所有不同的会话 ID
+                cur.execute(&quot;SELECT DISTINCT session_id FROM message_store&quot;)
+                session_ids = cur.fetchall()
+                # 创建一个字典 self.session_data，用于存储每个会话的聊天历史记录对象
+                self.session_data = {
+                    # 字典的键是会话 ID，这里将会话 ID 转换为整数类型
+                    int(session_id[0]):
+                    # 字典的值是 SQLChatMessageHistory 类的实例，用于管理会话的聊天历史记录
+                    SQLChatMessageHistory(
+                        # 第一个参数是会话 ID，同样转换为整数类型，用于标识特定的会话
+                        int(session_id[0]),
+                        # 第二个参数是数据库连接字符串，指定了聊天历史记录存储的数据库位置
+                        # 这里使用 SQLite 数据库，数据库文件存储在 files 目录下的 chat_history.db 文件中
+                        connection_string=&quot;sqlite:///files/chat_history.db&quot;
+                    )
+                    # 这是一个字典推导式，遍历 session_ids 列表中的每个会话 ID
+                    for session_id in session_ids
+                }
+
+    def chat(self, input: str, session_id: int) -&gt; AIMessage:
+        # 配置会话 ID
+        config = {&#x27;configurable&#x27;: {&#x27;session_id&#x27;: session_id}}
+        # 调用链处理输入，并获取响应
+        response = self.chain.invoke(input, config=config)
+        # 返回响应的内容
+        return response.content
+
+    #机器人的 stream 方法，传入问题和会话 ID，获取 AI 回复
+    def stream(self, inputs, session_id) -&gt; Iterator:
+        # 配置会话 ID
+        config = {&#x27;configurable&#x27;: {&#x27;session_id&#x27;: session_id}}
+        # 调用链以流式方式处理输入，并返回迭代器
+        response = self.chain.stream(inputs, config=config)
+        return response
+
+
+if __name__ == &quot;__main__&quot;:
+    # 初始化 Robot 类的实例，传入模型配置
+    robot = Robot(model_config={&quot;model&quot;: &quot;gpt-3.5-turbo&quot;})
+    # 定义用户问题
+    question = &quot;你好，请问你是谁？&quot;
+    # 打印问题
+    print(&quot;问题：&quot;, question)
+    # 调用 chat 方法获取回答
+    response = robot.chat(question, 1)
+    # 打印回答
+    print(&quot;答复：&quot;, response)</code></pre></details></li></ul><h2 id="1e0a551d-035a-8036-9a53-f5da0ea6051f" class="">Day04  LangSmith+LangGraph+Llama_Index</h2><ul id="1dba551d-035a-806e-b3fa-fbbd8c7df20f" class="toggle"><li><details open=""><summary>langsmith</summary><ul id="1e0a551d-035a-80ca-8cc5-ed2dfacd124d" class="toggle"><li><details open=""><summary>langsmith_quickstart.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1e0a551d-035a-809b-aaad-cc8c70160fa0" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">import os
+# langsmith 环境变量
+os.environ[&#x27;LANGCHAIN_TRACING_V2&#x27;]=&quot;true&quot;
+os.environ[&#x27;LANGCHAIN_ENDPOINT&#x27;]=&quot;https://api.smith.langchain.com&quot;
+os.environ[&#x27;LANGCHAIN_API_KEY&#x27;]=&quot;你的key&quot;
+os.environ[&#x27;LANGCHAIN_PROJECT&#x27;]=&quot;langsmith_learn&quot; #项目名
+# openai key
+os.environ[&quot;OPENAI_API_KEY&quot;]=&#x27;你的key&#x27;
+os.environ[&quot;OPENAI_API_BASE&quot;]=&#x27;https://api.openai-hk.com/v1&#x27;
+os.environ[&quot;OPENAI_BASE_URL&quot;] = &quot;https://api.openai-hk.com/v1&quot;
+
+import openai
+from langsmith.wrappers import wrap_openai
+from langsmith import traceable
+
+# 自动跟踪模型的调用情况
+client = wrap_openai(openai.Client())
+
+@traceable # 自动跟踪模型的调用情况,装饰器
+def pipeline(user_input: str):
+    result = client.chat.completions.create(
+        messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: user_input}],
+        model=&quot;gpt-3.5-turbo&quot;
+    )
+    return result.choices[0].message.content
+
+pipeline(&quot;你好&quot;)</code></pre><p id="1e0a551d-035a-8031-a8ac-fe05e3ebea28" class="">
+</p></details></li></ul><ul id="1e0a551d-035a-8016-9782-e84cb633c4b1" class="toggle"><li><details open=""><summary>langsmith_with_langchain.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1e0a551d-035a-807f-b7f8-cde0150e3b79" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">import os
+# langsmith 环境变量
+os.environ[&#x27;LANGCHAIN_TRACING_V2&#x27;]=&quot;true&quot;
+os.environ[&#x27;LANGCHAIN_ENDPOINT&#x27;]=&quot;https://api.smith.langchain.com&quot;
+os.environ[&#x27;LANGCHAIN_API_KEY&#x27;]=&quot;你的key&quot;
+os.environ[&#x27;LANGCHAIN_PROJECT&#x27;]=&quot;langsmith_learn2&quot;
+# openai key
+os.environ[&quot;OPENAI_API_KEY&quot;]=&#x27;你的key&#x27;
+os.environ[&quot;OPENAI_API_BASE&quot;]=&#x27;https://api.openai-hk.com/v1&#x27;
+os.environ[&quot;OPENAI_BASE_URL&quot;] = &quot;https://api.openai-hk.com/v1&quot;
+
+from langchain_openai import ChatOpenAI
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+
+#提示词模版
+prompt = ChatPromptTemplate.from_messages([
+    #帮助机器人
+    (&quot;system&quot;, &quot;You are a helpful assistant. Please respond to the user&#x27;s request only based on the given context.&quot;),
+    (&quot;user&quot;, &quot;Question: {question}\nContext: {context}&quot;)
+])
+#模型
+model = ChatOpenAI(model=&quot;gpt-3.5-turbo&quot;)
+#解析输出
+output_parser = StrOutputParser()
+
+#链的组件
+chain = prompt | model | output_parser
+
+#问题  总结一下早上会议内容
+question = &quot;Can you summarize this morning&#x27;s meetings?&quot;
+#早上的会议内容，解决世界冲突
+context = &quot;During this morning&#x27;s meeting, we solved all world conflict.&quot;
+#放入模型提问
+chain.invoke({&quot;question&quot;: question, &quot;context&quot;: context})</code></pre></details></li></ul></details></li></ul><ul id="1e0a551d-035a-8086-b1cc-f764df41675a" class="toggle"><li><details open=""><summary>LangGraph</summary><ul id="1e0a551d-035a-807d-9f73-f0bf128f0fec" class="toggle"><li><details open=""><summary>custom_tools.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1e0a551d-035a-8068-b5fc-dbb12d8fc146" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">from langchain_core.tools import tool
+
+@tool
+def multiply(a: int, b: int) -&gt; int:
+    &quot;&quot;&quot;两数相乘&quot;&quot;&quot;
+    return a * b
+
+tools = [multiply]
+
+
+# 1.导包
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import HumanMessage,SystemMessage
+import os
+
+# langsmith 环境变量
+os.environ[&#x27;LANGCHAIN_TRACING_V2&#x27;]=&quot;true&quot;
+os.environ[&#x27;LANGCHAIN_ENDPOINT&#x27;]=&quot;https://api.smith.langchain.com&quot;
+os.environ[&#x27;LANGCHAIN_API_KEY&#x27;]=&quot;你的key&quot;
+os.environ[&#x27;LANGCHAIN_PROJECT&#x27;]=&quot;langsmith_learn3&quot;
+# openai key
+os.environ[&quot;OPENAI_API_KEY&quot;]=&#x27;你的key&#x27;
+os.environ[&quot;OPENAI_API_BASE&quot;]=&#x27;https://api.openai-hk.com/v1&#x27;
+os.environ[&quot;OPENAI_BASE_URL&quot;] = &quot;https://api.openai-hk.com/v1&quot;
+
+# 2.创建模型
+model = ChatOpenAI(model=&quot;gpt-3.5-turbo&quot;)
+
+# 绑定Tools
+model_bind_tools = model.bind_tools(tools)
+
+# 3.对话
+input_text = input(&quot;请输入两数相乘的问题:&quot;)
+messages = [
+    HumanMessage(content=input_text)
+]
+
+# 4.启动模型
+response = model_bind_tools.invoke(messages)
+
+# print(response)
+for tool_call in response.tool_calls:
+
+    output = multiply.invoke(tool_call[&#x27;args&#x27;])
+
+    print(output)
+
+# 使用工具计算的结果
+result_with_tool = model.invoke(f&quot;{input_text}的计算结果是:{output}&quot;)
+print(f&quot;使用工具计算的结果是:{result_with_tool.content}&quot;)
+
+# 不使用工具计算的结果
+result_without_tool = model.invoke(input_text)
+print(f&quot;不使用工具计算的结果:{result_without_tool.content}&quot;)</code></pre></details></li></ul><ul id="1e0a551d-035a-80dc-8f46-c3757b7ae8ce" class="toggle"><li><details open=""><summary>langgraph_with_tools.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1e0a551d-035a-8048-80b3-c385d7e910b7" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">import os
+
+# langsmith 环境变量
+os.environ[&#x27;LANGCHAIN_TRACING_V2&#x27;]=&quot;true&quot;
+os.environ[&#x27;LANGCHAIN_ENDPOINT&#x27;]=&quot;https://api.smith.langchain.com&quot;
+os.environ[&#x27;LANGCHAIN_API_KEY&#x27;]=&quot;你的key&quot;
+os.environ[&#x27;LANGCHAIN_PROJECT&#x27;]=&quot;langsmith_learn5&quot;
+# openai key
+os.environ[&quot;OPENAI_API_KEY&quot;]=&#x27;你的key&#x27;
+os.environ[&quot;OPENAI_API_BASE&quot;]=&#x27;https://api.openai-hk.com/v1&#x27;
+os.environ[&quot;OPENAI_BASE_URL&quot;] = &quot;https://api.openai-hk.com/v1&quot;
+
+# 设置 Tavily 的 API 密钥，Tavily 是一个搜索工具，用于获取外部信息
+os.environ[&quot;TAVILY_API_KEY&quot;] = &quot;你的key&quot;
+
+# 从 langchain_community 库中导入 TavilySearchResults 工具类
+from langchain_community.tools.tavily_search import TavilySearchResults
+
+# 创建一个 TavilySearchResults 工具实例，设置最大返回结果数量为 2
+tool = TavilySearchResults(max_results=2)
+# 将工具实例存储在列表中，方便后续使用
+tools = [tool]
+
+# 导入相关类型注解模块，用于增强代码的可读性和类型检查
+from typing import Annotated
+from typing_extensions import TypedDict
+# 从 langgraph 库中导入状态图相关类和常量
+from langgraph.graph import StateGraph, START, END
+# 从 langgraph 库中导入消息处理相关函数
+from langgraph.graph.message import add_messages
+# 从 langgraph 预构建模块中导入工具节点和工具条件函数
+from langgraph.prebuilt import ToolNode, tools_condition
+
+# 定义一个名为 State 的类型字典，用于表示状态图中的状态
+# 其中 messages 字段是一个列表，使用 add_messages 进行注解，用于处理消息
+class State(TypedDict):
+    messages: Annotated[list, add_messages]
+
+# 创建一个 StateGraph 实例，用于构建状态图，传入 State 类型作为状态定义
+graph_builder = StateGraph(State)
+
+# 从 langchain_openai 库中导入 ChatOpenAI 类，用于与 OpenAI 的聊天模型进行交互
+from langchain_openai import ChatOpenAI
+
+# 创建一个 ChatOpenAI 实例，指定使用 gpt-3.5-turbo 模型
+llm = ChatOpenAI(model=&quot;gpt-3.5-turbo&quot;)
+# 将之前创建的工具列表绑定到语言模型上，使模型可以调用工具
+llm_with_tools = llm.bind_tools(tools)
+
+# 定义一个名为 chatbot 的函数，用于处理聊天逻辑
+# 接收一个 State 类型的参数 state，返回一个包含处理后消息的字典
+def chatbot(state: State):
+    return {&quot;messages&quot;: [llm_with_tools.invoke(state[&quot;messages&quot;])]}
+
+# 在状态图构建器中添加一个名为 chatbot 的节点，使用 chatbot 函数作为节点的处理逻辑
+graph_builder.add_node(&quot;chatbot&quot;, chatbot)
+# 创建一个 ToolNode 实例，传入工具列表，用于处理工具调用逻辑
+tool_node = ToolNode(tools=tools)
+# 在状态图构建器中添加一个名为 tools 的节点，使用 tool_node 作为节点的处理逻辑
+graph_builder.add_node(&quot;tools&quot;, tool_node)
+
+# 在状态图中添加从 chatbot 节点到 tools 节点的条件边，根据工具条件进行跳转
+graph_builder.add_conditional_edges(&quot;chatbot&quot;, tools_condition)
+# 在状态图中添加从 tools 节点到 chatbot 节点的边，形成循环调用逻辑
+graph_builder.add_edge(&quot;tools&quot;, &quot;chatbot&quot;)
+# 设置状态图的入口点为 chatbot 节点
+graph_builder.set_entry_point(&quot;chatbot&quot;)
+
+# 编译状态图构建器，生成可执行的状态图
+graph = graph_builder.compile()
+
+# 定义一个名为 stream_graph_updates 的函数，用于流式处理状态图的更新
+# 接收用户输入作为参数，将用户输入封装成消息列表传入状态图进行处理
+# 遍历状态图的流事件，打印出助手的回复内容
+def stream_graph_updates(user_input: str):
+    for event in graph.stream({&quot;messages&quot;: [(&quot;user&quot;, user_input)]}):
+        for value in event.values():
+            print(&quot;Assistant:&quot;, value[&quot;messages&quot;][-1].content)
+
+# 进入一个无限循环，用于持续接收用户输入并处理
+while True:
+    try:
+        # 提示用户输入信息，并读取用户输入
+        user_input = input(&quot;User: &quot;)
+        # 检查用户输入是否为退出指令，如果是则打印再见信息并退出循环
+        if user_input.lower() in [&quot;quit&quot;, &quot;exit&quot;, &quot;q&quot;]:
+            print(&quot;Goodbye!&quot;)
+            break
+
+        # 调用 stream_graph_updates 函数处理用户输入
+        stream_graph_updates(user_input)
+    except:
+        # 如果输入过程中出现异常（如无法获取输入），使用默认输入进行处理
+        user_input = &quot;What do you know about LangGraph?&quot;
+        print(&quot;User: &quot; + user_input)
+        # 调用 stream_graph_updates 函数处理默认输入
+        stream_graph_updates(user_input)
+        # 出现异常后退出循环
+        break</code></pre></details></li></ul><ul id="1e0a551d-035a-8046-b8d5-e3f015771092" class="toggle"><li><details open=""><summary>langgraph_quickstart.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1e0a551d-035a-80e7-a928-d76c1de01107" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">import os
+# langsmith 环境变量
+os.environ[&#x27;LANGCHAIN_TRACING_V2&#x27;]=&quot;true&quot;
+os.environ[&#x27;LANGCHAIN_ENDPOINT&#x27;]=&quot;https://api.smith.langchain.com&quot;
+os.environ[&#x27;LANGCHAIN_API_KEY&#x27;]=&quot;你的key&quot;
+os.environ[&#x27;LANGCHAIN_PROJECT&#x27;]=&quot;langsmith_learn4&quot;
+# openai key
+os.environ[&quot;OPENAI_API_KEY&quot;]=&#x27;你的key&#x27;
+os.environ[&quot;OPENAI_API_BASE&quot;]=&#x27;https://api.openai-hk.com/v1&#x27;
+os.environ[&quot;OPENAI_BASE_URL&quot;] = &quot;https://api.openai-hk.com/v1&quot;
+
+#导入数据类型 2个
+from typing import Annotated
+from typing_extensions import TypedDict
+
+from langgraph.graph import StateGraph, START, END
+from langgraph.graph.message import add_messages
+
+#参数：字典类型dict
+class State(TypedDict):
+    #把消息messages 通过add_messages方法放在list里面
+    messages: Annotated[list, add_messages]
+
+#构造了一个图
+graph_builder = StateGraph(State)
+
+from langchain_openai import ChatOpenAI
+
+llm = ChatOpenAI(model=&quot;gpt-3.5-turbo&quot;)
+
+def chatbot(state: State):
+    #key：messages，value：模型返回结果
+    return {&quot;messages&quot;: [llm.invoke(state[&quot;messages&quot;])]}
+
+#图里面添加了一个节点（任务或叫操作）
+graph_builder.add_node(&quot;chatbot&quot;, chatbot)
+
+#图里面添加了一个起始边
+graph_builder.add_edge(START, &quot;chatbot&quot;)
+#图里面添加了一个结束边
+graph_builder.add_edge(&quot;chatbot&quot;, END)
+
+graph = graph_builder.compile()
+
+def stream_graph_updates(user_input: str):
+    #一次性提问
+    for event in graph.stream({&quot;messages&quot;: [(&quot;user&quot;, user_input)]}):
+        for value in event.values():
+            print(&quot;Assistant:&quot;, value[&quot;messages&quot;][-1].content)
+
+
+while True:
+    try:
+        user_input = input(&quot;User: &quot;)
+        if user_input.lower() in [&quot;quit&quot;, &quot;exit&quot;, &quot;q&quot;]:
+            print(&quot;Goodbye!&quot;)
+            break
+
+        stream_graph_updates(user_input)
+    except:
+        user_input = &quot;What do you know about LangGraph?&quot;
+        print(&quot;User: &quot; + user_input)
+        stream_graph_updates(user_input)
+        break</code></pre></details></li></ul></details></li></ul><ul id="1e0a551d-035a-801d-8d56-e3460419f910" class="toggle"><li><details open=""><summary>Llama_Index</summary><ul id="1e0a551d-035a-80f4-ba15-f8ff6eb9768f" class="toggle"><li><details open=""><summary>llamaindex_load_directory.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1e0a551d-035a-80b4-bbf6-f70c7204b8b1" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># 导入 os 模块，用于与操作系统进行交互，比如设置环境变量
+import os
+# 从 llama_index.core 模块导入 load_index_from_storage 和 StorageContext 类
+# load_index_from_storage 用于从存储中加载索引，StorageContext 用于管理索引的存储上下文
+from llama_index.core import load_index_from_storage, StorageContext
+
+# 设置 OpenAI 的 API 密钥，这里的密钥是一个示例值
+os.environ[&quot;OPENAI_API_KEY&quot;] = &#x27;你的key&#x27;
+# 设置 OpenAI 的 API 基础地址，这里指定了自定义的 API 地址
+os.environ[&quot;OPENAI_API_BASE&quot;] = &#x27;https://api.openai-hk.com/v1&#x27;
+
+# 使用 StorageContext 类的 from_defaults 方法创建一个存储上下文对象
+# persist_dir 参数指定了索引数据持久化存储的目录
+storage_context = StorageContext.from_defaults(persist_dir=&quot;index_persist&quot;)
+# 调用 load_index_from_storage 函数，根据之前创建的存储上下文对象加载索引
+index = load_index_from_storage(storage_context)
+
+# 调用索引对象的 as_query_engine 方法，将索引转换为查询引擎对象
+# 查询引擎用于向索引中发起查询请求
+query_engine = index.as_query_engine()
+# 调用查询引擎对象的 query 方法，发起一个关于“脑卒中怎么治疗?”的查询
+# 并将查询结果存储在 response 变量中
+response = query_engine.query(&quot;脑卒中怎么治疗?&quot;)
+
+# 打印查询结果
+print(response)</code></pre></details></li></ul><ul id="1e0a551d-035a-8027-a4a7-fdc2a4bb8a40" class="toggle"><li><details open=""><summary>llamaindex_quickstart.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1e0a551d-035a-8012-b400-d38ac9f8d490" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># 导入 os 模块，该模块提供了与操作系统进行交互的功能，比如设置环境变量
+import os
+# 从 llama_index.core 模块导入 SimpleDirectoryReader 和 VectorStoreIndex 类
+# SimpleDirectoryReader 用于从指定目录读取文档数据
+# VectorStoreIndex 用于根据文档数据创建向量存储索引
+from llama_index.core import SimpleDirectoryReader, VectorStoreIndex
+
+# 设置 OpenAI 的 API 密钥，这是与 OpenAI 服务进行交互时的身份验证凭证
+# 注意：这里的密钥可能是示例，实际使用时需要替换为有效的密钥
+os.environ[&quot;OPENAI_API_KEY&quot;] = &#x27;你的key&#x27;
+# 设置 OpenAI 的 API 基础地址，指定了与 OpenAI 服务进行通信的服务器地址
+os.environ[&quot;OPENAI_API_BASE&quot;] = &#x27;https://api.openai-hk.com/v1&#x27;
+
+# 使用 SimpleDirectoryReader 类创建一个文档读取器对象，指定从 &quot;files&quot; 目录读取文档数据
+# 调用 load_data 方法将该目录下的文档数据加载到内存中，并存储在 documents 变量中
+documents = SimpleDirectoryReader(&quot;files&quot;).load_data()
+# 利用 VectorStoreIndex 类的 from_documents 方法，根据加载的文档数据创建一个向量存储索引
+# 这个索引可以用于后续的查询操作
+index = VectorStoreIndex.from_documents(documents)
+
+# 持久化index到目录中
+# 调用索引对象的 storage_context 属性的 persist 方法，将索引数据持久化到 &quot;index_persist&quot; 目录中
+# 这样在后续可以从该目录重新加载索引，避免重复创建索引的开销
+#index.storage_context.persist(&quot;index_persist&quot;)
+
+# 调用索引对象的 as_query_engine 方法，将索引转换为查询引擎对象
+# 查询引擎可以接受用户的查询请求，并从索引中查找相关信息
+query_engine = index.as_query_engine()
+# 调用查询引擎对象的 query 方法，发起一个关于“脑卒中是什么”的查询
+# 并将查询结果存储在 response 变量中
+response = query_engine.query(&quot;脑卒中是什么？&quot;)
+
+# 打印查询结果，将关于“脑卒中是什么”的查询结果输出到控制台
+print(response)</code></pre></details></li></ul></details></li></ul><h1 id="1e0a551d-035a-80ff-91e4-ecf875c11f22" class="">WK6  项目答辩周</h1><h2 id="1e0a551d-035a-80fd-b2b4-ca3e108285e8" class="">Day02  matplot按自然语言要求生成可视化图表</h2><ul id="1e0a551d-035a-800a-8934-db969ec79d71" class="toggle"><li><details open=""><summary>matplot+pandas+langchain</summary><ul id="1e0a551d-035a-80ff-be43-e32fb10dba89" class="toggle"><li><details open=""><summary>待读取csv文件</summary><figure id="1e0a551d-035a-80a0-acd7-dd3aef2c5dbb"><div class="source"><a href="sales_data.csv">sales_data.csv</a></div></figure></details></li></ul><ul id="1e0a551d-035a-805d-a7d0-f3e225831ac5" class="toggle"><li><details open=""><summary>automated_data_analysis.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1e0a551d-035a-806a-ae20-ebce277e68c3" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># 导入 contextlib 模块，用于上下文管理，这里主要用于重定向标准输出
+import contextlib
+# 导入 os.path 模块，用于处理文件路径相关操作
+import os.path
+# 导入 re 模块，用于正则表达式操作，可进行字符串的匹配和替换
+import re
+# 导入 sys 模块，提供对 Python 解释器使用或维护的一些变量的访问，以及与解释器进行交互的函数
+import sys
+
+# 导入 gradio 库，用于快速创建交互式的 Web 界面
+import gradio as gr
+# 导入 matplotlib.pyplot 模块，用于绘制图表
+import matplotlib.pyplot as plt
+# 导入 pandas 库，用于数据处理和分析
+import pandas as pd
+# 从 langchain_experimental.agents 模块导入 create_pandas_dataframe_agent 函数，用于创建基于 Pandas 数据框的智能代理
+from langchain_experimental.agents import create_pandas_dataframe_agent
+# 从 langchain_openai 模块导入 ChatOpenAI 类，用于与 OpenAI 模型进行交互
+from langchain_openai import ChatOpenAI
+
+# 设置 OpenAI API 密钥，用于访问 OpenAI 服务
+os.environ[&quot;OPENAI_API_KEY&quot;] = &#x27;sk-19a6e044d00c4962b62434ec87302a87&#x27;
+# 设置 OpenAI API 的基础地址，指定使用的 API 服务地址
+os.environ[&#x27;OPENAI_API_BASE&#x27;] = &#x27;https://api.deepseek.com/v1&#x27;
+
+# 设置 matplotlib 的中文字体，确保中文能正常显示
+plt.rcParams[&#x27;font.sans-serif&#x27;] = [&#x27;Arial Unicode MS&#x27;, &#x27;PingFang SC&#x27;, &#x27;STHeiti&#x27;, &#x27;SimHei&#x27;, &#x27;Microsoft YaHei&#x27;]
+# 解决 matplotlib 中负号显示问题
+plt.rcParams[&#x27;axes.unicode_minus&#x27;] = False
+
+
+# 定义 CodeCapture 类，用于捕获代码和输出信息
+class CodeCapture:
+    # 类的初始化方法，创建一个空的代码列表和输出列表
+    def __init__(self):
+        self.code = []
+        self.output = []
+
+    # 清理 ANSI 颜色代码和其他特殊字符的方法
+    def clean_ansi_codes(self, text):
+        # 定义一个正则表达式模式，用于匹配 ANSI 转义序列
+        ansi_escape = re.compile(r&#x27;\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])&#x27;)
+        # 使用正则表达式替换方法，将匹配到的 ANSI 转义序列替换为空字符串
+        return ansi_escape.sub(&#x27;&#x27;, text)
+
+    # 清理代码中的特殊字符和格式的方法
+    def clean_code(self, code):
+        # 调用 clean_ansi_codes 方法清理代码中的 ANSI 颜色代码
+        code = self.clean_ansi_codes(code)
+        # 去除代码前后的空白字符
+        code = code.strip()
+        # 如果代码以 ```python 开头，去掉这部分内容
+        if code.startswith(&quot;```python&quot;):
+            code = code[9:].strip()
+        # 如果代码以 ``` 开头，去掉这部分内容
+        if code.startswith(&quot;```&quot;):
+            code = code[3:].strip()
+        # 如果代码以 ``` 结尾，去掉这部分内容
+        if code.endswith(&quot;```&quot;):
+            code = code[:-3].strip()
+        return code
+
+    # 重写 write 方法，用于捕获所有输出信息
+    def write(self, text):
+        # 将输出信息添加到输出列表中
+        self.output.append(text)
+        # 检查输出中是否包含 &quot;Action:&quot; 和 &quot;Action Input:&quot;
+        if &quot;Action:&quot; in text and &quot;Action Input:&quot; in text:
+            # 使用正则表达式搜索 &quot;Action Input:&quot; 后面的代码内容
+            code_match = re.search(r&quot;Action Input:(.*?)(?=\nObservation:|$)&quot;, text, re.DOTALL)
+            if code_match:
+                # 获取匹配到的代码内容并去除前后空白字符
+                code = code_match.group(1).strip()
+                # 调用 clean_code 方法清理代码
+                code = self.clean_code(code)
+                # 如果代码不为空，则添加到代码列表中
+                if code:
+                    self.code.append(code)
+
+    # 获取捕获的代码，将代码列表中的元素用换行符连接成一个字符串
+    def get_code(self):
+        return &#x27;\n&#x27;.join(self.code)
+
+    # 获取捕获的输出，将输出列表中的元素连接成一个字符串
+    def get_output(self):
+        return &#x27;&#x27;.join(self.output)
+
+
+# 定义 DataAnalysisApp 类，用于实现数据分析应用的主要功能
+class DataAnalysisApp:
+    # 类的初始化方法，初始化数据框、智能代理和代码捕获对象
+    def __init__(self):
+        self.df = None
+        self.agent = None
+        self.code_capture = None
+
+    # 创建智能代理的方法
+    def create_agent(self):
+        # 检查数据框是否已初始化
+        if self.df is not None:
+            # 使用 create_pandas_dataframe_agent 函数创建智能代理
+            self.agent = create_pandas_dataframe_agent(
+                # 创建 ChatOpenAI 实例，设置温度为 0，使用 deepseek-chat 模型，并设置系统消息
+                ChatOpenAI(
+                    temperature=0,
+                    model=&#x27;deepseek-chat&#x27;,
+                    messages=[{&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;你是一个专业的数据分析师, 请使用中文回答所有问题&quot;}]
+                ),
+                # 传入数据框
+                self.df,
+                # 指定代理类型为零样本反应描述
+                agent_type=&quot;zero-shot-react-description&quot;,
+                # 开启详细输出模式
+                verbose=True,
+                # 允许执行危险代码
+                allow_dangerous_code=True
+            )
+
+    # 处理上传文件的方法
+    def process_file(self, file):
+        # 检查文件是否为空
+        if file is None:
+            return &quot;请上传文件&quot;, None
+        # 获取文件的扩展名
+        file_ext = os.path.splitext(file.name)[1].lower()
+        try:
+            # 如果文件扩展名是 .csv
+            if file_ext == &#x27;.csv&#x27;:
+                # 使用 pandas 的 read_csv 函数读取 CSV 文件
+                self.df = pd.read_csv(file.name)
+            # 如果文件扩展名是 .xlsx 或 .xls
+            elif file_ext in [&#x27;.xlsx&#x27;, &#x27;.xls&#x27;]:
+                # 使用 pandas 的 read_excel 函数读取 Excel 文件
+                self.df = pd.read_excel(file.name)
+            else:
+                return &#x27;不支持的文件格式, 请上传 CSV 或 EXCEL 文件&#x27;, None
+
+            # 调用 create_agent 方法创建智能代理
+            self.create_agent()
+            # 返回成功信息和数据的前几行预览
+            return f&quot;文件已成功加载。数据形状: {self.df.shape}&quot;, self.df.head().to_html()
+        except Exception as e:
+            # 如果处理文件时出现异常，返回错误信息
+            return f&#x27;处理文件时出错: {str(e)}&#x27;, None
+
+    # 分析数据的方法
+    def analyze_data(self, question):
+        # 检查数据框是否未初始化
+        if self.df is None:
+            return &#x27;请先上传数据文件&#x27;, None, &quot;&quot;
+
+        # 检查智能代理是否未初始化
+        if self.agent is None:
+            return &#x27;Agent 未初始化&#x27;, None, &quot;&quot;
+
+        try:
+            # 创建一个新的 CodeCapture 实例
+            self.code_capture = CodeCapture()
+
+            # 使用 contextlib.redirect_stdout 重定向标准输出到 CodeCapture 实例
+            with contextlib.redirect_stdout(self.code_capture):
+                # 调用智能代理的 invoke 方法执行分析，并传入问题
+                result = self.agent.invoke({&quot;input&quot;: question})
+
+            # 获取执行的代码
+            executed_code = self.code_capture.get_code()
+
+            # 打印捕获的输出信息到实际的终端
+            sys.__stdout__.write(f&quot;Captured Output: {self.code_capture.get_output()}\n&quot;)
+            # 打印执行的代码信息到实际的终端
+            sys.__stdout__.write(f&quot;Executed Code: {executed_code}\n&quot;)
+            # 打印分析结果信息到实际的终端
+            sys.__stdout__.write(f&quot;Result: {result}\n&quot;)
+
+            # 检查是否生成了新的图表
+            if plt.get_fignums():
+                # 将图表保存为临时文件
+                plt.savefig(&#x27;tmp_plot.png&#x27;)
+                # 关闭当前图表
+                plt.close()
+                # 返回分析结果、图表文件路径和执行的代码
+                return result[&#x27;output&#x27;], &#x27;tmp_plot.png&#x27;, executed_code
+
+            # 返回分析结果、无图表和执行的代码
+            return result[&#x27;output&#x27;], None, executed_code
+        except Exception as e:
+            # 如果分析过程中出现异常，返回错误信息
+            return f&#x27;分析过程中出错: {str(e)}&#x27;, None, &quot;&quot;
+
+
+# 创建 DataAnalysisApp 类的实例
+app = DataAnalysisApp()
+
+# 使用 gradio 的 Blocks 类创建一个界面块
+with gr.Blocks() as interface:
+    # 创建一个行布局
+    with gr.Row():
+        # 在界面上显示标题
+        gr.Markdown(&#x27;# 智能数据分析助手&#x27;)
+
+    # 创建一个行布局
+    with gr.Row():
+        # 创建一个列布局
+        with gr.Column():
+            # 创建一个文件输入组件，用于上传数据文件
+            file_input = gr.File(label=&#x27;上传数据文件(CSV或EXCEL)&#x27;)
+            # 创建一个文本框组件，用于显示文件上传状态
+            upload_output = gr.Textbox(label=&#x27;上传状态&#x27;)
+
+        # 创建一个列布局
+        with gr.Column():
+            # 创建一个 HTML 组件，用于显示数据的预览信息
+            data_preview = gr.HTML(label=&#x27;数据预览&#x27;)
+
+    # 为文件输入组件的上传事件绑定处理函数
+    file_input.upload(
+        # 绑定的处理函数为 app.process_file
+        app.process_file,
+        # 输入参数为文件输入组件
+        inputs=[file_input],
+        # 输出参数为上传状态文本框和数据预览 HTML 组件
+        outputs=[upload_output, data_preview]
+    )
+
+    # 创建一个行布局
+    with gr.Row():
+        # 创建一个文本框组件，用于输入分析问题
+        question_input = gr.Textbox(label=&#x27;输入您的分析问题&#x27;, placeholder=&#x27;例如: 计算每列的基本统计信息&#x27;)
+
+    # 创建一个行布局
+    with gr.Row():
+        # 创建一个列布局
+        with gr.Column():
+            # 创建一个文本框组件，用于显示分析结果
+            analysis_output = gr.Textbox(label=&#x27;分析结果&#x27;)
+            # 创建一个代码显示组件，用于显示执行的代码
+            code_output = gr.Code(label=&#x27;执行的代码&#x27;, language=&#x27;python&#x27;, interactive=False)
+        # 创建一个列布局
+        with gr.Column():
+            # 创建一个图像组件，用于显示可视化结果
+            plot_output = gr.Image(label=&#x27;可视化结果&#x27;)
+
+    # 为问题输入组件的提交事件绑定处理函数
+    question_input.submit(
+        # 绑定的处理函数为 app.analyze_data
+        app.analyze_data,
+        # 输入参数为问题输入组件
+        inputs=[question_input],
+        # 输出参数为分析结果文本框、可视化结果图像组件和执行的代码显示组件
+        outputs=[analysis_output, plot_output, code_output]
+    )
+# if __name__ == &#x27;__main__&#x27;:
+#     app = DataAnalysisApp()
+#     path = f&#x27;C:\Users\xupengcheng\PycharmProjects\pyDataAnalysis\demo\sales_data.csv&#x27;
+#     with open(path,&#x27;r+&#x27;) as file:
+#         app.process_file(file)
+#
+
+# 当脚本作为主程序运行时
+if __name__ == &#x27;__main__&#x27;:
+    # 启动界面
+    interface.launch()</code></pre></details></li></ul></details></li></ul><h2 id="1e0a551d-035a-80e4-8f92-fe409470a804" class="">Day05  最终答辩项目</h2><ul id="1e0a551d-035a-8074-92e1-ec16c98002d5" class="toggle"><li><details open=""><summary>提效项目压缩包</summary><figure id="1e0a551d-035a-80a7-b0bc-c939062fd644"><div class="source"><a href="%E6%8F%90%E6%95%88%E9%A1%B9%E7%9B%AE-%E4%B8%81%E5%AD%90%E5%81%A5.zip">提效项目-丁子健.zip</a></div></figure></details></li></ul><h1 id="1e0a551d-035a-80ed-86e6-dec83d320578" class="">WK7  langchain_graph</h1><h2 id="1e3a551d-035a-8089-8b35-c68f6c912165" class="">Day01  langchain_graph</h2><ul id="1e3a551d-035a-80ad-abae-d7b648eb01ca" class="toggle"><li><details open=""><summary>test01.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1e3a551d-035a-80d0-855f-e077f1995bba" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">#聊天机器人
+from typing import Annotated
+from langchain_deepseek import ChatDeepSeek
+#一定类型化字典
+from typing_extensions import TypedDict
+#构建状态图
+from langgraph.graph import StateGraph
+#处理消息添加
+from langgraph.graph.message import add_messages
+import os
+
+os.environ[&#x27;DEEPSEEK_API_KEY&#x27;] = &#x27;你的key&#x27;
+
+#类型化字典，存储状态
+class State(TypedDict):
+    #messages 列表， 使用add_messages进行注解
+    messages:Annotated[list,add_messages]
+
+#创建实例
+graph_builder =StateGraph(State)
+
+llm =ChatDeepSeek(model=&quot;deepseek-chat&quot;)
+
+#接收一个参数State类型
+#作用：调用Deepseek模型处理输入的消息，返回处理结果的字典
+def chatbot(state:State):
+    return {&quot;messages&quot;:[llm.invoke(state[&quot;messages&quot;])]}
+
+#图添加节点,该节点对应chatbot函数
+graph_builder.add_node(&quot;chatbot&quot;,chatbot)
+#设置状态图的入口点
+graph_builder.set_entry_point(&quot;chatbot&quot;)
+#设置状态图的结束点
+graph_builder.set_finish_point(&quot;chatbot&quot;)
+#生成最终状态图
+graph =graph_builder.compile()
+
+#显示图像
+from IPython.display import Image,display
+
+try:
+    #获取状态图的图形表示，转换为PNG图像
+    img =Image(graph.get_graph().draw_mermaid_png())
+    #将图像保存为base_image.png的文件
+    with open(&quot;base_image.png&quot;,&quot;wb&quot;) as f:
+        f.write(img.data)
+except Exception:
+    pass
+
+#处理用户输入并流式输出聊天机器人
+def stream_graph_updates(user_input:str):
+    #遍历状态图流式处理用户输入，产生的事件
+    for event in graph.stream({&quot;messages&quot;:[{&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:user_input}]}):
+        #遍历事件中的值
+        for value in event.values():
+            #打印聊天机器人的回复
+            print(&quot;Assistant&quot;,value[&quot;messages&quot;][-1].content)
+
+#循环，接收用户输入，并进行交互
+while True:
+    try:
+        user_input =input(&quot;User:&quot;)
+        if user_input.lower() in [&quot;quit&quot;,&quot;exit&quot;,&quot;q&quot;]:
+            print(&quot;bye&quot;)
+            break
+        stream_graph_updates(user_input)
+    except:
+        user_input =&quot;你对 LangGraph 了解多少?&quot;
+        print(&quot;User:&quot;+ user_input)
+        stream_graph_updates(user_input)
+        break
+
+
+
+
+
+
+
+
+
+</code></pre></details></li></ul><ul id="1e3a551d-035a-8007-a068-d53ec8fb305f" class="toggle"><li><details open=""><summary>test02.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1e3a551d-035a-8053-a01b-fd6271f4b1bd" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># 从 typing 模块导入 Annotated，用于类型注解（标记类型元数据）
+from typing import Annotated
+from langchain_deepseek import ChatDeepSeek
+# 导入 Tavily 搜索工具的结果类，用于处理搜索结果
+from langchain_community.tools.tavily_search import TavilySearchResults
+# 导入 LangChain 的基础消息类，用于定义消息结构
+from langchain_core.messages import BaseMessage
+from typing_extensions import TypedDict
+
+# 导入 LangGraph 的状态图构建类
+from langgraph.graph import StateGraph
+from langgraph.graph.message import add_messages
+# 导入 LangGraph 预构建的工具节点和工具调用条件
+from langgraph.prebuilt import ToolNode, tools_condition
+import os
+
+os.environ[&#x27;DEEPSEEK_API_KEY&#x27;] = &#x27;你的key&#x27;
+os.environ[&quot;TAVILY_API_KEY&quot;] =&quot;你的key&quot;
+
+class State(TypedDict):
+    messages: Annotated[list, add_messages]
+
+#创建状态图
+graph_builder=StateGraph(State)
+#初始化搜索工具
+tool =TavilySearchResults(max_results=2)
+tools=[tool]
+llm =ChatDeepSeek(model=&#x27;deepseek-chat&#x27;)
+#将语言模型与工具绑定，使模型能调用工具
+llm_with_tools=llm.bind_tools(tools)
+def chatbot(state:State):
+    return {&quot;messages&quot;:[llm_with_tools.invoke(state[&quot;messages&quot;])]}
+
+#添加聊天机器人节点
+graph_builder.add_node(&quot;chatbot&quot;,chatbot)
+#创建工具节点(封装Tavily搜索工具)
+tool_node=ToolNode(tools=[tool])
+#添加工具节点
+graph_builder.add_node(&quot;tools&quot;,tool_node)
+
+#添加条件 边： 当聊天机器人节点需要调用工具时(通过 tools_condtion判断),触发工具节点
+graph_builder.add_conditional_edges(
+    &quot;chatbot&quot;, #源节点，聊天机器人
+    tools_condition, #条件函数：判断是否需要调用工具
+)
+#添加固定边，工具节点处理完成后，返回聊天机器人节点继续处理
+graph_builder.add_edge(&quot;tools&quot;,&quot;chatbot&quot;)
+#状态图入口为聊天机器人
+graph_builder.set_entry_point(&quot;chatbot&quot;)
+#编译状态图，生成可执行的图结构
+graph =graph_builder.compile()
+
+# 导入 IPython 的图像显示工具（用于在 Jupyter 中展示流程图）
+from IPython.display import Image, display
+
+try:
+    # 生成状态图的 Mermaid 格式 PNG 图像
+    img = Image(graph.get_graph().draw_mermaid_png())
+    # 保存图像到文件
+    with open(&quot;add_tools_image.png&quot;, &quot;wb&quot;) as f:
+        f.write(img.data)
+except Exception:
+    # 忽略图像生成过程中的异常（如依赖缺失）
+    pass
+
+# 定义流式处理函数：接收用户输入，触发状态图运行并流式输出回复
+def stream_graph_updates(user_input: str):
+    # 调用状态图的 stream 方法，传入用户消息（初始状态为包含用户输入的消息列表）
+    for event in graph.stream({&quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: user_input}]}):
+        # 遍历状态图更新事件中的值（可能包含多节点输出）
+        for value in event.values():
+            # 提取最新的一条回复消息并打印
+            print(&quot;Assistant:&quot;, value[&quot;messages&quot;][-1].content)
+
+# 主循环：持续接收用户输入并进行交互
+while True:
+    try:
+        # 读取用户输入
+        user_input = input(&quot;User: &quot;)
+        # 判断是否为退出指令
+        if user_input.lower() in [&quot;quit&quot;, &quot;exit&quot;, &quot;q&quot;]:
+            print(&quot;Goodbye!&quot;)
+            break  # 退出循环
+
+        # 调用流式处理函数处理用户输入
+        stream_graph_updates(user_input)
+    except:
+        # 捕获异常（如输入格式错误），自动触发默认问题
+        user_input = &quot;你对 LangGraph 了解多少？&quot;
+        print(&quot;User: &quot; + user_input)
+        stream_graph_updates(user_input)
+        break  # 处理完默认问题后退出循环
+</code></pre></details></li></ul><ul id="1e3a551d-035a-8024-ad58-f46630434f8f" class="toggle"><li><details open=""><summary>test03.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1e3a551d-035a-80ea-8b1e-d84245b3a82b" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">from typing import Annotated
+from langchain_deepseek import ChatDeepSeek
+# 从 langchain_community.tools.tavily_search 模块导入 TavilySearchResults，它是一个搜索工具
+from langchain_community.tools.tavily_search import TavilySearchResults
+# 从 langchain_core.messages 模块导入 BaseMessage，是消息的基类
+from langchain_core.messages import BaseMessage
+# 从 typing_extensions 模块导入 TypedDict，用于定义类型化字典
+from typing_extensions import TypedDict
+
+# 从 langgraph.checkpoint.memory 模块导入 MemorySaver，用于保存和恢复状态图的内存状态
+from langgraph.checkpoint.memory import MemorySaver
+# 从 langgraph.graph 模块导入 StateGraph，用于构建和管理状态图
+from langgraph.graph import StateGraph
+# 从 langgraph.graph.message 模块导入 add_messages，用于处理消息添加操作
+from langgraph.graph.message import add_messages
+# 从 langgraph.prebuilt 模块导入 ToolNode 和 tools_condition，ToolNode 用于创建工具节点，tools_condition 用于判断是否需要调用工具
+from langgraph.prebuilt import ToolNode, tools_condition
+# 导入 os 模块，用于与操作系统交互，比如设置环境变量
+import os
+
+os.environ[&#x27;LANGSMITH_TRACING&#x27;] = &#x27;true&#x27;
+os.environ[&#x27;LANGCHAIN_API_KEY&#x27;]=&quot;你的key&quot;
+os.environ[&#x27;DEEPSEEK_API_KEY&#x27;] = &#x27;你的key&#x27;
+os.environ[&quot;TAVILY_API_KEY&quot;] =&quot;你的key&quot;
+os.environ[&#x27;LANGSMITH_PROJECT&#x27;] = &quot;0428&quot;
+
+# 定义一个名为 State 的类型化字典，用于存储状态信息
+# messages 字段是一个列表，并且使用 add_messages 进行注解，表明该列表用于存储消息
+class State(TypedDict):
+    messages: Annotated[list, add_messages]
+
+# 创建一个 StateGraph 实例，以 State 类型作为状态图的状态类型
+graph_builder = StateGraph(State)
+
+# 创建一个 TavilySearchResults 工具实例，最多返回 2 条搜索结果
+tool = TavilySearchResults(max_results=2)
+# 将工具存储在列表中，方便后续使用
+tools = [tool]
+# 创建一个 ChatDeepSeek 实例，指定使用 deepseek-chat 模型
+llm = ChatDeepSeek(model=&quot;deepseek-chat&quot;)
+# 将语言模型与工具绑定，使模型可以调用工具
+llm_with_tools = llm.bind_tools(tools)
+
+# 定义一个名为 chatbot 的函数，该函数接收一个 State 类型的参数
+# 函数的作用是调用绑定了工具的语言模型处理输入的消息，并返回包含处理结果的字典
+def chatbot(state: State):
+    return {&quot;messages&quot;: [llm_with_tools.invoke(state[&quot;messages&quot;])]}
+
+# 向状态图构建器中添加一个名为 &quot;chatbot&quot; 的节点，该节点对应 chatbot 函数
+graph_builder.add_node(&quot;chatbot&quot;, chatbot)
+
+# 创建一个 ToolNode 实例，将之前创建的工具包含在内
+tool_node = ToolNode(tools=[tool])
+# 向状态图构建器中添加一个名为 &quot;tools&quot; 的节点，该节点对应 tool_node
+graph_builder.add_node(&quot;tools&quot;, tool_node)
+
+# 向状态图中添加条件边，当 &quot;chatbot&quot; 节点满足 tools_condition 条件时，会触发相关操作
+graph_builder.add_conditional_edges(
+    &quot;chatbot&quot;,
+    tools_condition,
+)
+# 向状态图中添加一条边，使 &quot;tools&quot; 节点处理完后可以回到 &quot;chatbot&quot; 节点
+graph_builder.add_edge(&quot;tools&quot;, &quot;chatbot&quot;)
+# 设置状态图的入口点为 &quot;chatbot&quot; 节点
+graph_builder.set_entry_point(&quot;chatbot&quot;)
+
+#聊天机器人现在可以使用工具回答用户问题，但无法记住之前交互的上下文，限制连续多轮对话能力
+#LangGraph持久化检查点解决这个问题。 在编译图时，提供“检查器”
+#在调用图，提供 线程_id，将每一步自动保存状态
+#当使用相同的线程_id调用图时，图将加载保存的状态
+#&quot;检查点&quot; 比简单的聊天记录记忆强大很多，允许在任何时间保存和回复复杂状态
+#内存检查点器，全部保存在内存中
+#生产环境中，可以修改为SqlliteSvaer 连接自己的数据库
+
+memory=MemorySaver()
+#编译状态图构建器，指定使用memory，作为检查点保存器
+graph =graph_builder.compile(checkpointer=memory)
+# 导入 IPython 的图像显示工具（用于在 Jupyter 中展示流程图）
+from IPython.display import Image, display
+
+try:
+    # 生成状态图的 Mermaid 格式 PNG 图像
+    img = Image(graph.get_graph().draw_mermaid_png())
+    # 保存图像到文件
+    with open(&quot;add_memory_image.png&quot;, &quot;wb&quot;) as f:
+        f.write(img.data)
+except Exception:
+    # 忽略图像生成过程中的异常（如依赖缺失）
+    pass
+# 定义流式处理函数：接收用户输入，触发状态图运行并流式输出回复
+def stream_graph_updates(user_input: str):
+    # 调用状态图的 stream 方法，传入用户消息（初始状态为包含用户输入的消息列表）
+    for event in graph.stream({&quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: user_input}]}):
+        # 遍历状态图更新事件中的值（可能包含多节点输出）
+        for value in event.values():
+            # 提取最新的一条回复消息并打印
+            print(&quot;Assistant:&quot;, value[&quot;messages&quot;][-1].content)
+
+
+#定义配置字典，包含线程ID信息
+config={&quot;configurable&quot;:{&quot;thread_id&quot;:&quot;1&quot;}}
+user_input=&quot;你好，我是徐老师&quot;
+#调用状态图，传入用户输入的消息和配置信息，以流的方式处理消息
+events =graph.stream(
+    {&quot;messages&quot;:[{&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:user_input}]},
+    config,
+    stream_mode=&quot;values&quot;,
+)
+#遍历处理过程中产生的时间，打印聊天机器人的回复
+for event in events:
+    event[&quot;messages&quot;][-1].pretty_print()
+
+user_input=&quot;你还记得我的名字吗?&quot;
+
+events =graph.stream(
+    {&quot;messages&quot;:[{&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:user_input}]},
+    config,
+    stream_mode=&quot;values&quot;,
+)
+
+for event in events:
+    event[&quot;messages&quot;][-1].pretty_print()
+
+config={&quot;configurable&quot;:{&quot;thread_id&quot;:&quot;2&quot;}}
+
+#换了线程id，再问，是否记得名字
+user_input=&quot;你还记得我的名字吗?&quot;
+
+events =graph.stream(
+    {&quot;messages&quot;:[{&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:user_input}]},
+    config,
+    stream_mode=&quot;values&quot;,
+)
+
+for event in events:
+    event[&quot;messages&quot;][-1].pretty_print()
+
+
+
+
+
+
+
+
+
+
+
+</code></pre></details></li></ul><ul id="1e3a551d-035a-8085-95c3-c9bcc487f492" class="toggle"><li><details open=""><summary>test04.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1e3a551d-035a-8056-9505-f518e32d43ff" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">from typing import Annotated
+from langchain_deepseek import ChatDeepSeek
+from langchain_community.tools.tavily_search import TavilySearchResults
+# 从 langchain_core.tools 模块导入 tool 装饰器，用于将函数转换为工具
+from langchain_core.tools import tool
+from typing_extensions import TypedDict
+from langgraph.checkpoint.memory import MemorySaver
+# 从 langgraph.graph 模块导入 StateGraph 用于构建状态图，START 和 END 作为状态图的起始和结束标识
+from langgraph.graph import StateGraph, START, END
+# 从 langgraph.graph.message 模块导入 add_messages，用于消息处理相关操作
+from langgraph.graph.message import add_messages
+# 从 langgraph.prebuilt 模块导入 ToolNode 和 tools_condition，ToolNode 用于创建工具节点，tools_condition 用于判断是否需要调用工具
+from langgraph.prebuilt import ToolNode, tools_condition
+# 从 langgraph.types 模块导入 Command 和 interrupt，Command 用于封装命令，interrupt 用于中断当前流程并获取响应
+from langgraph.types import Command, interrupt
+import os
+
+os.environ[&#x27;DEEPSEEK_API_KEY&#x27;] = &#x27;sk-19a6e044d00c4962b62434ec87302a87&#x27;
+os.environ[&quot;TAVILY_API_KEY&quot;] =&quot;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&quot;
+
+# 定义一个类型化字典 State，用于存储状态信息
+# messages 字段是一个列表，并且使用 add_messages 进行注解，表明该列表用于存储消息
+class State(TypedDict):
+    messages: Annotated[list, add_messages]
+
+# 创建一个 StateGraph 实例，指定状态类型为 State
+graph_builder = StateGraph(State)
+
+# 使用 tool 装饰器将 human_assistance 函数转换为工具，并指定其描述
+@tool(description=&quot;处理需要人工干预的复杂问题，传入用户查询后获取人工回复&quot;)
+# 定义 human_assistance 函数，接收一个字符串类型的查询参数，返回一个字符串类型的回复
+def human_assistance(query: str) -&gt; str:
+    # 调用 interrupt 函数，传入包含查询的字典，获取人工回复
+    human_response = interrupt({&quot;query&quot;: query})
+    # 返回人工回复中的数据
+    return human_response[&quot;data&quot;]
+
+# 创建一个 TavilySearchResults 工具实例，设置最多返回 2 条搜索结果
+tool = TavilySearchResults(max_results=2)
+# 将 Tavily 搜索工具和人工辅助工具组合成一个工具列表
+tools = [tool, human_assistance]
+# 创建一个 ChatDeepSeek 实例，指定使用 deepseek - chat 模型
+llm = ChatDeepSeek(model=&quot;deepseek-chat&quot;)
+# 将语言模型与工具列表绑定，使模型可以调用这些工具
+llm_with_tools = llm.bind_tools(tools)
+
+# 定义 chatbot 函数，接收一个 State 类型的参数
+def chatbot(state: State):
+    # 调用绑定了工具的语言模型处理输入的消息列表
+    message = llm_with_tools.invoke(state[&quot;messages&quot;])
+    # 断言消息中的工具调用数量不超过 1 个
+    assert(len(message.tool_calls) &lt;= 1)
+    # 返回包含处理后消息的字典
+    return {&quot;messages&quot;: [message]}
+
+# 向状态图构建器中添加一个名为 &quot;chatbot&quot; 的节点，该节点对应 chatbot 函数
+graph_builder.add_node(&quot;chatbot&quot;, chatbot)
+
+# 创建一个 ToolNode 实例，包含之前定义的工具列表
+tool_node = ToolNode(tools=tools)
+# 向状态图构建器中添加一个名为 &quot;tools&quot; 的节点，该节点对应 tool_node
+graph_builder.add_node(&quot;tools&quot;, tool_node)
+
+# 向状态图中添加条件边，当 &quot;chatbot&quot; 节点满足 tools_condition 条件时，会触发相关操作
+graph_builder.add_conditional_edges(
+    &quot;chatbot&quot;,
+    tools_condition,
+)
+# 向状态图中添加一条边，使 &quot;tools&quot; 节点处理完后可以回到 &quot;chatbot&quot; 节点
+graph_builder.add_edge(&quot;tools&quot;, &quot;chatbot&quot;)
+# 向状态图中添加一条从起始标识到 &quot;chatbot&quot; 节点的边
+graph_builder.add_edge(START, &quot;chatbot&quot;)
+
+# 创建一个 MemorySaver 实例，用于保存和恢复状态
+memory = MemorySaver()
+# 编译状态图构建器，生成最终的状态图，并指定使用 memory 作为检查点保存器
+graph = graph_builder.compile(checkpointer=memory)
+
+# 从 IPython.display 模块导入 Image 和 display，用于显示图像
+from IPython.display import Image, display
+
+try:
+    # 获取状态图的图形表示，并将其转换为 PNG 图像
+    img = Image(graph.get_graph().draw_mermaid_png())
+    # 将图像数据保存为名为 Human-in-the-loop_image.png 的文件
+    with open(&quot;Human-in-the-loop_image.png&quot;, &quot;wb&quot;) as f:
+        f.write(img.data)
+except Exception:
+    # 如果在生成或保存图像时发生异常，忽略该异常
+    pass
+
+# 定义用户输入的消息
+user_input = &quot;我需要一些专家指导来构建 AI Agent。你能帮助我吗？&quot;
+# 定义配置字典，包含线程 ID 信息
+config = {&quot;configurable&quot;: {&quot;thread_id&quot;: &quot;1&quot;}}
+
+# 调用状态图的 stream 方法，传入用户输入的消息和配置信息，以流式方式处理消息
+events = graph.stream(
+    {&quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: user_input}]},
+    config,
+    stream_mode=&quot;values&quot;,
+)
+# 遍历处理过程中产生的事件
+for event in events:
+    # 如果事件中包含 &quot;messages&quot; 字段
+    if &quot;messages&quot; in event:
+        # 打印消息列表中最后一条消息
+        event[&quot;messages&quot;][-1].pretty_print()
+
+# 以下两行代码被注释掉，若取消注释可获取状态图的状态快照并打印下一个状态
+# snapshot = graph.get_state(config)
+# print(snapshot.next)
+
+# 定义人工回复的内容
+human_response = (
+    &quot;我们，随时为您提供帮助！我们建议您查看 LangGraph 来构建您的Agent。&quot;
+    &quot;它比简单的自主代理更可靠、可扩展得多。&quot;
+)
+
+# 创建一个 Command 实例，用于恢复处理流程，并传入人工回复的数据
+human_command = Command(resume={&quot;data&quot;: human_response})
+
+# 调用状态图的 stream 方法，传入人工命令和配置信息，以流式方式处理
+events = graph.stream(human_command, config, stream_mode=&quot;values&quot;)
+# 遍历处理过程中产生的事件
+for event in events:
+    # 如果事件中包含 &quot;messages&quot; 字段
+    if &quot;messages&quot; in event:
+        # 打印消息列表中最后一条消息
+        event[&quot;messages&quot;][-1].pretty_print()</code></pre></details></li></ul><ul id="1e3a551d-035a-804e-b1ca-f1f422889c69" class="toggle"><li><details open=""><summary>test05.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1e3a551d-035a-80d1-9091-fc48799bb7dc" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># 从 typing 模块导入 Annotated，用于类型注解（标记类型元数据）
+from typing import Annotated
+from langchain_deepseek import ChatDeepSeek
+# 导入 Tavily 搜索工具的结果类，用于处理搜索结果
+from langchain_community.tools.tavily_search import TavilySearchResults
+# 导入 LangChain 的基础消息类，用于定义消息结构
+from langchain_core.messages import BaseMessage
+from typing_extensions import TypedDict
+
+# 导入 LangGraph 的状态图构建类
+from langgraph.graph import StateGraph
+from langgraph.graph.message import add_messages
+# 导入 LangGraph 预构建的工具节点和工具调用条件
+from langgraph.prebuilt import ToolNode, tools_condition
+import os
+
+os.environ[&#x27;DEEPSEEK_API_KEY&#x27;] = &#x27;你的key&#x27;
+os.environ[&quot;TAVILY_API_KEY&quot;] =&quot;你的key&quot;
+
+class State(TypedDict):
+    messages: Annotated[list, add_messages]
+
+#创建状态图
+graph_builder=StateGraph(State)
+#初始化搜索工具
+tool =TavilySearchResults(max_results=2)
+tools=[tool]
+llm =ChatDeepSeek(model=&#x27;deepseek-chat&#x27;)
+#将语言模型与工具绑定，使模型能调用工具
+llm_with_tools=llm.bind_tools(tools)
+def chatbot(state:State):
+    return {&quot;messages&quot;:[llm_with_tools.invoke(state[&quot;messages&quot;])]}
+
+#添加聊天机器人节点
+graph_builder.add_node(&quot;chatbot&quot;,chatbot)
+#创建工具节点(封装Tavily搜索工具)
+tool_node=ToolNode(tools=[tool])
+#添加工具节点
+graph_builder.add_node(&quot;tools&quot;,tool_node)
+
+#添加条件 边： 当聊天机器人节点需要调用工具时(通过 tools_condtion判断),触发工具节点
+graph_builder.add_conditional_edges(
+    &quot;chatbot&quot;, #源节点，聊天机器人
+    tools_condition, #条件函数：判断是否需要调用工具
+)
+#添加固定边，工具节点处理完成后，返回聊天机器人节点继续处理
+graph_builder.add_edge(&quot;tools&quot;,&quot;chatbot&quot;)
+#状态图入口为聊天机器人
+graph_builder.set_entry_point(&quot;chatbot&quot;)
+#编译状态图，生成可执行的图结构
+graph =graph_builder.compile()
+
+# 导入 IPython 的图像显示工具（用于在 Jupyter 中展示流程图）
+from IPython.display import Image, display
+
+try:
+    # 生成状态图的 Mermaid 格式 PNG 图像
+    img = Image(graph.get_graph().draw_mermaid_png())
+    # 保存图像到文件
+    with open(&quot;add_tools_image.png&quot;, &quot;wb&quot;) as f:
+        f.write(img.data)
+except Exception:
+    # 忽略图像生成过程中的异常（如依赖缺失）
+    pass
+
+# 定义流式处理函数：接收用户输入，触发状态图运行并流式输出回复
+def stream_graph_updates(user_input: str):
+    # 调用状态图的 stream 方法，传入用户消息（初始状态为包含用户输入的消息列表）
+    for event in graph.stream({&quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: user_input}]}):
+        # 遍历状态图更新事件中的值（可能包含多节点输出）
+        for value in event.values():
+            # 提取最新的一条回复消息并打印
+            print(&quot;Assistant:&quot;, value[&quot;messages&quot;][-1].content)
+
+# 主循环：持续接收用户输入并进行交互
+while True:
+    try:
+        # 读取用户输入
+        user_input = input(&quot;User: &quot;)
+        # 判断是否为退出指令
+        if user_input.lower() in [&quot;quit&quot;, &quot;exit&quot;, &quot;q&quot;]:
+            print(&quot;Goodbye!&quot;)
+            break  # 退出循环
+
+        # 调用流式处理函数处理用户输入
+        stream_graph_updates(user_input)
+    except:
+        # 捕获异常（如输入格式错误），自动触发默认问题
+        user_input = &quot;你对 LangGraph 了解多少？&quot;
+        print(&quot;User: &quot; + user_input)
+        stream_graph_updates(user_input)
+        break  # 处理完默认问题后退出循环
+</code></pre></details></li></ul><p id="1e3a551d-035a-80ed-86b5-ea8a3f8325bf" class="">
 </p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
