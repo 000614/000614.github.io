@@ -6498,5 +6498,314 @@ while True:
         print(&quot;User: &quot; + user_input)
         stream_graph_updates(user_input)
         break  # 处理完默认问题后退出循环
-</code></pre></details></li></ul><h2 id="1e3a551d-035a-80ed-86b5-ea8a3f8325bf" class="">Day02 langgraph实现旅行助手</h2><ul id="1eba551d-035a-8012-8447-d9cf15f46c86" class="toggle"><li><details open=""><summary>项目文件</summary><figure id="1eba551d-035a-80d6-9ea6-ea8ee3393b8c"><div class="source"><a href="%E6%97%85%E8%A1%8C%E5%8A%A9%E6%89%8B.rar">旅行助手.rar</a></div></figure></details></li></ul><h2 id="1eba551d-035a-80e0-b378-d794e1f13d9c" class="">Day03 LoRA微调流程</h2><ul id="1eca551d-035a-80b6-89e5-e917e1b94870" class="toggle"><li><details open=""><summary>流程文件</summary><figure id="1eca551d-035a-8020-8f09-f463cf421093"><div class="source"><a href="LoRA%E5%BE%AE%E8%B0%83%E6%A1%88%E4%BE%8B.rar">LoRA微调案例.rar</a></div></figure></details></li></ul><p id="1eca551d-035a-8019-9ebb-c1f9f8caac79" class="">
+</code></pre></details></li></ul><h2 id="1e3a551d-035a-80ed-86b5-ea8a3f8325bf" class="">Day02 langgraph实现旅行助手</h2><ul id="1eba551d-035a-8012-8447-d9cf15f46c86" class="toggle"><li><details open=""><summary>项目文件</summary><figure id="1eba551d-035a-80d6-9ea6-ea8ee3393b8c"><div class="source"><a href="%E6%97%85%E8%A1%8C%E5%8A%A9%E6%89%8B.rar">旅行助手.rar</a></div></figure></details></li></ul><h2 id="1eba551d-035a-80e0-b378-d794e1f13d9c" class="">Day03 LoRA微调流程</h2><ul id="1eca551d-035a-80b6-89e5-e917e1b94870" class="toggle"><li><details open=""><summary>流程文件</summary><figure id="1eca551d-035a-8020-8f09-f463cf421093"><div class="source"><a href="LoRA%E5%BE%AE%E8%B0%83%E6%A1%88%E4%BE%8B.rar">LoRA微调案例.rar</a></div></figure><figure id="1f1a551d-035a-804c-af1f-cb7a4304425e"><div class="source"><a href="LORA%E4%BD%9C%E4%B8%9A.docx">LORA作业.docx</a></div></figure></details></li></ul><h2 id="1eca551d-035a-8019-9ebb-c1f9f8caac79" class="">Day04 bert模型底层-多头注意力机制过程</h2><ul id="1eda551d-035a-8042-b77f-f8206205d421" class="toggle"><li><details open=""><summary>课程代码</summary><ul id="1eda551d-035a-80e9-bebe-caf2d60c40f9" class="toggle"><li><details open=""><summary>text01.py（模型选用和下载）</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1eda551d-035a-8034-98f1-fa20255dcbce" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">#模型下载
+from modelscope import snapshot_download
+model_dir = snapshot_download(&#x27;AI-ModelScope/bert-base-uncased&#x27;,cache_dir=&#x27;D:\\modeldl&#x27;)</code></pre></details></li></ul><ul id="1eda551d-035a-80a3-86f5-df639ec77a35" class="toggle"><li><details open=""><summary>text02.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1eda551d-035a-80f0-838b-cc8a656588ea" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">#使用自注意力机制计算词向量之间的注意力分数：
+#灵活捕捉语义关系、自动学习词语重要性、提高模型的泛化能力、并行计算提高效率
+
+
+#1.需要将文本分词为词语序列
+#2.将每一词语转换为对应的词向量(embedding)
+#Pytorch 提供了torch.nn.Embedding层完成这个操作
+
+#神经网络模块
+from torch import nn
+#加载预训练模型的配置
+from transformers import AutoConfig
+#分词器
+from transformers import AutoTokenizer
+
+#指定预训练模型的路径(本地)
+model_ckpt=&#x27;D:\\modeldl\\AI-ModelScope\\bert-base-uncased&#x27;
+#指定要加载的分词器对应的预训练模型
+tokenizer=AutoTokenizer.from_pretrained(model_ckpt)
+#定义要处理的文本
+text=&quot;time files like an arrow&quot;
+#add_special_tokens=False 去除分词结果中的 cls和sep
+#return_tensors=&#x27;pt&#x27; 返回张量的类型
+inputs=tokenizer(text,return_tensors=&#x27;pt&#x27;,add_special_tokens=False)
+#bert-base-uncased 模型 对应的词表大小为：30522 ，每个词的向量维度为768
+#打印分词后的输入ID
+print(inputs.input_ids)
+
+#加载配置
+config =AutoConfig.from_pretrained(model_ckpt)
+#print(config)
+#创建一个嵌入层，将词表中的每个词映射到一个指定维度的向量
+#config.vocab_size 词表大小
+#config.hidden_size 对应的词向量的维度
+token_emb=nn.Embedding(config.vocab_size,config.hidden_size)
+#print(token_emb)
+#将输入的词语id转换为对应的词向量
+inputs_embeds=token_emb(inputs.input_ids)
+#打印向量张量形态
+print(inputs_embeds.size())
+#创建query、key、value 向量序列，使用点积作为相似度函数来计算注意力分数
+import torch
+from math import sqrt
+
+#把词向量分别赋值QKV
+Q=K=V=inputs_embeds
+#k的最后一个维度大小
+dim_k=K.size(-1)
+#计算注意力分数，使用点计 除以K维度平方根进行缩放
+#Q:查询向量
+#K.transpose(1,2)：向量转置
+#sqrt(dim_k)：缩放点计结果，避免点积值过大
+scores=torch.bmm(Q,K.transpose(1,2)/sqrt(dim_k))
+print(scores.size())
+
+#这里的QK序列长度为5，生成了一个5X5D 注意力分数矩阵，应用softmax标准化注意力权重
+import torch.nn.functional as F
+#应用函数，转换为注意力权重
+#scores:注意力分数矩阵
+#dim=-1:指定在最后一个维度上进行softmax操作
+weights =F.softmax(scores,dim=-1)
+#打印注意力权重在最后一个维度上的求和结果，验证softmax操作的正确性
+print(weights.sum(dim=-1))
+
+#最后将注意力权重与value序列相乘
+#weights: 注意力矩阵
+#V：值向量
+attn_outputs=torch.bmm(weights,V)
+#打印主力输出张量的形状
+print(attn_outputs.shape)
+print(attn_outputs)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</code></pre></details></li></ul><ul id="1eda551d-035a-8054-92f8-c51c4e3462ad" class="toggle"><li><details open=""><summary>text03.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1eda551d-035a-80d9-aab1-d64c6fa11f3f" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">#多头注意力机制，使用预训练 bert模型对文本进行处理
+#定义了缩放点积注意力的计算方法。
+#构建了单个注意力头和多头注意力模块。
+#加载预训练的 BERT 模型配置和分词器。
+#对输入文本进行分词并转换为词向量。
+#使用多头注意力模块处理词向量，并输出结果。
+
+import torch
+import torch.nn.functional as F
+from math import sqrt
+
+def scaled_dot_product_attention(query,key,value,query_mask=None,key_mask=None,mask=None):
+    #计算缩放点积注意力
+    #参数：query 查询张量，key键张量，value值张量，query_mask查询掩码张量，key_mask键掩码张量，注意力掩码张量
+    #返回计算缩放点积注意力的输出
+
+
+    dim_k=query.size(-1)
+    #批量矩阵乘法，分数矩阵
+    scores=torch.bmm(query,key.transpose(1,2))/sqrt(dim_k)
+
+    if query_mask is not None and key_mask is not None:
+        #查询掩码和键掩码进行外积操作
+        mask =torch.bmm(query_mask.unsqueeze(-1),key_mask.unsqueeze(-1))
+
+    if mask is not None:
+        #将掩码为0的位置的注意力分数置为负无穷，后续softmax操作会趋近于0
+        scores =scores.masked_fill(mask == 0, -float(&quot;inf&quot;))
+        #应用函数，转换为注意力权重
+    weights=F.softmax(scores,dim=-1)
+    #返回计算注意力输出，矩阵乘法将注意力权重与值张量相乘
+    return torch.bmm(weights,value)
+
+from torch import nn
+
+#每个头都会初始化三个独立的线性层，负责将QKV序列影响到张量，head_dim是映射到的向量维度
+#例如BERT 有12个注意力头，每个头的维度设置为 768/12 =64
+
+class AttentionHead(nn.Module):
+    # 初始化注意力头
+    def __init__(self,embed_dim,head_dim):
+        #调用父类构造函数
+        super().__init__()
+        #定义查询线性层
+        self.q=nn.Linear(embed_dim,head_dim)
+        # 定义键线性层
+        self.k = nn.Linear(embed_dim, head_dim)
+        # 定义值线性层
+        self.v = nn.Linear(embed_dim, head_dim)
+
+    #前向传播方法,返回注意力头输出
+    def forward(self,query,key,value,query_mask=None,key_mask=None,mask=None):
+        #对查询，键，值分别通过线性层进行变换，然后计算缩放点积注意力
+        attn_outputs=scaled_dot_product_attention(
+            self.q(query),self.k(key),self.v(value),query_mask,key_mask,mask
+        )
+        #返回注意力头的输出
+        return attn_outputs
+
+#拼接多个注意力头的输出，可以构建层
+class MultiHeadAttention(nn.Module):
+    #多头注意力初始化模块，config:配置对象
+    def __init__(self,config):
+        super().__init__()
+        #获取隐藏维度
+        embed_dim=config.hidden_size
+        #获取注意力头数量
+        num_heads=config.num_attention_heads
+        #计算每个注意力头的维度
+        head_dim=embed_dim // num_heads
+        #创建多个助理头并存储在ModuleList中
+        self.heads =nn.ModuleList(
+            [AttentionHead(embed_dim,head_dim) for _ in range(num_heads)]
+        )
+        #定义输出线性层，将多头注意力的输出映射回原始的嵌入维度
+        self.output_linear =nn.Linear(embed_dim,embed_dim)
+
+    #前向传播
+    def forward(self,query,key,value,query_mask=None,key_mask=None,mask=None):
+        #对每注意力进行前向传播，并将输出在最后一个维度上拼接
+        x=torch.cat(
+            [
+                h(query, key, value, query_mask, key_mask, mask) for h in self.heads
+            ],dim=-1
+        )
+        #输出线性层进行变换
+        x =self.output_linear(x)
+        return x
+
+from transformers import AutoConfig
+from transformers import AutoTokenizer
+
+#使用bert-base-uncased 模型 的参数初始化 Multi-head Attention 层， 将之前构建的输入送入模型，验证是否工作正常
+
+#指定预训练模型的路径(本地)
+model_ckpt=&#x27;D:\\modeldl\\AI-ModelScope\\bert-base-uncased&#x27;
+#指定要加载的分词器对应的预训练模型
+tokenizer=AutoTokenizer.from_pretrained(model_ckpt)
+#定义要处理的文本
+text=&quot;time files like an arrow&quot;
+
+inputs=tokenizer(text,return_tensors=&#x27;pt&#x27;,add_special_tokens=False)
+config =AutoConfig.from_pretrained(model_ckpt)
+
+token_emb=nn.Embedding(config.vocab_size,config.hidden_size)
+inputs_embeds=token_emb(inputs.input_ids)
+
+#创建一个多头注意力模块实例
+multihead_atten=MultiHeadAttention(config)
+#将输入词向量分别赋值给查询、键、值
+query=key=value=inputs_embeds
+#进行多头注意力计算
+attn_output=multihead_atten(query,key,value)
+print(attn_output.size())
+</code></pre></details></li></ul></details></li></ul><h2 id="1eda551d-035a-8086-af7f-c1474285bb26" class="">Day05 微调流程-BGE微调-难例样本</h2><ul id="1eea551d-035a-8027-9993-ee652161c5ca" class="toggle"><li><details open=""><summary>流程文件</summary><figure id="1f1a551d-035a-8008-a7b7-fe797c145e9b"><div class="source"><a href="BGE%E5%BE%AE%E8%B0%83-%E9%9A%BE%E4%BE%8B%E6%A0%B7%E6%9C%AC.rar">BGE微调-难例样本.rar</a></div></figure><figure id="1f1a551d-035a-8037-979f-c4351824f8ce"><div class="source"><a href="BGE%E5%BE%AE%E8%B0%83-%E9%9A%BE%E4%BE%8B%E6%A0%B7%E6%9C%AC%E4%BD%9C%E4%B8%9A.docx">BGE微调-难例样本作业.docx</a></div></figure><p id="1f1a551d-035a-807a-b072-c0805166a697" class="">
+</p></details></li></ul><p id="1f1a551d-035a-8051-b147-fe78fe4c418c" class="">
+</p><h1 id="1f1a551d-035a-8051-b8fc-c6d32091d8ca" class="">WK8</h1><h2 id="1f1a551d-035a-802f-8850-d48db5e77886" class="">Day01 Numpy</h2><ul id="1f0a551d-035a-802c-8b3a-ed6bf070f33f" class="toggle"><li><details open=""><summary>func_test.py</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1f1a551d-035a-80a0-94ae-c6eed58d6000" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">import numpy as np
+
+learn = {
+    &quot;array_test_list&quot;: [
+        np.array([1, 2, 3, 4, 5, 6, ]),
+        np.array((1, 2, 3, 4, 5, 6)),
+        np.array(range(6))
+    ],
+    &quot;arange_test_list&quot;: [
+        np.arange(6),
+        np.arange(2, 10, 2),
+        np.array(range(2, 10, 2))
+    ],
+    &quot;linspace_test_list&quot;: [
+        # 分割步长为，差/（num-1）
+        np.linspace(0, 49),
+        np.linspace(0, 10, 5),
+    ],
+    &quot;full_test_list&quot;: [
+        np.full((2, 4), 6)
+    ],
+    &quot;zeros_test_list&quot;: [
+        np.zeros((10, 2)),
+        np.zeros(10),
+    ],
+    &quot;ones_test_list&quot;: [
+        # 十维向量
+        np.ones(10, dtype = &quot;float&quot;),
+    ],
+    &quot;random.random_test_list&quot;: [
+        np.random.random((2, 4)),
+    ],
+    &quot;random.randint_test_list&quot;: [
+        # 起始值，终止值-1，形状
+        np.random.randint(0, 10, (2,4))
+    ],
+
+}
+for k, v in learn.items():
+    print(&quot;\n\n&quot; + k)
+    for i in v:
+        print(i)
+</code></pre></details></li></ul><ul id="1f1a551d-035a-80f7-813b-c2f11b5310d6" class="toggle"><li><details open=""><summary>正态分布</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1f1a551d-035a-802d-9cff-e34b5cbeaf2f" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">#正态分布
+#normal(均值,标准差，形状)
+#想象有一堆数据，像人的身高，成绩等等。。。 正态分布下，这些数据画成图像一口大钟，中间高两边低，两边对称
+#中间最高的地方,对应的是数据里最常出现的值,比如考试成绩，得中间分数的人最多。次从中间往两边走，数据出现的次数越来越少
+#均值：钟的中心位置，决定数据大体上集中在哪里，像平均分高就是身高数据正态分布的中心
+#标准差：描述数据挤在一起还是散开。标准差小，数据聚在均值附近，钟形瘦高；标准差大，数据散开，钟形矮胖
+# 3- sigma 原则：大部分数据(约99.7%)都落在距离均值3倍标准差范围里.
+#工厂检查产品质量:如果产品某个指标符合正态分布,超出这个范围的产品就是不合格产品。
+#正态分布帮我们理解很多自然和社会现象里数据的分布规律
+
+#大模型中正态分布的作用：
+#1.数据预处理：将数据转化为均值为0，标准差为1的标准正态分布
+#2.模型参数初始化：神经网络，初始化权重参数时，从正态分布中采样。
+#3.不确定性估计
+#4.生成式模型:潜在空间的分布常假设为正态分布。
+#5.理论分析基础: 统计推断
+import numpy as np
+a =np.random.normal(0,1,(2,4))
+print(a)
+</code></pre></details></li></ul><ul id="1f1a551d-035a-8030-b7f3-eaa8fb0e4825" class="toggle"><li><details open=""><summary>案例</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1f1a551d-035a-806d-b42e-d1766af70983" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># 光华公司最近最近六个月的收入数据为 [70, 65, 80, 75, 70, 55]（单位：万元），支出数据为 [40, 35, 45, 35, 40, 30]（单位：万元）。
+# 1. 使用np.array创建一个包含最近6个月收入数据的数组。
+# 2. 使用np.array创建一个包含最近6个月支出数据的元组，并将其转换为 NumPy 数组。
+# 3. 使用np.array创建一个生成器对象，包含过去5年的年利润数据（单位：万元），数据为 [100, 110, 120, 130, 140]，并将其转换为 NumPy 数组。
+import numpy as np
+#1.
+revenue=np.array([70, 65, 80, 75, 70, 55])
+print(&quot;收入数组:&quot;,revenue)
+#2.
+expenses_tuple=(40, 35, 45, 35, 40, 30)
+expenses = np.array(expenses_tuple)
+print(&quot;支出数组:&quot;,expenses)
+#3.
+def profit_generator():
+    for p in [100, 110, 120, 130, 140]:
+        yield  p
+
+profit_gen =profit_generator()
+profit =np.array(list(profit_gen))
+print(&quot;年利润数组:&quot;,profit)
+
+
+
+# 现在预测光华公司未来12个月的收入。每月增加10万元。
+#
+# 使用np.arange创建一个包含未来12个月的每月收入预测数组。
+last_revenue=55 #获取最后一个月的收入
+future_revenues=np.arange(1,13)*10 +last_revenue
+print(&quot;预测来12个月收入&quot;,future_revenues)
+
+
+
+# 公司需要未来一年的月度预算。预算将从100万元增加到1200万元，每个月均匀增加。
+#
+# 使用np.linspace创建一个包含每个月预算的月度预算数据的数组。
+monthly_budgets=np.linspace(100,1200,12)
+print(&quot;未来12个月的月度预算(单位:万元):&quot;,monthly_budgets)
+</code></pre></details></li></ul><p id="1f1a551d-035a-8003-af05-c7cecb9dc202" class="">
 </p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
